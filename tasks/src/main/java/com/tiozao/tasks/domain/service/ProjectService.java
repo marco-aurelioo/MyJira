@@ -44,7 +44,4 @@ public class ProjectService {
         return true;
     }
 
-    public ProjectEntity findByAlias(String alias) {
-        return repository.findByProjectAlias(alias);
-    }
 }
