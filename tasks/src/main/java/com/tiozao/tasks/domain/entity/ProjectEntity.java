@@ -11,8 +11,10 @@ public class ProjectEntity {
     private Integer id;
     private String projectName;
     private String projectAlias;
+
     @ManyToOne
     private PersonEntity owner;
+
     private String description;
 
     public Integer getId() {

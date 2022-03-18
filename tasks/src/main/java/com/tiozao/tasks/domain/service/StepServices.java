@@ -50,7 +50,11 @@ public class StepServices {
     }
 
     private void cleanAllSteps(ProjectEntity project) {
-        List<StepEntity> steps = repository.findByProject(project);
+        List<StepEntity> steps = repository.findByProjectOrderByOrderIdx(project);
         repository.deleteAll(steps);
+    }
+
+    public StepEntity getFristStepForProject(ProjectEntity project) {
+        return repository.findByProjectOrderByOrderIdx(project).get(0);
     }
 }

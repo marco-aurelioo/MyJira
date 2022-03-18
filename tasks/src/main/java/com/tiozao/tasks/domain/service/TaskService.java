@@ -17,8 +17,25 @@ public class TaskService {
     @Autowired
     private TaskRepository repository;
 
+    @Autowired
+    private StepServices stepServices;
+
     public Page<TaskEntity> findAllTasks(String alias, Pageable pageReq) {
         ProjectEntity project = projectService.find(alias);
         return repository.findByProject(project,pageReq);
+    }
+
+    public TaskEntity createTask(String alias, TaskEntity taskEntity) {
+        ProjectEntity project = projectService.find(alias);
+        taskEntity.setProject(project);
+        taskEntity.setStep(stepServices.getFristStepForProject(project));
+        taskEntity = repository.save(taskEntity);
+        return includeTaskAlias(taskEntity);
+    }
+
+    private TaskEntity includeTaskAlias(TaskEntity taskEntity) {
+        Integer qtd = repository.countByProject(taskEntity.getProject());
+        taskEntity.setTaskAlias(taskEntity.getProject().getProjectAlias()+"-"+qtd);
+        return repository.save(taskEntity);
     }
 }

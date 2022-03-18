@@ -15,6 +15,7 @@ public class TaskEntity {
     private Integer complexity;
     private VALUE_SIZE value;
     private TASK_TYPE type;
+    private String taskAlias;
 
     @ManyToOne
     private TaskEntity epicTask;
@@ -27,6 +28,14 @@ public class TaskEntity {
 
     @OneToMany
     private List<PersonEntity> executors;
+
+    public String getTaskAlias() {
+        return taskAlias;
+    }
+
+    public void setTaskAlias(String taskAlias) {
+        this.taskAlias = taskAlias;
+    }
 
     public Integer getId() {
         return Id;

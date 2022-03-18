@@ -7,6 +7,33 @@ public class TaskDto {
     private String description;
     private String priorioty;
     private String step;
+    private String taskAlias;
+    private Integer complexity;
+    private Integer id;
+
+    public String getTaskAlias() {
+        return taskAlias;
+    }
+
+    public void setTaskAlias(String taskAlias) {
+        this.taskAlias = taskAlias;
+    }
+
+    public Integer getComplexity() {
+        return complexity;
+    }
+
+    public void setComplexity(Integer complexity) {
+        this.complexity = complexity;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAlias() {
         return alias;

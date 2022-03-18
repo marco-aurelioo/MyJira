@@ -1,6 +1,8 @@
 package com.tiozao.tasks.assembler;
 
 
+import org.springframework.data.domain.Page;
+
 import java.util.function.Function;
 
 abstract class Converter<O,D> {
@@ -21,4 +23,8 @@ abstract class Converter<O,D> {
         return originDomain.apply(o);
     }
 
+    public final Page<O> createPageFromEntities(final Page<D> entities) {
+        Page<O> dtoPage = entities.map(this::convertDomain);
+        return dtoPage;
+    }
 }
