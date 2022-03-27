@@ -11,7 +11,7 @@ public class PersonConverter extends Converter<PersonDto, PersonEntity> {
         super(PersonConverter::originDomainPerson, PersonConverter::domainOriginDto);
     }
 
-    public static PersonEntity originDomainPerson(PersonDto dto){
+    public static PersonEntity originDomainPerson(PersonDto dto) {
         PersonEntity entity = new PersonEntity();
         entity.setId(dto.getId());
         entity.setAvatar(dto.getAvatar());
@@ -19,7 +19,7 @@ public class PersonConverter extends Converter<PersonDto, PersonEntity> {
         return entity;
     }
 
-    public static PersonDto domainOriginDto(PersonEntity entity){
+    public static PersonDto domainOriginDto(PersonEntity entity) {
         PersonDto dto = new PersonDto();
         dto.setId(entity.getId());
         dto.setAvatar(entity.getAvatar());

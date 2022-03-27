@@ -9,9 +9,6 @@ import java.util.List;
 
 @Repository
 public interface StepRepository extends JpaRepository<StepEntity,Integer> {
-
     List<StepEntity> findByProjectOrderByOrderIdx(ProjectEntity project);
-
     StepEntity findByProjectAndStepName(ProjectEntity project, String stepName);
-
 }

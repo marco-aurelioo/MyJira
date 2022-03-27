@@ -10,22 +10,27 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ProjectController {
 
-@Autowired
-private ProjectService service;
+    @Autowired
+    private ProjectService service;
 
-@Autowired
-private ProjectConverter converter;
+    @Autowired
+    private ProjectConverter converter;
 
     @GetMapping("/projects/{projectAlias}")
     public ResponseEntity<ProjectDto> findProject(
             @PathVariable("projectAlias") String projectAlias) {
-        return ResponseEntity.ok(converter.convertDomain(service.find(projectAlias)));
+        return ResponseEntity.ok(
+                converter.convertDomain(
+                        service.find(projectAlias)));
     }
 
     @PostMapping("/projects")
     public ResponseEntity<ProjectDto> createProject(
             @RequestBody ProjectDto project) {
-        return ResponseEntity.ok(converter.convertDomain(service.create(converter.convertOrigin(project))));
+        return ResponseEntity.ok(
+                converter.convertDomain(
+                        service.create(
+                                converter.convertOrigin(project))));
     }
 
     @DeleteMapping("/projects/{projectAlias}")

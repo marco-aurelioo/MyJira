@@ -25,11 +25,13 @@ public class TaskController {
     public ResponseEntity<Page<TaskDto>> getAllTasksProject(
             @PathVariable("alias") String alias,
             @RequestParam(name = "page", defaultValue = "0") Integer page,
-            @RequestParam(name = "size", defaultValue = "0") Integer size){
-        return ResponseEntity.ok(converter.createPageFromEntities(taskService.findAllTasks(alias, PageRequest.of(page,size))));
+            @RequestParam(name = "size", defaultValue = "20") Integer size) {
+        return ResponseEntity.ok(
+                converter.createPageFromEntities(
+                        taskService.findAllTasks(
+                                alias,
+                                PageRequest.of(page, size))));
     }
-
-
 
 
 }

@@ -5,13 +5,13 @@ import com.tiozao.tasks.domain.entity.ProjectEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProjectConverter extends Converter<ProjectDto, ProjectEntity>{
+public class ProjectConverter extends Converter<ProjectDto, ProjectEntity> {
 
     public ProjectConverter() {
         super(ProjectConverter::originDomainEntity, ProjectConverter::domainOriginDto);
     }
 
-    public static ProjectEntity originDomainEntity(ProjectDto dto){
+    public static ProjectEntity originDomainEntity(ProjectDto dto) {
         ProjectEntity entity = new ProjectEntity();
         entity.setProjectAlias(dto.getAlias());
         entity.setProjectName(dto.getProjectName());
@@ -20,7 +20,7 @@ public class ProjectConverter extends Converter<ProjectDto, ProjectEntity>{
         return entity;
     }
 
-    public static ProjectDto domainOriginDto(ProjectEntity entity){
+    public static ProjectDto domainOriginDto(ProjectEntity entity) {
         ProjectDto dto = new ProjectDto();
         dto.setAlias(entity.getProjectAlias());
         dto.setProjectName(entity.getProjectName());

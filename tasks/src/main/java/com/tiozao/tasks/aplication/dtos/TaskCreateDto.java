@@ -6,6 +6,7 @@ public class TaskCreateDto {
     private String description;
     private Integer complexity;
     private String taskAlias;
+    private String step;
     private Integer createByPersonId;
 
     public String getTaskAlias() {
@@ -46,5 +47,13 @@ public class TaskCreateDto {
 
     public void setCreateByPersonId(Integer createByPersonId) {
         this.createByPersonId = createByPersonId;
+    }
+
+    public String getStep() {
+        return step;
+    }
+
+    public void setStep(String step) {
+        this.step = step;
     }
 }

@@ -5,10 +5,7 @@ import com.tiozao.tasks.assembler.TaskCreateConverter;
 import com.tiozao.tasks.domain.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TaskCrudController {
@@ -19,13 +16,22 @@ public class TaskCrudController {
     @Autowired
     private TaskCreateConverter taskCreateConverter;
 
-
     @PostMapping("/project/{alias}/tasks")
     public ResponseEntity<TaskCreateDto> createTask(
             @PathVariable("alias") String alias,
-            @RequestBody TaskCreateDto task){
+            @RequestBody TaskCreateDto task) {
         return ResponseEntity.ok(taskCreateConverter.convertDomain(
                 taskService.createTask(alias,
+                        taskCreateConverter.convertOrigin(task))
+        ));
+    }
+
+    @PutMapping("/tasks/{taskAlias}")
+    public ResponseEntity<TaskCreateDto> updateTask(
+            @PathVariable("taskAlias") String taskAlias,
+            @RequestBody TaskCreateDto task) {
+        return ResponseEntity.ok(taskCreateConverter.convertDomain(
+                taskService.updateTask(taskAlias,task.getStep(),
                         taskCreateConverter.convertOrigin(task))
         ));
     }

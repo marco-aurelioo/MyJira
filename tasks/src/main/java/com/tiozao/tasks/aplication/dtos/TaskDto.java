@@ -2,7 +2,6 @@ package com.tiozao.tasks.aplication.dtos;
 
 public class TaskDto {
 
-    private String alias;
     private String title;
     private String description;
     private String priorioty;
@@ -33,14 +32,6 @@ public class TaskDto {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
     }
 
     public String getTitle() {

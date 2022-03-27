@@ -22,7 +22,7 @@ public class PersonController {
                 service.findPerson(id)));
     }
 
-    @PostMapping("/persons ")
+    @PostMapping("/persons")
     public ResponseEntity<PersonDto> createPerson(@RequestBody PersonDto person) {
         return ResponseEntity.ok(
                 converter.convertDomain(

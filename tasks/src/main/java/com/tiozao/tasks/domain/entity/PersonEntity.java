@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="persons")
-public class PersonEntity {
+@Table(name = "persons")
+public class PersonEntity  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

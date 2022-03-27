@@ -20,13 +20,17 @@ public class TaskService {
     @Autowired
     private StepServices stepServices;
 
-    public Page<TaskEntity> findAllTasks(String alias, Pageable pageReq) {
-        ProjectEntity project = projectService.find(alias);
+    public Page<TaskEntity> findAllTasks(String projectAlias, Pageable pageReq) {
+        ProjectEntity project = projectService.find(projectAlias);
         return repository.findByProject(project,pageReq);
     }
 
-    public TaskEntity createTask(String alias, TaskEntity taskEntity) {
-        ProjectEntity project = projectService.find(alias);
+    public TaskEntity findByTaskAlias(String taskAlias) {
+        return repository.findByTaskAlias(taskAlias);
+    }
+
+    public TaskEntity createTask(String projectAlias, TaskEntity taskEntity) {
+        ProjectEntity project = projectService.find(projectAlias);
         taskEntity.setProject(project);
         taskEntity.setStep(stepServices.getFristStepForProject(project));
         taskEntity = repository.save(taskEntity);
@@ -38,4 +42,13 @@ public class TaskService {
         taskEntity.setTaskAlias(taskEntity.getProject().getProjectAlias()+"-"+qtd);
         return repository.save(taskEntity);
     }
+
+    public TaskEntity updateTask(String taskAlias,String step, TaskEntity taskEntityNew) {
+        TaskEntity taskEntity = repository.findByTaskAlias(taskAlias);
+        taskEntity.setTitle(taskEntityNew.getTitle());
+        taskEntity.setDescription(taskEntityNew.getDescription());
+        taskEntity.setStep(stepServices.findStepByName(taskEntity.getProject(),step));
+        return repository.save(taskEntity);
+    }
+
 }

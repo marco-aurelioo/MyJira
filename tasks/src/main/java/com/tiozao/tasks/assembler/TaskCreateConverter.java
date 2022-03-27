@@ -11,16 +11,17 @@ public class TaskCreateConverter extends Converter<TaskCreateDto, TaskEntity> {
         super(TaskCreateConverter::originDomain, TaskCreateConverter::domainOrigin);
     }
 
-    public static TaskEntity originDomain(TaskCreateDto dto){
+    public static TaskEntity originDomain(TaskCreateDto dto) {
         TaskEntity entity = new TaskEntity();
         entity.setTitle(dto.getTitle());
         entity.setDescription(dto.getDescription());
         return entity;
     }
 
-    public static TaskCreateDto domainOrigin(TaskEntity entity){
+    public static TaskCreateDto domainOrigin(TaskEntity entity) {
         TaskCreateDto dto = new TaskCreateDto();
         dto.setTitle(entity.getTitle());
+        dto.setStep(entity.getStep().getStepName());
         dto.setDescription(entity.getDescription());
         dto.setComplexity(entity.getComplexity());
         dto.setTaskAlias(entity.getTaskAlias());

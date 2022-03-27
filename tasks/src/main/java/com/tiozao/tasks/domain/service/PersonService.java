@@ -11,12 +11,12 @@ public class PersonService {
     @Autowired
     private PersonRepository repository;
 
-    public PersonEntity createPerson(PersonEntity person){
+    public PersonEntity createPerson(PersonEntity person) {
         return repository.save(person);
     }
 
     public PersonEntity findPerson(Integer id) {
-        if(id == null)
+        if (id == null)
             return null;
         return repository.findById(id).get();
     }

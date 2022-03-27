@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name="taks")
-public class TaskEntity {
+public class TaskEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +28,11 @@ public class TaskEntity {
 
     @OneToMany
     private List<PersonEntity> executors;
+
+    @OneToMany
+    private List<TaskCommentEntity> comment;
+
+
 
     public String getTaskAlias() {
         return taskAlias;
@@ -116,4 +121,13 @@ public class TaskEntity {
     public void setExecutors(List<PersonEntity> executors) {
         this.executors = executors;
     }
+
+    public List<TaskCommentEntity> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<TaskCommentEntity> comment) {
+        this.comment = comment;
+    }
+
 }

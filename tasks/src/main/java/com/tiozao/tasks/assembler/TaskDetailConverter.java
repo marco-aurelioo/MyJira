@@ -11,7 +11,7 @@ public class TaskDetailConverter extends Converter<TaskDto, TaskEntity> {
         super(TaskDetailConverter::originDomain, TaskDetailConverter::domainOrigin);
     }
 
-    public static TaskEntity originDomain(TaskDto dto){
+    public static TaskEntity originDomain(TaskDto dto) {
         TaskEntity entity = new TaskEntity();
         entity.setTaskAlias(dto.getAlias());
         entity.setId(dto.getId());
@@ -21,7 +21,7 @@ public class TaskDetailConverter extends Converter<TaskDto, TaskEntity> {
         return entity;
     }
 
-    public static TaskDto domainOrigin(TaskEntity entity){
+    public static TaskDto domainOrigin(TaskEntity entity) {
         TaskDto dto = new TaskDto();
         dto.setTaskAlias(entity.getTaskAlias());
         dto.setId(entity.getId());

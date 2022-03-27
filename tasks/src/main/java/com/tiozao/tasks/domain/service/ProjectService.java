@@ -18,7 +18,7 @@ public class ProjectService {
     @Autowired
     private PersonService personService;
 
-    public ProjectEntity create(ProjectEntity project){
+    public ProjectEntity create(ProjectEntity project) {
         validateOwner(project);
         ProjectEntity new_project = repository.save(project);
         stepServices.createDefaultSteps(new_project);
@@ -26,19 +26,19 @@ public class ProjectService {
     }
 
     private void validateOwner(ProjectEntity project) {
-        PersonEntity owner =  personService.findPerson(project.getOwner().getId());
-        if(owner == null){
+        PersonEntity owner = personService.findPerson(project.getOwner().getId());
+        if (owner == null) {
             owner = personService.createPerson(project.getOwner());
         }
         owner.getProjectMember().add(project);
         project.setOwner(owner);
     }
 
-    public ProjectEntity find(String alias){
+    public ProjectEntity find(String alias) {
         return repository.findByProjectAlias(alias);
     }
 
-    public boolean delete(String alias){
+    public boolean delete(String alias) {
         ProjectEntity project = repository.findByProjectAlias(alias);
         repository.delete(project);
         return true;

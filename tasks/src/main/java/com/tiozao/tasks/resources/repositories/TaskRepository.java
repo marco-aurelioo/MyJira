@@ -9,8 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity,Integer> {
-
     Page<TaskEntity> findByProject(ProjectEntity project, Pageable pageReq);
-
     Integer countByProject(ProjectEntity project);
+    TaskEntity findByTaskAlias(String taskAlias);
 }

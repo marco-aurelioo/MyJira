@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="project_steps")
-public class StepEntity {
+public class StepEntity  extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
