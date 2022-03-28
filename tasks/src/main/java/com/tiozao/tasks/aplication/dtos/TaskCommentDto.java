@@ -4,7 +4,7 @@ public class TaskCommentDto {
 
     private Long id;
     private String comment;
-    private Integer personId;
+    private PersonDto person;
 
     public Long getId() {
         return id;
@@ -22,12 +22,12 @@ public class TaskCommentDto {
         this.comment = comment;
     }
 
-    public Integer getPersonId() {
-        return personId;
+    public PersonDto getPerson() {
+        return person;
     }
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    public void setPerson(PersonDto person) {
+        this.person = person;
     }
 
 }

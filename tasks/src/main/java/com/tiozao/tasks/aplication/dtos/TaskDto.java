@@ -4,7 +4,7 @@ public class TaskDto {
 
     private String title;
     private String description;
-    private String priorioty;
+    private Integer priority;
     private String step;
     private String taskAlias;
     private Integer complexity;
@@ -50,12 +50,12 @@ public class TaskDto {
         this.description = description;
     }
 
-    public String getPriorioty() {
-        return priorioty;
+    public Integer getPriority() {
+        return priority;
     }
 
-    public void setPriorioty(String priorioty) {
-        this.priorioty = priorioty;
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 
     public String getStep() {

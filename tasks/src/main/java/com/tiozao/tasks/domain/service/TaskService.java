@@ -3,6 +3,7 @@ package com.tiozao.tasks.domain.service;
 import com.tiozao.tasks.domain.entity.ProjectEntity;
 import com.tiozao.tasks.domain.entity.TaskEntity;
 import com.tiozao.tasks.resources.repositories.TaskRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,10 +44,9 @@ public class TaskService {
         return repository.save(taskEntity);
     }
 
-    public TaskEntity updateTask(String taskAlias,String step, TaskEntity taskEntityNew) {
+    public TaskEntity updateTask(String taskAlias, String step, TaskEntity taskEntityNew) {
         TaskEntity taskEntity = repository.findByTaskAlias(taskAlias);
-        taskEntity.setTitle(taskEntityNew.getTitle());
-        taskEntity.setDescription(taskEntityNew.getDescription());
+        BeanUtils.copyProperties(taskEntityNew,taskEntity, "id","project","step","taskAlias");
         taskEntity.setStep(stepServices.findStepByName(taskEntity.getProject(),step));
         return repository.save(taskEntity);
     }

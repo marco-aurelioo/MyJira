@@ -13,6 +13,7 @@ public class TaskEntity extends BaseEntity {
     private String title;
     private String description;
     private Integer complexity;
+    private Integer priority;
     private VALUE_SIZE value;
     private TASK_TYPE type;
     private String taskAlias;
@@ -32,7 +33,13 @@ public class TaskEntity extends BaseEntity {
     @OneToMany
     private List<TaskCommentEntity> comment;
 
+    public Integer getPriority() {
+        return priority;
+    }
 
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
     public String getTaskAlias() {
         return taskAlias;

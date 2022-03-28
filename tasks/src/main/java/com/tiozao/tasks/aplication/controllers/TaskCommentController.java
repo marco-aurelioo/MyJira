@@ -1,6 +1,7 @@
 package com.tiozao.tasks.aplication.controllers;
 
 import com.tiozao.tasks.aplication.dtos.TaskCommentDto;
+import com.tiozao.tasks.assembler.PersonConverter;
 import com.tiozao.tasks.assembler.TaskCommentConverter;
 import com.tiozao.tasks.domain.service.TaskCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
