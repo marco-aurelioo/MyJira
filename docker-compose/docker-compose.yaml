@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin_password
+      POSTGRES_DB: database
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./wait-for-it.sh:/docker-entrypoint-initdb.d/wait-for-it.sh
+      - ./custom-entrypoint.sh:/docker-entrypoint-initdb.d/custom-entrypoint.sh
+    ports:
+      - "5432:5432"
+    entrypoint: ["/docker-entrypoint-initdb.d/custom-entrypoint.sh"]
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=POSTGRES
+      - DB_SCHEMA=keycloak
+      - DB_DATABASE=database
+      - DB_ADDR=postgres
+      - DB_PORT=5432
+      - DB_USER=keycloak
+      - DB_PASSWORD=keycloak
+    ports:
+      - "9090:8080"
+    depends_on:
+      - postgres
+    command: start-dev
