@@ -1,0 +1,64 @@
+/* Importar Font Awesome para os ícones */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #f1f1f1;
+    --text-color: #333;
+    --hover-color: #45a049;
+}
+
+.footer {
+    background-color: #4CAF50;
+    color: #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+    color: #f1f1f1;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color:  #2c5a2e;
+}
+
+.footer-section p {
+    margin: 5px 0;
+}
+
+.social-links a {
+    color: #f1f1f1;
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 1.5em;
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: #2c5a2e;
+}

@@ -1,0 +1,16 @@
+
+<div class="sidebar" id="sidebarMenu">
+    <button class="toggle-btn"  (click)="toggleSidebar()">
+        <i style="float:right;" class="fas" [class.fa-arrow-right]="!isSidebarActive" [class.fa-arrow-left]="isSidebarActive"></i>
+    </button>
+
+    <nav class="sidebar-menu">
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#"><i class="fas fa-info-circle"></i> Sobre</a></li>
+            <li><a href="#"><i class="fas fa-cogs"></i> Serviços</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contato</a></li>
+        </ul>
+    </nav>
+</div>    
+
