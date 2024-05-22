@@ -1,0 +1,58 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #f1f1f1;
+    --text-color: #333;
+    --hover-color: #45a049;
+}
+.scrum-board {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #f1f1f1;
+  }
+  
+  .column {
+    background-color: #296d2b;
+    margin: 5px;
+    padding: 20px;
+    border-radius: 8px;
+    width: 14%;
+  }
+  
+  .column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #f1f1f1;
+  }
+  
+  .column-header i {
+    font-size: 1.5em;
+  }
+  
+  .task {
+    background-color: #f1f1f1;
+    color: #333;
+    margin: 10px 1;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .task-footer i {
+    margin-right: 10px;
+  }
+  

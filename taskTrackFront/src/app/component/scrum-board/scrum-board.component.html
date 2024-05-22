@@ -1,0 +1,19 @@
+<div class="scrum-board">
+    <div class="column" *ngFor="let column of columns">
+      <div class="column-header">
+        <i class="{{column.icon}}"></i>
+        <h2>{{ column.title }}</h2>
+      </div>
+      <div class="task" *ngFor="let task of column.tasks">
+        <div class="task-header">
+          <h3>{{ task.title }}</h3>
+          <div class="task-days">{{ task.days }}d</div>
+        </div>
+        <div class="task-footer">
+          <i class="{{ task.typeIcon }}"></i>
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  

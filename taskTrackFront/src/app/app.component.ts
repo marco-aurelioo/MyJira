@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './conponent/header/header.component';
-import { FooterComponent } from './conponent/footer/footer.component';
-import { SideBarComponent } from './conponent/side-bar/side-bar.component';
+import { HeaderComponent } from './component/header/header.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { SideBarComponent } from './component/side-bar/side-bar.component';
+import { NewTaskComponent } from './component/new-task/new-task.component';
+import { FormsModule, NgForm } from '@angular/forms';
+import { ScrumBoardComponent } from './component/scrum-board/scrum-board.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +14,10 @@ import { SideBarComponent } from './conponent/side-bar/side-bar.component';
     RouterOutlet,
     HeaderComponent, 
     FooterComponent,
-    SideBarComponent
+    SideBarComponent,
+    NewTaskComponent,
+    ScrumBoardComponent,
+    FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

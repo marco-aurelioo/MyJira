@@ -1,0 +1,18 @@
+<div class="task-form-container">
+    <h2>Cadastrar Task</h2>
+    <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
+        <div class="form-group">
+            <label for="title">Título</label>
+            <input type="text" id="title" name="title" ngModel required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" ngModel required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="dueDate">Data de Vencimento</label>
+            <input type="date" id="dueDate" name="dueDate" ngModel required>
+        </div>
+        <button type="submit" [disabled]="!taskForm.form.valid">Cadastrar</button>
+    </form>
+</div>
