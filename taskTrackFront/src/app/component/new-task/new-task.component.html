@@ -2,6 +2,12 @@
     <h2>Cadastrar Task</h2>
     <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
         <div class="form-group">
+            <label for="taskProject">Select Project</label>
+            <select id="taskProject" class="task-select" name="taskProject" [(ngModel)]="selectedProject" required>
+              <option *ngFor="let project of taskProjects" [value]="project.value">{{ project.label }}</option>
+            </select>
+          </div>
+        <div class="form-group">
             <label for="title">Título</label>
             <input type="text" id="title" name="title" ngModel required>
         </div>

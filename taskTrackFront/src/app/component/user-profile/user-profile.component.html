@@ -1,0 +1,39 @@
+<div class="user-profile">
+    <div class="profile-header">
+      <img [src]="user.photo" alt="User Photo" class="profile-photo">
+      <div class="profile-info">
+        <h2>{{ user.name }} <img [src]="user.icon" alt="User Icon" class="profile-icon"></h2>
+        <p><strong>Nickname:</strong> {{ user.nickname }}</p>
+        <p><strong>Position:</strong> {{ user.position }}</p>
+      </div>
+    </div>
+  
+    <div class="profile-section">
+      <h3>Experiences</h3>
+      <ul>
+        <li *ngFor="let experience of user.experiences">{{ experience }}</li>
+      </ul>
+    </div>
+  
+    <div class="profile-section">
+      <h3>Current Projects</h3>
+      <ul>
+        <li *ngFor="let project of user.currentProjects">{{ project.label }}</li>
+      </ul>
+    </div>
+  
+    <div class="profile-section">
+      <h3>Skills</h3>
+      <ul>
+        <li *ngFor="let skill of user.skills">{{ skill }}</li>
+      </ul>
+    </div>
+  
+    <div class="profile-section">
+      <h3>Teams</h3>
+      <ul>
+        <li *ngFor="let team of user.teams">{{ team }}</li>
+      </ul>
+    </div>
+  </div>
+  

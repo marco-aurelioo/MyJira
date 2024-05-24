@@ -66,3 +66,16 @@ button:disabled {
 button:hover:not(:disabled) {
     background-color: #135016;
 }
+
+.task-select {
+    background-color: #f1f1f1;
+    border-color: #45a049;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 20px auto;
+    font-size: 1em;
+    font-family: Arial;
+  }
+  

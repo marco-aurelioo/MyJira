@@ -19,8 +19,10 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.5
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_USER=user
+      - KEYCLOAK_PASSWORD=user
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
       - DB_VENDOR=POSTGRES
       - DB_SCHEMA=keycloak
       - DB_DATABASE=database
