@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-scrum-board',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
   templateUrl: './scrum-board.component.html',
   styleUrl: './scrum-board.component.css'
 })
