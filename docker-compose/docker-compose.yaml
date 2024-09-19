@@ -12,6 +12,7 @@ services:
       - ./init.sh:/docker-entrypoint-initdb.d/init.sh
       - ./wait-for-it.sh:/docker-entrypoint-initdb.d/wait-for-it.sh
       - ./custom-entrypoint.sh:/docker-entrypoint-initdb.d/custom-entrypoint.sh
+      
     ports:
       - "5432:5432"
     entrypoint: ["/docker-entrypoint-initdb.d/custom-entrypoint.sh"]
@@ -32,6 +33,14 @@ services:
       - DB_PASSWORD=keycloak
     ports:
       - "9090:8080"
+    volumes:
+      - ./meu-tema:/opt/keycloak/themes/meu-tema
     depends_on:
       - postgres
-    command: start-dev
+    entrypoint: [ "/opt/keycloak/bin/kc.sh", "start-dev",
+      # deactivate theme caching during theme development
+              "--spi-theme-static-max-age=-1",
+              "--spi-theme-cache-themes=false",
+              "--spi-theme-cache-templates=false"
+      # ...
+    ]

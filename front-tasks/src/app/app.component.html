@@ -1,0 +1,18 @@
+<div class="container">
+<app-header></app-header>
+<div class="content">
+    <div *ngIf="keycloakService.isAuthenticated()">
+    <aside [class.collapsed]="isCollapsed" class="sidebar">
+        <button (click)="toggleSidebar()">&#9776;</button>
+        <div *ngIf="!isCollapsed" class="menu-items">
+        <div><a href="home" >Inicio</a></div>
+        <!-- Outras opções de menu -->
+        </div>
+    </aside>
+    </div>
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+</div>
+<app-footer></app-footer>
+</div>
