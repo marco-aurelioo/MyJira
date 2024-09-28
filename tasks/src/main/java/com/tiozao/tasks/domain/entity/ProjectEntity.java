@@ -1,6 +1,6 @@
 package com.tiozao.tasks.domain.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "projects")

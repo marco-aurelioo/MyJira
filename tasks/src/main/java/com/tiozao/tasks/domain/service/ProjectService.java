@@ -12,8 +12,6 @@ public class ProjectService {
     @Autowired
     private ProjectRepository repository;
 
-    @Autowired
-    private StepServices stepServices;
 
     @Autowired
     private PersonService personService;
@@ -21,7 +19,6 @@ public class ProjectService {
     public ProjectEntity create(ProjectEntity project) {
         validateOwner(project);
         ProjectEntity new_project = repository.save(project);
-        stepServices.createDefaultSteps(new_project);
         return new_project;
     }
 

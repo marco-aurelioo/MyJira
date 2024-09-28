@@ -1,6 +1,7 @@
 package com.tiozao.tasks.domain.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
