@@ -1,5 +1,6 @@
 CREATE TABLE persons (
     id SERIAL PRIMARY KEY,             -- ID gerado automaticamente
+    user_id VARCHAR(255) NOT NULL,      -- Id de referencia de user autenticados
     name VARCHAR(255) NOT NULL,        -- Nome da pessoa
     avatar VARCHAR(255),               -- Avatar da pessoa
     create_date TIMESTAMP,             -- Data de criação (herdada de BaseEntity)

@@ -1,11 +1,13 @@
 package com.tiozao.tasks.assembler;
 
 
+import com.tiozao.tasks.assembler.models.ObjectsIn;
+import com.tiozao.tasks.assembler.models.ObjectsOut;
 import org.springframework.data.domain.Page;
 
 import java.util.function.Function;
 
-abstract class Converter<O, D> {
+abstract class Converter<O extends ObjectsIn, D extends ObjectsOut> {
 
     private final Function<O, D> originDomain;
     private final Function<D, O> domainOrigin;

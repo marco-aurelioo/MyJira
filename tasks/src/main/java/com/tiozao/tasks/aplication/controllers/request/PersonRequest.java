@@ -1,17 +1,9 @@
-package com.tiozao.tasks.aplication.dtos;
+package com.tiozao.tasks.aplication.controllers.request;
 
-import com.tiozao.tasks.aplication.controllers.request.PersonRequest;
-
-import java.security.Principal;
-
-public class PersonDto {
+public class PersonRequest{
 
     private String name;
     private String avatar;
-
-    public PersonDto(PersonRequest person, Principal principal) {
-
-    }
 
     public String getName() {
         return name;
@@ -28,6 +20,4 @@ public class PersonDto {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
-
 }

@@ -12,6 +12,9 @@ public class PersonEntity  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private String userId;
+
     private String name;
     private String avatar;
 
@@ -49,4 +52,13 @@ public class PersonEntity  extends BaseEntity {
     public void setProjectMember(List<ProjectEntity> projectMember) {
         this.projectMember = projectMember;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
 }
