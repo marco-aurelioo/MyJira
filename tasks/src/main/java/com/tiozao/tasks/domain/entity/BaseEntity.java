@@ -4,40 +4,41 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @MappedSuperclass
 abstract class BaseEntity {
 
-    private Date createDate;
+    private LocalDateTime createDate;
 
-    private Date modifyDate;
+    private LocalDateTime  modifyDate;
 
 
-    public Date getCreateDate() {
+    public LocalDateTime  getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime  createDate) {
         this.createDate = createDate;
     }
 
-    public Date getModifyDate() {
+    public LocalDateTime  getModifyDate() {
         return modifyDate;
     }
 
-    public void setModifyDate(Date modifyDate) {
+    public void setModifyDate(LocalDateTime  modifyDate) {
         this.modifyDate = modifyDate;
     }
 
     @PrePersist
     protected void onCreate() {
-        this.createDate = new Date();
+        this.createDate = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.modifyDate = new Date();
+        this.modifyDate = LocalDateTime.now();
     }
 
 }

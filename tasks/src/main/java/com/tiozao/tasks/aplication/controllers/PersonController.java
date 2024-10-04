@@ -33,13 +33,12 @@ public class PersonController {
     public ResponseEntity<PersonEntity> createPerson(
             Principal principal,
             @RequestBody PersonRequest person) {
-
         return ResponseEntity.ok(
                         service.createPerson(
                                 converter.convertOrigin(
                                         new PersonInputs(person,principal)
                                 ).getEntity()
                         ));
-
     }
+
 }

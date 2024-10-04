@@ -11,8 +11,13 @@ public class PersonService {
     @Autowired
     private PersonRepository repository;
 
+    @Autowired
+    private UserRolesService userRolesService;
+
     public PersonEntity createPerson(PersonEntity person) {
-        return repository.save(person);
+        PersonEntity personEntity = repository.save(person);
+        userRolesService.addRole(personEntity.getUserId(),"USER_ROLE");
+        return personEntity;
     }
 
     public PersonEntity findPerson(Integer id) {
