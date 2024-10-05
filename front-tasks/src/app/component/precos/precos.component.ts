@@ -1,35 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PricesPlan } from 'src/app/models/PricesPlan';
+import { PricesService } from 'src/app/services/prices.service';
 
 @Component({
   selector: 'app-precos',
   templateUrl: './precos.component.html',
   styleUrls: ['./precos.component.css']
 })
-export class PrecosComponent {
-  plans = [
-    {
-      price: 'Free',
-      items: [
-        { name: 'item 1', available: true },
-        { name: 'item 2', available: true },
-        // Outros itens
-      ]
-    },
-    {
-      price: 'R$ 200,00',
-      items: [
-        { name: 'item 1', available: true },
-        { name: 'item 2', available: false },
-        // Outros itens
-      ]
-    },
-    {
-      price: 'R$ 450,00',
-      items: [
-        { name: 'item 1', available: true },
-        { name: 'item 2', available: true },
-        // Outros itens
-      ]
-    }
-  ];
+export class PrecosComponent implements OnInit {
+
+  plans?: PricesPlan[];
+  
+  constructor(private prices: PricesService){}
+
+  ngOnInit(): void {
+    console.log('Buscando planos ###############################################');
+    this.prices.getPrices().subscribe(
+      response => {
+        this.plans = response;
+        console.log('Dados recebidos:', this.plans);
+      },
+      error => {
+        console.error('Erro ao carregar dados:', error);
+      }
+      
+    );
+  }
 }

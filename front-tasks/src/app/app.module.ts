@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => keycloak.init();
@@ -25,7 +26,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
     
     AppComponent, 
     HomeComponent, 
-    LoginComponent, SobreComponent, PrecosComponent, HeaderComponent, FooterComponent, NavegComponent,
+    LoginComponent,
+    SobreComponent, 
+    PrecosComponent, 
+    HeaderComponent, 
+    FooterComponent, 
+    NavegComponent,
     
       ],
   imports: [
@@ -33,9 +39,11 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule, 
-    MatIconModule
+    MatIconModule,
+    HttpClientModule
   ],
   providers: [
+    HttpClientModule,
     KeycloakService,
     {
       provide: APP_INITIALIZER,

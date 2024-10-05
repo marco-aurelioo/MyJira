@@ -1,12 +1,9 @@
 <div class="list-prices">
     <div class="pricing-card" *ngFor="let plan of plans">
-        <div *ngFor="let item of plan.items">
-          <span>{{item.name}}</span>
-          <span [ngClass]="{'available': item.available, 'unavailable': !item.available}">
-            <mat-icon *ngIf="item.available">done</mat-icon>
-            <mat-icon *ngIf="!item.available">close</mat-icon>
-          </span>
+        <h1>{{plan.name}}</h1>
+        <div *ngFor="let feature of plan.features">
+          <span>{{feature}}</span>
         </div>
-        <div class="price">Preço: {{plan.price}}</div>
+        <div class="price">Preço: R$ {{plan.price}}</div>
       </div>
 </div>
