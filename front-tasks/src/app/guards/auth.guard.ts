@@ -14,7 +14,8 @@ export class AuthGuard implements CanActivate {
     if (this.keycloakService.isAuthenticated()) {
       return true;
     } else {
-      this.router.navigate(['/login']);
+      
+      this.keycloakService.login(); 
       return false;
     }
     

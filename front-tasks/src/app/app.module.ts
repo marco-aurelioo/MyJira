@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfirmPlanComponent } from './component/confirm-plan/confirm-plan.component';
+import { PaymentStatusComponent } from './component/payment-status/payment-status.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => keycloak.init();
@@ -31,7 +33,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PrecosComponent, 
     HeaderComponent, 
     FooterComponent, 
-    NavegComponent,
+    NavegComponent, ConfirmPlanComponent, PaymentStatusComponent,
     
       ],
   imports: [

@@ -1,5 +1,5 @@
 export interface PricesPlan {
-    name: string;
+    planName: string;
     price: number;
     features: string[];
   }

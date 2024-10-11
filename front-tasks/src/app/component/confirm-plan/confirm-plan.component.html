@@ -1,0 +1,12 @@
+<div class="confirm-content">
+    <div class="confirm">
+        <h2>Confirmar compra do Plano</h2>
+        <p>Plano selecionado: {{ selectedPlan?.planName }}</p>
+        <p>Preço: R$ {{ selectedPlan?.price }}</p>
+        <button class="btn btn-primary" (click)="confirmPurchase()">Confirmar Compra</button>
+        <p>Neste plano vc terá direito ha:</p>
+        <div class="pricing-card" *ngFor="let feature of selectedPlan?.features" >
+            <div>{{feature}}</div>
+        </div>
+    </div>
+</div>

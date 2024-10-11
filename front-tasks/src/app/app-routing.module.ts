@@ -5,12 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SobreComponent } from './component/sobre/sobre.component';
 import { PrecosComponent } from './component/precos/precos.component';
+import { ConfirmPlanComponent } from './component/confirm-plan/confirm-plan.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'sobre', component: SobreComponent },
   { path: 'precos', component: PrecosComponent },
+  { path: 'confirm-plan', component: ConfirmPlanComponent,  canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'precos' },
 ];
 

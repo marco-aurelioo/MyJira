@@ -1,9 +1,10 @@
 <div class="list-prices">
     <div class="pricing-card" *ngFor="let plan of plans">
-        <h1>{{plan.name}}</h1>
+        <h1>{{plan.planName}}</h1>
         <div *ngFor="let feature of plan.features">
-          <span>{{feature}}</span>
+          <div>{{feature}}</div>
         </div>
         <div class="price">Preço: R$ {{plan.price}}</div>
+        <button class="btn btn-primary" (click)="selectPlan(plan.planName)">Adiquirir</button>
       </div>
 </div>

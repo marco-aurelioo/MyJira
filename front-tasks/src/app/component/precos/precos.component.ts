@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PricesPlan } from 'src/app/models/PricesPlan';
+import { PaymentService } from 'src/app/services/payment.service';
 import { PricesService } from 'src/app/services/prices.service';
 
 @Component({
@@ -11,10 +13,27 @@ export class PrecosComponent implements OnInit {
 
   plans?: PricesPlan[];
   
-  constructor(private prices: PricesService){}
+
+  constructor(
+    private prices: PricesService,
+    private payment: PaymentService,
+    private router: Router
+  ){}
+
+  selectPlan(sendPlanName: string ){
+    console.log("plano selecionado "+sendPlanName)
+    var plan = this.plans!.find(x => x.planName === sendPlanName )
+    if(plan){
+      this.payment.paySelectedPlan(plan);
+      this.router.navigate(['/confirm-plan']).then(success => {
+        if (!success) {
+          console.error('Falha no redirecionamento para /confirm-plan');
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
-    console.log('Buscando planos ###############################################');
     this.prices.getPrices().subscribe(
       response => {
         this.plans = response;
