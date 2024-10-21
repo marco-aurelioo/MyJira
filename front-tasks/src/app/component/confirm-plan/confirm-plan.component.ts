@@ -22,8 +22,6 @@ export class ConfirmPlanComponent  implements OnInit {
 
   confirmPurchase() {
     this.paymentService.submitPlan().subscribe((response: any) => {
-      console.log("response "+response)
-      console.log("paymentUrl "+response.urtPaymentMethod)
       if (response && response.urtPaymentMethod) {
         window.location.href = response.urtPaymentMethod;
       }
