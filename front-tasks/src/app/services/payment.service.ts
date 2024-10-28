@@ -35,8 +35,8 @@ export class PaymentService {
       let plansSubmited = new PlansSubmited(
         this.selectedPlan!.planName,
         this.selectedPlan!.price,
-        "http://localhost:4200/payment-status?status=cancel&idrequest=",
-        "http://localhost:4200/payment-status?status=success&idrequest="
+        "http://localhost:4200/payment-status?status=success&idrequest=",
+        "http://localhost:4200/payment-status?status=cancel&idrequest="
       )
     
     return this.http.post('http://localhost:8080/api/submit/add-plan',  plansSubmited, {headers: headersValues });
@@ -51,6 +51,8 @@ export class PaymentService {
     console.log("fazendo chamada !!!!!!!")
     return this.http.put('http://localhost:8080/api/submit/add-plan/'+idrequest,  body, {headers: headersValues });
   }
+
+
 
   checkPaymentStatus(): Observable<any> {
     return this.http.get('/api/payment-status');

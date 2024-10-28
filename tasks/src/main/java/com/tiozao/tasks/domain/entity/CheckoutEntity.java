@@ -25,6 +25,8 @@ public class CheckoutEntity extends BaseEntity{
     @Column(unique = true, nullable = false)
     private UUID externalId;
 
+    private String gatewayPaymentId;
+
     private String pessoa;
 
     @Enumerated(EnumType.STRING)
@@ -39,11 +41,12 @@ public class CheckoutEntity extends BaseEntity{
 
     public CheckoutEntity() {}
 
-    public CheckoutEntity(UUID externalId, String pessoa, List<Produto> produtos) {
+    public CheckoutEntity(UUID externalId, String pessoa, List<Produto> produtos, String gatewayPaymentId) {
         this.externalId = externalId;
         this.produtos = produtos;
         this.pessoa = pessoa;
         this.carrinhoJson = convertToJson(produtos);
+        this.gatewayPaymentId = gatewayPaymentId;
         this.status = CheckoutStatus.PENDING;
     }
 
@@ -118,5 +121,13 @@ public class CheckoutEntity extends BaseEntity{
 
     public void setStatus(CheckoutStatus status) {
         this.status = status;
+    }
+
+    public String getGatewayPaymentId() {
+        return gatewayPaymentId;
+    }
+
+    public void setGatewayPaymentId(String gatewayPaymentId) {
+        this.gatewayPaymentId = gatewayPaymentId;
     }
 }

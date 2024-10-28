@@ -13,6 +13,7 @@ import com.tiozao.tasks.domain.exceptions.GatewayPagamentoException;
 import com.tiozao.tasks.domain.service.PlansService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -51,20 +52,18 @@ public class SubscriptionPlansController {
                         checkoutOut.getProdutos(),
                         checkoutOut.getExternalId(),
                         checkoutOut.getUrlSuccess(),
-                        checkoutOut.getUrlSuccess()));
+                        checkoutOut.getUrlCancel()));
 
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/submit/add-plan/{idrequest}")
-    public ResponseEntity<PricePlanRequest> updateSubmitPlan(
-            @PathVariable String idrequest,
+    @PutMapping("/submit/add-plan/{checkoutId}")
+    public ResponseEntity<Boolean> updateSubmitPlan(
+            @PathVariable String checkoutId,
             @RequestBody CheckoutStatus planRequest,
-            Principal principal)  {
-        PricePlanRequest response = new PricePlanRequest();
-
-
-        return ResponseEntity.ok(response);
+            Principal principal) throws GatewayPagamentoException {
+        String pessoaID = ((JwtAuthenticationToken) principal).getToken().getClaim("sub");
+        return ResponseEntity.ok(service.confirmPayment(pessoaID,checkoutId , planRequest.getStatus()));
     }
 
 }

@@ -2,13 +2,15 @@ package com.tiozao.tasks.domain.service.providers;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
+
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.tiozao.tasks.domain.exceptions.GatewayPagamentoException;
+import com.tiozao.tasks.domain.service.providers.model.CheckoutGatewayResponse;
 import com.tiozao.tasks.domain.service.providers.model.Produto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +27,27 @@ public class StripeGatewayPagamento {
 
 
 
-    public String getCheckout(UUID idCheckout, String urlSuccess, String urlCancel, List<Produto> produtos) throws GatewayPagamentoException {
+    public CheckoutGatewayResponse getCheckout(UUID idCheckout, String urlSuccess, String urlCancel, List<Produto> produtos) throws GatewayPagamentoException {
         try {
             Stripe.apiKey = this.apiSecret;
             SessionCreateParams params = SessionCreateParams.builder()
-                    .setMode(SessionCreateParams.Mode.PAYMENT) // Modo de pagamento
-                    .setSuccessUrl(urlSuccess + idCheckout.toString()) // URL de sucesso
-                    .setCancelUrl(urlCancel) // URL de cancelamento
+                    .setMode(SessionCreateParams.Mode.PAYMENT)
+                    .setSuccessUrl(urlSuccess + idCheckout.toString())
+                    .setCancelUrl(urlCancel)
                     .addAllLineItem(getLineItems(produtos))
                     .build();
             Session session = Session.create(params);
-            return session.getUrl();
+            return new CheckoutGatewayResponse(session.getUrl(), session.getId());
+        }catch (StripeException ex){
+            throw new GatewayPagamentoException(ex.getMessage());
+        }
+    }
+
+    public String confirPayment(String sessionId) throws GatewayPagamentoException {
+        try {
+            Stripe.apiKey = this.apiSecret;
+            Session session = Session.retrieve(sessionId);
+            return session.getPaymentStatus();
         }catch (StripeException ex){
             throw new GatewayPagamentoException(ex.getMessage());
         }

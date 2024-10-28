@@ -3,7 +3,18 @@ package com.tiozao.tasks.domain.entity;
 public enum CheckoutStatus {
     PENDING,
     IN_PROGRESS,
-    COMPLETED,
+    PAID,
     FAILED,
-    CANCELED
+    CANCELED;
+
+    public static CheckoutStatus getStatus(String s) {
+        if(s == null)
+            throw new IllegalStateException("Unknown CheckoutStatus");
+        for(CheckoutStatus status : CheckoutStatus.values()){
+            if(status.name().equals(s.toUpperCase())){
+                return status;
+            }
+        }
+        throw new IllegalStateException("Unknown CheckoutStatus");
+    }
 }

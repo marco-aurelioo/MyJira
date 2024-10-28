@@ -29,5 +29,17 @@ public class PlansService {
         return checkoutService.efetuarPagamento(produtos, externalId, urlSuccess, urlCancel);
     }
 
+    public Boolean confirmPayment(String pessoaID, String checkoutId, String status) throws GatewayPagamentoException {
+        if("success".equals(status)) {
+            boolean gatewayStatus = checkoutService.confirmPayment( pessoaID, checkoutId);
+            if(gatewayStatus){
+                //Atribui condições para o novo plano;
+            }else{
+                //não esta compativel  
+            }
+        }
+        return checkoutService.confirmPayment( pessoaID, checkoutId);
+    }
+
 
 }

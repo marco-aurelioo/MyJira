@@ -1,6 +1,7 @@
 CREATE TABLE checkout (
     id SERIAL PRIMARY KEY,
     external_id UUID NOT NULL,
+    gateway_payment_id VARCHAR(255),
     pessoa VARCHAR(255) NOT NULL,
     status VARCHAR(50) NOT NULL,
     carrinho_json JSONB NOT NULL,

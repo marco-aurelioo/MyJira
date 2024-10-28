@@ -31,7 +31,7 @@ public class CheckoutConverter extends Converter<CheckoutIn, CheckoutOut>{
 
         return new CheckoutOut(produtos,
                 checkoutIn.getPricePlanRequest().getUrlSuccess(),
-                checkoutIn.getPricePlanRequest().getUrlSuccess(),
+                checkoutIn.getPricePlanRequest().getUrlCancel(),
                 sub);
 
     }
