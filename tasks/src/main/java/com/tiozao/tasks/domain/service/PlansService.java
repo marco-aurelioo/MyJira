@@ -21,6 +21,9 @@ public class PlansService {
     @Autowired
     private CheckoutService checkoutService;
 
+    @Autowired
+    private UserRolesService userRolesService;
+
     public List<SubscriptionPlansEntity> getAllPlans() {
         return (List<SubscriptionPlansEntity>) repository.findAll();
     }
@@ -33,9 +36,9 @@ public class PlansService {
         if("success".equals(status)) {
             boolean gatewayStatus = checkoutService.confirmPayment( pessoaID, checkoutId);
             if(gatewayStatus){
-                //Atribui condições para o novo plano;
+                userRolesService.addRole(pessoaID,"OWNER_ROLE");
             }else{
-                //não esta compativel  
+                throw new IllegalStateException(("Erro validando pagamento"));
             }
         }
         return checkoutService.confirmPayment( pessoaID, checkoutId);

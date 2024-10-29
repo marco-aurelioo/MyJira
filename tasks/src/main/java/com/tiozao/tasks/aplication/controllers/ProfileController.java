@@ -1,8 +1,6 @@
 package com.tiozao.tasks.aplication.controllers;
 
 import com.tiozao.tasks.aplication.dtos.ProfileDTO;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -16,13 +16,13 @@ public class KeycloakClient implements PermissionApi {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Value("{app.config.keycloak.client_secret}")
+    @Value("${app.config.keycloak.client_secret}")
     private String client_secret;
-    @Value("{app.config.keycloak.client_id}")
+    @Value("${app.config.keycloak.client_id}")
     private String client_id;
-    @Value("{app.config.keycloak.realm}")
+    @Value("${app.config.keycloak.realm}")
     private String realm;
-    @Value("{app.config.keycloak.domain}")
+    @Value("${app.config.keycloak.domain}")
     private String keycloak_domain;
 
     public KeycloakClient(RestTemplate restTemplate, String client_secret, String client_id, String realm, String keycloak_domain) {
@@ -36,8 +36,7 @@ public class KeycloakClient implements PermissionApi {
     @Override
     public boolean addRole(String role, String userId) {
         Map<String,String> roleModel = findRole(role);
-
-        return false;
+        return addRoleToClient(roleModel, userId);
     }
 
     private Map<String, String> findRole(String role) {
