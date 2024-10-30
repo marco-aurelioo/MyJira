@@ -1,4 +1,4 @@
-package com.tiozao.tasks.domain.service.providers.model;
+package com.tiozao.tasks.domain.service.providers.gatewaypagamento.model;
 
 import java.io.Serializable;
 

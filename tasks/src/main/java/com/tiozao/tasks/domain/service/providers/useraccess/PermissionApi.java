@@ -1,4 +1,4 @@
-package com.tiozao.tasks.domain.service.providers;
+package com.tiozao.tasks.domain.service.providers.useraccess;
 
 public interface PermissionApi {
 

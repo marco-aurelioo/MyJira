@@ -1,4 +1,4 @@
-package com.tiozao.tasks.domain.entity;
+package com.tiozao.tasks.domain.service.providers.gatewaypagamento.persist;
 
 public enum CheckoutStatus {
     PENDING,

@@ -1,6 +1,7 @@
 package com.tiozao.tasks.domain.service;
 
 import com.tiozao.tasks.domain.entity.PersonEntity;
+import com.tiozao.tasks.domain.service.providers.useraccess.UserRolesService;
 import com.tiozao.tasks.resources.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

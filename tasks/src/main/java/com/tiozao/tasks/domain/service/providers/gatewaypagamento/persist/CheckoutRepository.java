@@ -1,6 +1,4 @@
-package com.tiozao.tasks.resources.repositories;
-
-import com.tiozao.tasks.domain.entity.CheckoutEntity;
+package com.tiozao.tasks.domain.service.providers.gatewaypagamento.persist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

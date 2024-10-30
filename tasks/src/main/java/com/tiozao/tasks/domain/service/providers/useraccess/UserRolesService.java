@@ -1,9 +1,8 @@
-package com.tiozao.tasks.domain.service;
+package com.tiozao.tasks.domain.service.providers.useraccess;
 
-import com.tiozao.tasks.domain.service.providers.PermissionApi;
+import com.tiozao.tasks.domain.service.providers.useraccess.PermissionApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserRolesService {

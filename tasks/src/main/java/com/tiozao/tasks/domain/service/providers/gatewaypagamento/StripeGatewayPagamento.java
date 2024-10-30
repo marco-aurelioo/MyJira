@@ -1,4 +1,4 @@
-package com.tiozao.tasks.domain.service.providers;
+package com.tiozao.tasks.domain.service.providers.gatewaypagamento;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -6,8 +6,8 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.tiozao.tasks.domain.exceptions.GatewayPagamentoException;
-import com.tiozao.tasks.domain.service.providers.model.CheckoutGatewayResponse;
-import com.tiozao.tasks.domain.service.providers.model.Produto;
+import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.CheckoutGatewayResponse;
+import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.Produto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

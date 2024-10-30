@@ -1,10 +1,11 @@
 package com.tiozao.tasks.domain.service;
 
-import com.tiozao.tasks.domain.entity.PersonEntity;
 import com.tiozao.tasks.domain.entity.SubscriptionPlansEntity;
 import com.tiozao.tasks.domain.exceptions.GatewayPagamentoException;
 
-import com.tiozao.tasks.domain.service.providers.model.Produto;
+import com.tiozao.tasks.domain.service.providers.gatewaypagamento.CheckoutService;
+import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.Produto;
+import com.tiozao.tasks.domain.service.providers.useraccess.UserRolesService;
 import com.tiozao.tasks.resources.repositories.SubscriptionPlansRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,16 +34,24 @@ public class PlansService {
     }
 
     public Boolean confirmPayment(String pessoaID, String checkoutId, String status) throws GatewayPagamentoException {
-        if("success".equals(status)) {
-            boolean gatewayStatus = checkoutService.confirmPayment( pessoaID, checkoutId);
-            if(gatewayStatus){
-                userRolesService.addRole(pessoaID,"OWNER_ROLE");
-            }else{
-                throw new IllegalStateException(("Erro validando pagamento"));
-            }
+        if("cancel".equals(status))
+            throw new IllegalStateException(("Erro validando pagamento"));
+        boolean gatewayStatus = checkoutService.confirmPayment( pessoaID, checkoutId);
+        if(gatewayStatus && "success".equals(status)){
+            userRolesService.addRole(pessoaID,"OWNER_ROLE");
+            salvaPlanoContratado(pessoaID, checkoutId);
+        }else{
+            throw new IllegalStateException(("Erro validando pagamento"));
         }
-        return checkoutService.confirmPayment( pessoaID, checkoutId);
+        return gatewayStatus;
     }
 
 
+    private void salvaPlanoContratado(String pessoaID, String checkoutId){
+        List<Produto> produtos = checkoutService.getCheckoutProdutos( pessoaID, checkoutId);
+        //cria plano baseado no produto;
+        for(Produto produto : produtos){
+
+        }
+    }
 }

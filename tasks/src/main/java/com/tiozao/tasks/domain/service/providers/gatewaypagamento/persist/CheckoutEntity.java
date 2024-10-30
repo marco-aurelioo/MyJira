@@ -1,8 +1,8 @@
-package com.tiozao.tasks.domain.entity;
+package com.tiozao.tasks.domain.service.providers.gatewaypagamento.persist;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tiozao.tasks.domain.service.providers.model.Produto;
+import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.Produto;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
@@ -11,11 +11,12 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "checkout")
-public class CheckoutEntity extends BaseEntity{
+public class CheckoutEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +40,11 @@ public class CheckoutEntity extends BaseEntity{
     @Transient
     private List<Produto> produtos;
 
+    private LocalDateTime createDate;
+
+    private LocalDateTime  modifyDate;
+
+
     public CheckoutEntity() {}
 
     public CheckoutEntity(UUID externalId, String pessoa, List<Produto> produtos, String gatewayPaymentId) {
@@ -61,10 +67,9 @@ public class CheckoutEntity extends BaseEntity{
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
-        this.carrinhoJson = convertToJson(produtos); // Serializando os produtos para JSON
+        this.carrinhoJson = convertToJson(produtos);
     }
 
-    // Métodos de conversão entre JSON e a lista de produtos
     private String convertToJson(List<Produto> produtos) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -129,5 +134,31 @@ public class CheckoutEntity extends BaseEntity{
 
     public void setGatewayPaymentId(String gatewayPaymentId) {
         this.gatewayPaymentId = gatewayPaymentId;
+    }
+
+    public LocalDateTime  getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime  createDate) {
+        this.createDate = createDate;
+    }
+
+    public LocalDateTime  getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(LocalDateTime  modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.modifyDate = LocalDateTime.now();
     }
 }

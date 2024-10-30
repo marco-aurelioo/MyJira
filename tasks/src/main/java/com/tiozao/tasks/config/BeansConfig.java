@@ -1,7 +1,7 @@
 package com.tiozao.tasks.config;
 
-import com.tiozao.tasks.domain.service.providers.KeycloakClient;
-import com.tiozao.tasks.domain.service.providers.PermissionApi;
+import com.tiozao.tasks.domain.service.providers.useraccess.KeycloakClient;
+import com.tiozao.tasks.domain.service.providers.useraccess.PermissionApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

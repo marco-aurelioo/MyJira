@@ -1,6 +1,6 @@
 package com.tiozao.tasks.assembler.models;
 
-import com.tiozao.tasks.domain.service.providers.model.Produto;
+import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.Produto;
 
 import java.util.List;
 

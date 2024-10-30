@@ -1,4 +1,4 @@
-package com.tiozao.tasks.config;
+package com.tiozao.tasks.domain.service.providers.useraccess;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,12 +35,13 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     }
 
     private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt) {
-        Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
-        if (resourceAccess == null) return Set.of();
-        Map<String, Object> resource = (Map<String, Object>) resourceAccess.get("your-client-id");
-        if (resource == null) return Set.of();
-        Collection<String> resourceRoles = (Collection<String>) resource.get("roles");
-        return resourceRoles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toSet());
+        Map<String, Object> resourceAccess = jwt.getClaim("realm_access");
+
+        if (resourceAccess == null)
+            return Set.of();
+
+        Collection<String> resourceRoles = (Collection<String>) resourceAccess.get("roles");
+        return resourceRoles.stream().map(role -> new SimpleGrantedAuthority( "ROLE_" +role )).collect(Collectors.toSet());
     }
 
     private String getPrincipleClaimName(Jwt jwt) {

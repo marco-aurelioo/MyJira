@@ -3,7 +3,6 @@ package com.tiozao.tasks.aplication.dtos;
 public class OrganizationDTO {
 
     private String organization;
-    private String userOwner;
 
     public String getOrganization() {
         return organization;
@@ -13,11 +12,4 @@ public class OrganizationDTO {
         this.organization = organization;
     }
 
-    public String getUserOwner() {
-        return userOwner;
-    }
-
-    public void setUserOwner(String userOwner) {
-        this.userOwner = userOwner;
-    }
 }

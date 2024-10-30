@@ -2,11 +2,10 @@ package com.tiozao.tasks.aplication.controllers;
 
 import com.tiozao.tasks.aplication.dtos.OrganizationDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,9 @@ public class OrganizationController {
 
 
     @PostMapping("/organizations")
-    public ResponseEntity<String> listaOrganizations(OrganizationDTO organizationDTO){
+    @PreAuthorize("hasRole('OWNER_ROLE')")
+    public ResponseEntity<String> listaOrganizations(@RequestBody OrganizationDTO organizationDTO, Principal principal){
+
         return ResponseEntity.ok(organizationDTO.getOrganization());
     }
 
