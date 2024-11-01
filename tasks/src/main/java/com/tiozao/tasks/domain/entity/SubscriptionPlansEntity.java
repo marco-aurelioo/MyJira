@@ -22,7 +22,7 @@ public class SubscriptionPlansEntity extends BaseEntity{
             joinColumns = @JoinColumn(name = "subscription_plan_id"),  // FK para subscription_plans
             inverseJoinColumns = @JoinColumn(name = "features_plataform_id")  // FK para features_plataform
     )
-    private List<FeaturePlataform> featuresList;
+    private List<FeaturePlataformEntity> featuresList;
 
     public Integer getId() {
         return id;
@@ -56,11 +56,11 @@ public class SubscriptionPlansEntity extends BaseEntity{
         this.alias = alias;
     }
 
-    public List<FeaturePlataform> getFeaturesList() {
+    public List<FeaturePlataformEntity> getFeaturesList() {
         return featuresList;
     }
 
-    public void setFeaturesList(List<FeaturePlataform> featuresList) {
+    public void setFeaturesList(List<FeaturePlataformEntity> featuresList) {
         this.featuresList = featuresList;
     }
 }

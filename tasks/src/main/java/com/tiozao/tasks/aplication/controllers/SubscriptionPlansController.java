@@ -50,7 +50,7 @@ public class SubscriptionPlansController {
         response.setUrtPaymentMethod(
                 service.getUrlCheckout(
                         checkoutOut.getProdutos(),
-                        checkoutOut.getExternalId(),
+                        checkoutOut.getPersonId(),
                         checkoutOut.getUrlSuccess(),
                         checkoutOut.getUrlCancel()));
 

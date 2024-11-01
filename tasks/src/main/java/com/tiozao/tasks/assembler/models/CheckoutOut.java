@@ -12,13 +12,13 @@ public class CheckoutOut implements ObjectsOut{
 
     private String urlCancel;
 
-    private String externalId;
+    private String personId;
 
-    public CheckoutOut(List<Produto> produtos, String urlSuccess, String urlCancel, String externalId) {
+    public CheckoutOut(List<Produto> produtos, String urlSuccess, String urlCancel, String personId) {
         this.produtos = produtos;
         this.urlSuccess = urlSuccess;
         this.urlCancel = urlCancel;
-        this.externalId = externalId;
+        this.personId = personId;
     }
 
     public List<Produto> getProdutos() {
@@ -45,11 +45,11 @@ public class CheckoutOut implements ObjectsOut{
         this.urlCancel = urlCancel;
     }
 
-    public String getExternalId() {
-        return externalId;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 }

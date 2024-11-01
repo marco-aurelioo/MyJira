@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity(name = "features_plataform")
-public class FeaturePlataform extends BaseEntity {
+public class FeaturePlataformEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

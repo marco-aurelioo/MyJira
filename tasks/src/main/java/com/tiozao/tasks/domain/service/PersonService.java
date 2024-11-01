@@ -27,4 +27,8 @@ public class PersonService {
         return repository.findById(id).get();
     }
 
+    public PersonEntity findPersonByUserId(String userId) {
+        return repository.findByUserId( userId).orElseThrow(IllegalStateException::new);
+    }
+
 }

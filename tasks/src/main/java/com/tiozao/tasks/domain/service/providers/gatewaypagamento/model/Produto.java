@@ -7,6 +7,8 @@ public class Produto implements Serializable {
     private Long preco;
     private Long quantidade;
 
+    public Produto(){}
+
     public Produto(String nome, Long preco, Long quantidade) {
         this.nome = nome;
         this.preco = preco;
