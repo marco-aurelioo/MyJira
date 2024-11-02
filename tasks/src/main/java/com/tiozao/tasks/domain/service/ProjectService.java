@@ -23,6 +23,8 @@ public class ProjectService {
     }
 
     private void validateOwner(ProjectEntity project) {
+        //validar regras de negocio quantidade de projetos criados por owner
+
         PersonEntity owner = personService.findPerson(project.getOwner().getId());
         if (owner == null) {
             owner = personService.createPerson(project.getOwner());

@@ -1,17 +1,15 @@
-package com.tiozao.tasks.aplication.dtos;
+package com.tiozao.tasks.aplication.controllers.response;
 
-public class ProjectDto {
+public class ProjectResponse {
 
-    private String alias;
     private String projectName;
     private String description;
-    private PersonDto owner;
 
-    public String getAlias() {
-        return alias;
-    }
+    private String alias;
 
-    public void setAlias(String alias) {
+    public ProjectResponse(String projectName, String description, String alias) {
+        this.projectName = projectName;
+        this.description = description;
         this.alias = alias;
     }
 
@@ -31,11 +29,11 @@ public class ProjectDto {
         this.description = description;
     }
 
-    public PersonDto getOwner() {
-        return owner;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setOwner(PersonDto owner) {
-        this.owner = owner;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 }

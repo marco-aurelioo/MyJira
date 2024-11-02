@@ -18,7 +18,12 @@ public class PersonEntity  extends BaseEntity {
     private String name;
     private String avatar;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "person_projects",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
     private List<ProjectEntity> projectMember = new ArrayList<>();
 
     public Integer getId() {
