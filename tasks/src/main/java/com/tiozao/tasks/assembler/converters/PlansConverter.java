@@ -1,8 +1,8 @@
-package com.tiozao.tasks.assembler;
+package com.tiozao.tasks.assembler.converters;
 
 import com.tiozao.tasks.aplication.controllers.response.SubscriptionPlansResponse;
-import com.tiozao.tasks.assembler.models.PlansInputs;
-import com.tiozao.tasks.assembler.models.PlansOutput;
+import com.tiozao.tasks.assembler.converters.models.PlansInputs;
+import com.tiozao.tasks.assembler.converters.models.PlansOutput;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

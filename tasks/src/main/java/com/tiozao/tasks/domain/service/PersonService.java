@@ -2,8 +2,11 @@ package com.tiozao.tasks.domain.service;
 
 import com.tiozao.tasks.domain.entity.PersonEntity;
 import com.tiozao.tasks.domain.service.providers.useraccess.UserRolesService;
+import com.tiozao.tasks.resources.repositories.PersonReportReporsitoy;
 import com.tiozao.tasks.resources.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +14,9 @@ public class PersonService {
 
     @Autowired
     private PersonRepository repository;
+
+    @Autowired
+    private PersonReportReporsitoy reportReporsitoy;
 
     @Autowired
     private UserRolesService userRolesService;
@@ -31,4 +37,7 @@ public class PersonService {
         return repository.findByUserId( userId).orElseThrow(IllegalStateException::new);
     }
 
+    public Page<PersonEntity> findPersonLikeName(Integer nameLike, Pageable pageable) {
+        return reportReporsitoy.findByNameLike(nameLike, pageable );
+    }
 }

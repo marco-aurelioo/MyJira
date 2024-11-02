@@ -2,9 +2,9 @@ package com.tiozao.tasks.aplication.controllers;
 
 import com.tiozao.tasks.aplication.controllers.request.ProjectRequest;
 import com.tiozao.tasks.aplication.controllers.response.ProjectResponse;
-import com.tiozao.tasks.assembler.ProjectConverter;
-import com.tiozao.tasks.assembler.models.ProjectIn;
-import com.tiozao.tasks.assembler.models.ProjectOut;
+import com.tiozao.tasks.assembler.converters.ProjectConverter;
+import com.tiozao.tasks.assembler.converters.models.ProjectIn;
+import com.tiozao.tasks.assembler.converters.models.ProjectOut;
 import com.tiozao.tasks.domain.service.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ public class ProjetoController {
 
     @Autowired
     private ProjectConverter projectConverter;
+
 
     @PostMapping("/projeto/{organizations}")
     public ResponseEntity<ProjectResponse> createProject(

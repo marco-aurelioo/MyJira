@@ -1,11 +1,10 @@
-package com.tiozao.tasks.assembler;
+package com.tiozao.tasks.assembler.converters;
 
-import com.tiozao.tasks.assembler.models.ProjectIn;
-import com.tiozao.tasks.assembler.models.ProjectOut;
+import com.tiozao.tasks.assembler.converters.models.ProjectIn;
+import com.tiozao.tasks.assembler.converters.models.ProjectOut;
 import com.tiozao.tasks.domain.entity.ProjectEntity;
 import com.tiozao.tasks.domain.service.OrganizationService;
 import com.tiozao.tasks.domain.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 

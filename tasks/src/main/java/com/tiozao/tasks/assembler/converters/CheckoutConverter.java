@@ -1,7 +1,7 @@
-package com.tiozao.tasks.assembler;
+package com.tiozao.tasks.assembler.converters;
 
-import com.tiozao.tasks.assembler.models.CheckoutIn;
-import com.tiozao.tasks.assembler.models.CheckoutOut;
+import com.tiozao.tasks.assembler.converters.models.CheckoutIn;
+import com.tiozao.tasks.assembler.converters.models.CheckoutOut;
 import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.Produto;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;

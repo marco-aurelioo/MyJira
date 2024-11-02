@@ -1,14 +1,11 @@
-package com.tiozao.tasks.assembler;
+package com.tiozao.tasks.assembler.converters;
 
-import com.tiozao.tasks.assembler.models.ObjectsIn;
-import com.tiozao.tasks.assembler.models.ObjectsOut;
-import com.tiozao.tasks.assembler.models.PersonInputs;
-import com.tiozao.tasks.assembler.models.PersonOutputs;
+import com.tiozao.tasks.assembler.converters.models.PersonInputs;
+import com.tiozao.tasks.assembler.converters.models.PersonOutputs;
 import com.tiozao.tasks.domain.entity.PersonEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Function;
 import java.security.Principal;
 
 @Component

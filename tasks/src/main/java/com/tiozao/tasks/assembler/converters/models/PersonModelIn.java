@@ -1,17 +1,16 @@
-package com.tiozao.tasks.aplication.dtos;
+package com.tiozao.tasks.assembler.converters.models;
 
-import com.tiozao.tasks.aplication.controllers.request.PersonRequest;
+import com.tiozao.tasks.aplication.dtos.PersonDto;
+import com.tiozao.tasks.domain.entity.PersonEntity;
 
-import java.security.Principal;
+public class PersonModelIn implements ObjectsIn {
 
-public class PersonDto {
 
     private String name;
     private String avatar;
-
     private String pessoaId;
 
-    public PersonDto(String name, String avatar, String pessoaId) {
+    public PersonModelIn(String name, String avatar, String pessoaId) {
         this.name = name;
         this.avatar = avatar;
         this.pessoaId = pessoaId;

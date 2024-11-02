@@ -1,8 +1,8 @@
-package com.tiozao.tasks.assembler;
+package com.tiozao.tasks.assembler.converters;
 
 
-import com.tiozao.tasks.assembler.models.ObjectsIn;
-import com.tiozao.tasks.assembler.models.ObjectsOut;
+import com.tiozao.tasks.assembler.converters.models.ObjectsIn;
+import com.tiozao.tasks.assembler.converters.models.ObjectsOut;
 import org.springframework.data.domain.Page;
 
 import java.util.function.Function;

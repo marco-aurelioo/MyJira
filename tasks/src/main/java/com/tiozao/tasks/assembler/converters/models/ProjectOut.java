@@ -1,4 +1,4 @@
-package com.tiozao.tasks.assembler.models;
+package com.tiozao.tasks.assembler.converters.models;
 
 import com.tiozao.tasks.aplication.controllers.response.ProjectResponse;
 import com.tiozao.tasks.domain.entity.ProjectEntity;
