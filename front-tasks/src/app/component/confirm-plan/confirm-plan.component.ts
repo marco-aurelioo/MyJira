@@ -14,6 +14,7 @@ export class ConfirmPlanComponent  implements OnInit {
   constructor(private paymentService: PaymentService, private router: Router) {}
 
   ngOnInit() {
+
     this.selectedPlan = this.paymentService.getSelectedPlan();
     if (!this.selectedPlan) {
       this.router.navigate(['/precos']);
@@ -21,6 +22,7 @@ export class ConfirmPlanComponent  implements OnInit {
   }
 
   confirmPurchase() {
+    console.log("confirm purchase:")
     this.paymentService.submitPlan().subscribe((response: any) => {
       if (response && response.urtPaymentMethod) {
         window.location.href = response.urtPaymentMethod;

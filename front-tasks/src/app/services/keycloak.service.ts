@@ -10,7 +10,7 @@ export class KeycloakService {
 
   constructor() {
     this.keycloakInstance = new Keycloak({
-      url: 'http://localhost:9090/',
+      url: 'http://192.168.0.106:9090/',
       realm: 'DEV',
       clientId: 'task-track',
     });

@@ -12,7 +12,6 @@ public class UserRolesService {
 
 
     public boolean addRole(String userId, String roleName){
-
         return permissionApi.addRole(roleName, userId);
     }
 

@@ -10,15 +10,11 @@ import { KeycloakService } from './services/keycloak.service';
 export class AppComponent implements OnInit {
 
   title = "Pagina Inicial";
-  isCollapsed = true;
 
   constructor(public keycloakService: KeycloakService) {}
 
   ngOnInit(): void {
 
   }
-
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
-  }
+  
 }

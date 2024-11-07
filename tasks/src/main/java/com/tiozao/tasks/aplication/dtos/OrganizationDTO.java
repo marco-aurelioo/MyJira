@@ -2,14 +2,22 @@ package com.tiozao.tasks.aplication.dtos;
 
 public class OrganizationDTO {
 
-    private String organization;
+    private String titulo;
 
-    public String getOrganization() {
-        return organization;
+    public OrganizationDTO(String name) {
+        this.titulo = name;
     }
 
-    public void setOrganization(String organization) {
-        this.organization = organization;
+
+    public OrganizationDTO() {
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
 }

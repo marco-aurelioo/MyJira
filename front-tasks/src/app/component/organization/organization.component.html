@@ -1,0 +1,14 @@
+<h2>Organizações</h2>
+
+<!-- Formulário para criar uma nova organização -->
+<form (ngSubmit)="adicionarOrganizacao()">
+  <label for="titulo">Título:</label>
+  <input type="text" id="titulo" [(ngModel)]="novaOrganizacao.titulo" name="titulo" required />
+  <button type="submit">Adicionar Organização</button>
+</form>
+
+<!-- Lista de organizações -->
+<h3>Lista de Organizações</h3>
+<ul>
+  <li *ngFor="let organizacao of organizacoes">{{ organizacao.titulo }}</li>
+</ul>

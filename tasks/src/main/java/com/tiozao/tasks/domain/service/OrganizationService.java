@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class OrganizationService {
@@ -16,9 +17,11 @@ public class OrganizationService {
 
     @Autowired
     private PersonService personService;
-    public void getOrganizations(String pessoaId){
-
+    public List<OrganizationEntity> getOrganizations(String pessoaId){
+        PersonEntity person = personService.findPersonByUserId(pessoaId);
+        return repository.findByOwner(person);
     }
+
     public void criarOrganizations(String organizationName, String pessoaId){
         PersonEntity person = personService.findPersonByUserId(pessoaId);
 
