@@ -1,12 +1,9 @@
-<div class="container">
+
 <app-header></app-header>
-<div class="content">
-    <div *ngIf="keycloakService.isAuthenticated()">
-        <app-naveg></app-naveg>
-    </div>
-    <main class="main-content">
-        <router-outlet></router-outlet>
-    </main>
+<div *ngIf="keycloakService.isAuthenticated()">
+    <app-naveg></app-naveg>
 </div>
+<main class="main-content">
+    <router-outlet></router-outlet>
+</main>
 <app-footer></app-footer>
-</div>

@@ -1,2 +1,62 @@
-<p>profile works!</p>
-M<
+<main class="main-content">
+    <div class="card">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="{{profile!.image}}" *ngIf="profile?.image" class="profile-avatar-image" />
+            </div>
+            <div class="profile-info">
+                <h1>{{profile?.username}}</h1>
+                <p class="text-secondary">Desenvolvedor Full Stack</p>
+                <div style="margin-top: 12px;">
+                    <span class="badge">React</span>
+                    <span class="badge">Node.js</span>
+                    <span class="badge">TypeScript</span>
+                    <span class="badge">AWS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-stats">
+        <div class="stat-card">
+            <div class="stat-value">85%</div>
+            <div class="stat-label">Taxa de Conclusão</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">24</div>
+            <div class="stat-label">Tarefas Concluídas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Projetos Ativos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Dias no Prazo</div>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active">Informações Pessoais</div>
+        <div class="tab">Preferências</div>
+        <div class="tab">Segurança</div>
+        <div class="tab">Notificações</div>
+    </div>
+
+    <div class="card" >
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" >
+          <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" class="form-control" formControlName="username">
+          </div>
+      
+          <div class="form-group">
+            <label>avatar:</label>
+            <input type="email" class="form-control" formControlName="image">
+          </div>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <button type="submit" class="button button-primary " style="margin:15px;padding:10px;width: 120px; height: 40px; text-align: center; display: flex; align-items: center; justify-content: center;">Salvar</button>
+          </div>
+        </form>
+      </div>
+</main>

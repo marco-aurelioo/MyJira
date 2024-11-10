@@ -38,6 +38,10 @@ public class PersonService {
     }
 
     public Page<PersonEntity> findPersonLikeName(Integer nameLike, Pageable pageable) {
+        //sera que queremos devolver todos os usuarios
+        if(nameLike == null){
+            return  reportReporsitoy.findAll(pageable);
+        }
         return reportReporsitoy.findByNameLike(nameLike, pageable );
     }
 }

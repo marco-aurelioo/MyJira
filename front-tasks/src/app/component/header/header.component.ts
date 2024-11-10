@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakTokenParsed } from 'keycloak-js';
+import { Router } from '@angular/router';
+import { Profile } from 'src/app/models/Profile';
 import { KeycloakService } from 'src/app/services/keycloak.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +11,24 @@ import { KeycloakService } from 'src/app/services/keycloak.service';
 })
 export class HeaderComponent implements OnInit{
 
-  userName?: KeycloakTokenParsed;
+  profile?: Profile;
 
-  constructor(public keycloakService: KeycloakService) {
+  constructor(
+    private router: Router,
+    public keycloakService: KeycloakService, 
+    private profileService: ProfileService) {
+
     if(keycloakService.isAuthenticated()){
-      this.userName = keycloakService.getUserName();
+       profileService.getProfile().subscribe(
+        (profile) => {
+          this.profile = profile;
+        },
+        (erro) => {
+          console.error('Erro ao carregar profile:', erro);
+        }
+       );
+    }else{
+      this.router.navigate(['/login'])
     }
 
   }

@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfirmPlanComponent } from './component/confirm-plan/confirm-plan.component';
 import { PaymentStatusComponent } from './component/payment-status/payment-status.component';
 import { OrganizationComponent } from './component/organization/organization.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './component/profile/profile.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -46,7 +46,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MatButtonModule, 
     MatIconModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule  
   ],
   providers: [
     

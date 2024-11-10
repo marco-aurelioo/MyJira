@@ -16,8 +16,8 @@ public class PersonModelConverter extends ConverterModel<PersonDto, PersonEntity
 
     private static PersonDto originDomain(PersonEntity entity) {
         return new PersonDto(
-                entity.getUserId(),
+                entity.getName(),
                 entity.getAvatar(),
-                entity.getName());
+                entity.getUserId());
     }
 }

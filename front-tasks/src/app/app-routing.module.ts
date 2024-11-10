@@ -11,11 +11,12 @@ import { OrganizationComponent } from './component/organization/organization.com
 import { ProfileComponent } from './component/profile/profile.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  
   { path: 'login', component: LoginComponent },
   { path: 'sobre', component: SobreComponent },
   { path: 'precos', component: PrecosComponent },
   
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent,  canActivate: [AuthGuard] },
   { path: 'confirm-plan', component: ConfirmPlanComponent,  canActivate: [AuthGuard] },
   { path: 'payment-status', component: PaymentStatusComponent,  canActivate: [AuthGuard] },

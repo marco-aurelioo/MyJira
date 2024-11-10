@@ -1,22 +1,20 @@
-<div class="header">
-    <div class="logo">
-        <div class="imagem-circulo" >
-            <img src="../../../assets/imgs/logo-task-manager.png" width="100px" height="100px"/>
+<header class="header">
+    <div class="flex items-center justify-between" style="width: 100%;">
+        <div class="flex items-center gap-2">
+            <div class="logo">📋</div>
+            <h1 class="text-primary">Task Manager</h1>
         </div>
-    </div>
-    <div class="login" >
-        <div *ngIf="keycloakService.isAuthenticated(); else login">
-            <div>
-                <div class="user-tag">
-                    <img class="imagem-circulo space" src="../../../assets/imgs/user-default-logo.jpeg" width="50px" height="50px"/>
-                    <p class="space">{{userName}}</p>
-                </div>
-                <button class="btn btn-primary"  (click)="keycloakService.logout()">Logout</button>
+        
+        <div class="flex items-center gap-2" *ngIf="keycloakService.isAuthenticated(); else login" >
+            <div  >
+                <h1>{{profile?.username}}</h1>
             </div>
+
+            <button class="button button-primary">+ Nova Tarefa</button>
+            <button class="button button-primary"  (click)="keycloakService.logout()">Logout</button>
         </div>
         <ng-template #login>
-            <button class="btn btn-primary" (click)="keycloakService.login()">Login</button>
+            <button class="button button-primary" (click)="keycloakService.login()">Login</button>
         </ng-template>
     </div>
-
-</div>
+</header>

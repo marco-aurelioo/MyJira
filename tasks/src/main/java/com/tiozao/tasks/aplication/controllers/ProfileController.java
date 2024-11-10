@@ -40,6 +40,7 @@ public class ProfileController {
         ProfileDTO profile = new ProfileDTO();
         profile.setUsername(entity.getName());
         profile.setUserId(entity.getUserId());
+        profile.setImage(entity.getAvatar());
         return profile;
     }
 }

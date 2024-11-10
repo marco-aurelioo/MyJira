@@ -5,7 +5,6 @@ import com.tiozao.tasks.aplication.dtos.PersonDto;
 import com.tiozao.tasks.assembler.converters.PersonConverter;
 import com.tiozao.tasks.assembler.converters.PersonModelConverter;
 import com.tiozao.tasks.assembler.converters.models.PersonInputs;
-import com.tiozao.tasks.assembler.converters.models.PersonModelIn;
 import com.tiozao.tasks.domain.entity.PersonEntity;
 import com.tiozao.tasks.domain.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +34,9 @@ public class PersonController {
     }
 
 
-    @GetMapping("/persons/")
+    @GetMapping("/persons")
     public ResponseEntity<Page<PersonDto>> findPerson(
-            @RequestParam(name = "name") Integer nameLike,
+            @RequestParam(name = "name", required = false) Integer nameLike,
             Pageable pageable
     ) {
        return ResponseEntity.ok(

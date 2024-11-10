@@ -1,8 +1,19 @@
-<aside [class.collapsed]="isCollapsed" class="sidebar">
-    <button (click)="toggleSidebar()">&#9776;</button>
-    <div *ngIf="!isCollapsed" class="menu-items">
-    <div><a href="home" >Inicio</a></div>
-    <div><a href="organizacao" >organizacao</a></div>
-    <!-- Outras opções de menu -->
-    </div>
+<aside class="sidebar">
+    <nav>
+        <a href="home" class="nav-item">
+            📊 Dashboard
+        </a>
+        <a href="#" class="nav-item">
+            ✔️ Minhas Tarefas
+        </a>
+        <a href="#" class="nav-item">
+            👥 Equipe
+        </a>
+        <a href="profile" class="nav-item active">
+            👤 Perfil
+        </a>
+        <a href="#" class="nav-item">
+            ⚙️ Configurações
+        </a>
+    </nav>
 </aside>
