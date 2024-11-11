@@ -36,7 +36,7 @@ public class PersonController {
 
     @GetMapping("/persons")
     public ResponseEntity<Page<PersonDto>> findPerson(
-            @RequestParam(name = "name", required = false) Integer nameLike,
+            @RequestParam(name = "name", required = false) String nameLike,
             Pageable pageable
     ) {
        return ResponseEntity.ok(

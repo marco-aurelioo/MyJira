@@ -37,11 +37,13 @@ public class PersonService {
         return repository.findByUserId( userId).orElseThrow(IllegalStateException::new);
     }
 
-    public Page<PersonEntity> findPersonLikeName(Integer nameLike, Pageable pageable) {
+    public Page<PersonEntity> findPersonLikeName(String nameLike, Pageable pageable) {
         //sera que queremos devolver todos os usuarios
         if(nameLike == null){
             return  reportReporsitoy.findAll(pageable);
         }
-        return reportReporsitoy.findByNameLike(nameLike, pageable );
+        return reportReporsitoy.findByNameLike('%'+nameLike+'%', pageable );
     }
+
+
 }

@@ -9,17 +9,19 @@ import { ConfirmPlanComponent } from './component/confirm-plan/confirm-plan.comp
 import { PaymentStatusComponent } from './component/payment-status/payment-status.component';
 import { OrganizationComponent } from './component/organization/organization.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { EquipeComponent } from './component/equipe/equipe.component';
 
 const routes: Routes = [
   
   { path: 'login', component: LoginComponent },
   { path: 'sobre', component: SobreComponent },
   { path: 'precos', component: PrecosComponent },
-  
+
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent,  canActivate: [AuthGuard] },
   { path: 'confirm-plan', component: ConfirmPlanComponent,  canActivate: [AuthGuard] },
   { path: 'payment-status', component: PaymentStatusComponent,  canActivate: [AuthGuard] },
+  { path: 'equipe', component: EquipeComponent,  canActivate: [AuthGuard] },
   { path: 'organizacao', component: OrganizationComponent,  canActivate: [AuthGuard] },
   
   { path: '**', redirectTo: 'sobre' }

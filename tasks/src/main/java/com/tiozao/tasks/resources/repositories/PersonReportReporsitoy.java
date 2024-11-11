@@ -7,5 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface PersonReportReporsitoy  extends PagingAndSortingRepository<PersonEntity,Integer> {
 
-    Page<PersonEntity> findByNameLike(Integer nameLike, Pageable pageable);
+    Page<PersonEntity> findByNameLike(String nameLike, Pageable pageable);
 }

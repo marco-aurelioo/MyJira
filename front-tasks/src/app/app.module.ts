@@ -21,6 +21,7 @@ import { PaymentStatusComponent } from './component/payment-status/payment-statu
 import { OrganizationComponent } from './component/organization/organization.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './component/profile/profile.component';
+import { EquipeComponent } from './component/equipe/equipe.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => keycloak.init();
@@ -36,7 +37,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PrecosComponent, 
     HeaderComponent, 
     FooterComponent, 
-    NavegComponent, ConfirmPlanComponent, PaymentStatusComponent, OrganizationComponent, ProfileComponent
+    NavegComponent, ConfirmPlanComponent, PaymentStatusComponent, OrganizationComponent, ProfileComponent, EquipeComponent
     
       ],
   imports: [
