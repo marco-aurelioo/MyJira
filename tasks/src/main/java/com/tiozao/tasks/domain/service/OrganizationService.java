@@ -35,8 +35,9 @@ public class OrganizationService {
 
     }
 
-    public OrganizationEntity findORganizationByName(String organizations) {
-        return repository.findByName(organizations).orElseThrow();
+    public OrganizationEntity findORganizationByName(String pessoaId, String organizations) {
+        PersonEntity person = personService.findPersonByUserId(pessoaId);
+        return repository.findByNameAndOwner(organizations, person).orElseThrow();
     }
 
 }

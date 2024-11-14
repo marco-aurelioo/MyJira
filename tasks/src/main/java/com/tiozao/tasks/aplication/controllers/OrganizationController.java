@@ -32,7 +32,7 @@ public class OrganizationController {
 
 
     @PostMapping("/organizations")
-    @PreAuthorize("hasRole('OWNER_ROLE')")
+    //@PreAuthorize("hasRole('OWNER_ROLE')")
     public ResponseEntity<String> listaOrganizations(@RequestBody OrganizationDTO organizationDTO, Principal principal){
 
         service.criarOrganizations(

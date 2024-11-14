@@ -21,6 +21,7 @@ export class OrganizacaoService {
   addOrganizacao(organizacao: Organizacao): Observable<Organizacao> {
     let headersValues = new HttpHeaders()
         .set('Authorization', 'Bearer ' + this.keycloak.getToken());
+    console.log("Efetuando a chamada:"+organizacao.titulo);
     return this.http.post<Organizacao>(this.apiUrl, organizacao,  {headers: headersValues });
   }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface OrganizationRepository extends JpaRepository<OrganizationEntity,Integer> {
 
-    Optional<OrganizationEntity> findByName(String organizations);
     List<OrganizationEntity> findByOwner(PersonEntity person);
 
+    Optional<OrganizationEntity> findByNameAndOwner(String organizations, PersonEntity person);
 }

@@ -28,13 +28,13 @@ public class ProjectConverter extends Converter<ProjectIn, ProjectOut> {
     }
 
     private static ProjectOut originDomain(ProjectIn projectIn) {
+        String userId = ((JwtAuthenticationToken) projectIn.getPrincipal()).getToken().getClaim("sub");
         ProjectEntity projectEntity = new ProjectEntity();
-        projectEntity.setProjectName(projectIn.getProjectDto().getProjectName());
+        projectEntity.setProjectName(projectIn.getProjectDto().getNome());
         projectEntity.setDescription(projectIn.getProjectDto().getDescription());
         projectEntity.setOwner(
-                personService.findPersonByUserId(
-                        ((JwtAuthenticationToken) projectIn.getPrincipal()).getToken().getClaim("sub")));
-        projectEntity.setOrganization(organizationService.findORganizationByName(projectIn.getOrganizations()));
+                personService.findPersonByUserId(userId));
+        projectEntity.setOrganization(organizationService.findORganizationByName(userId, projectIn.getOrganizations()));
         return new ProjectOut(projectEntity);
 
     }

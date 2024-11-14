@@ -1,10 +1,14 @@
 package com.tiozao.tasks.domain.service;
 
+import com.tiozao.tasks.aplication.controllers.response.ProjectResponse;
+import com.tiozao.tasks.domain.entity.OrganizationEntity;
 import com.tiozao.tasks.domain.entity.PersonEntity;
 import com.tiozao.tasks.domain.entity.ProjectEntity;
 import com.tiozao.tasks.resources.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProjectService {
@@ -12,6 +16,8 @@ public class ProjectService {
     @Autowired
     private ProjectRepository repository;
 
+    @Autowired
+    private OrganizationService organizationService;
 
     @Autowired
     private PersonService personService;
@@ -43,4 +49,9 @@ public class ProjectService {
         return true;
     }
 
+    public List<ProjectEntity> findByOrganizations(String userId, String organizations) {
+        PersonEntity owner = personService.findPersonByUserId(userId);
+        OrganizationEntity organization = organizationService.findORganizationByName(userId, organizations);
+        return repository.findByOrganization(organization);
+    }
 }

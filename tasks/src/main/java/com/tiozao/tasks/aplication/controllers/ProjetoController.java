@@ -8,10 +8,14 @@ import com.tiozao.tasks.assembler.converters.models.ProjectOut;
 import com.tiozao.tasks.domain.service.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -36,6 +40,22 @@ public class ProjetoController {
                         projectConverter.convertOrigin(
                                 new ProjectIn(organizations, project, principal))
                                 .getProjectEntity())).getProjectResponse());
+    }
+
+    @GetMapping("/projeto/{organizations}")
+    public ResponseEntity<List<ProjectResponse>> createProject(
+            @PathVariable(name="organizations") String organizations,
+                 Principal principal){
+
+        return ResponseEntity.ok(
+                projetoService.findByOrganizations(
+                        ((JwtAuthenticationToken) principal).getToken().getClaim("sub"),
+                        organizations).stream().map(item -> {
+                            return new ProjectResponse(
+                                    item.getProjectName(),
+                                    item.getDescription(),
+                                    item.getProjectAlias());})
+                        .collect(Collectors.toList()));
     }
 
 }

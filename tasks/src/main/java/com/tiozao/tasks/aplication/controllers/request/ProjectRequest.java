@@ -2,17 +2,17 @@ package com.tiozao.tasks.aplication.controllers.request;
 
 public class ProjectRequest {
 
-    private String projectName;
+    private String nome;
     private String description;
 
     public ProjectRequest() {}
 
-    public String getProjectName() {
-        return projectName;
+    public String getNome() {
+        return nome;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescription() {

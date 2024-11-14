@@ -136,6 +136,13 @@ body {
     flex: 1;
 }
 
+.form-label {
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 500;
+    flex: 1;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

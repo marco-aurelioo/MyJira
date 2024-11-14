@@ -2,23 +2,23 @@ package com.tiozao.tasks.aplication.controllers.response;
 
 public class ProjectResponse {
 
-    private String projectName;
+    private String nome;
     private String description;
 
     private String alias;
 
     public ProjectResponse(String projectName, String description, String alias) {
-        this.projectName = projectName;
+        this.nome = projectName;
         this.description = description;
         this.alias = alias;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getNome() {
+        return nome;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescription() {
