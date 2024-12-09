@@ -52,6 +52,7 @@ public class ProjetoController {
                         ((JwtAuthenticationToken) principal).getToken().getClaim("sub"),
                         organizations).stream().map(item -> {
                             return new ProjectResponse(
+                                    item.getExternalId(),
                                     item.getProjectName(),
                                     item.getDescription(),
                                     item.getProjectAlias());})

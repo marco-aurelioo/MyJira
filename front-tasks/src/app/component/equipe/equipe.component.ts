@@ -8,6 +8,8 @@ import { OrganizacaoService } from 'src/app/services/organization.service';
 import { Organizacao } from 'src/app/models/Organizacao ';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProjetosService } from 'src/app/services/projetos.service';
+import { TeamService } from 'src/app/services/team.service';
+import { MyInviteProject } from 'src/app/models/MyInviteProject';
 
 @Component({
   selector: 'app-equipe',
@@ -18,12 +20,14 @@ export class EquipeComponent implements OnInit {
 
   myOrganizations: Organizacao[] = [];
   myProjects: Projeto[] = [];
-  activeTeams: any[] = [];
+  activeTeams: Projeto[] = [];
   pendingInvites: TeamInvite[] = [];
+
+  myInvites: MyInviteProject[] = [];
 
   formCadastroOrganizacao: FormGroup;
   formCadastroProjeto: FormGroup;
-  selectedProjectId: number | undefined;
+  selectedProjectId: string | undefined;
 
 
   organizationSelected: string| undefined;
@@ -41,6 +45,7 @@ export class EquipeComponent implements OnInit {
     private pessoaService: PessoaService,
     private organizacaoService: OrganizacaoService,
     private projetosService: ProjetosService,
+    private teamService: TeamService,
     private fb: FormBuilder,
   ) {
     this.formCadastroOrganizacao = this.fb.group({
@@ -60,6 +65,7 @@ export class EquipeComponent implements OnInit {
   }
 
   setOrganization(organization: string){
+
     this.organizationSelected = organization;
     console.log("load projects da organizacao "+organization)
     this.loadMyProjects();
@@ -81,13 +87,14 @@ export class EquipeComponent implements OnInit {
   loadMyOrganizations(){
     console.log("carregando organizations;");
     this.organizacaoService.getOrganizacoes().subscribe( response => {
+      console.log(response);  
       this.myOrganizations = response;
     });
   }
 
   onSalvaOrganizacao() {
     console.log("cadastrando organizacao");
-    this.organizacaoService.addOrganizacao( {titulo: this.formCadastroOrganizacao.value.titulo}).subscribe(
+    this.organizacaoService.addOrganizacao( {id:'', titulo: this.formCadastroOrganizacao.value.titulo}).subscribe(
       response => {
          console.log(response);
       }
@@ -96,10 +103,11 @@ export class EquipeComponent implements OnInit {
   }
 
   loadMyProjects() {
-    console.log("cadastrando organizacao");
+    console.log("loadMyProjects");
     if(this.organizationSelected){
       this.projetosService.getProjetos( this.organizationSelected! ).subscribe(
         response => {
+          console.log(response);
           this.myProjects = response;
         }
       );
@@ -123,29 +131,53 @@ export class EquipeComponent implements OnInit {
 
   }
 
+
+  aceitarProjeto(inviteid: string){
+    console.log('aceita inviteid:'+inviteid);
+    this.teamService.confirmMyInvites(inviteid,true).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
+    this.loadPendingInvites();
+  }
+
+
+  rejeitarProjeto(inviteid: string){
+    console.log('rejeita inviteid:'+inviteid);
+    this.teamService.confirmMyInvites(inviteid,false).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
+    this.loadPendingInvites();
+  }
+
+
   loadActiveTeams() {
-    //this.teamService.getActiveTeams().subscribe(
-    //  teams => this.activeTeams = teams
-    //);
+    this.teamService.getMyTeams().subscribe(
+      response => {
+        this.activeTeams = response.content;
+      }
+    );
   }
 
   loadPendingInvites() {
-    //this.teamService.getPendingInvites().subscribe(
-    //  invites => this.pendingInvites = invites
-    //);
+    this.teamService.getMyInvites().subscribe(
+      response => {
+        console.log(response);
+
+        this.myInvites = response.content;
+      }
+    )
   }
 
   sendInvite(pessoaId: string) {
-
-    console.log(">>>>>>>>> pessoaId:"+pessoaId)
-    console.log(">>>>>>>>>>>>>>>>>> selecionado:"+this.selectedProjectId)
-    //this.teamService.sendInvite(projectId, email).subscribe(
-    //  response => {
-        // Handle success
-    //  },
-    //  error => {
-        // Handle error
-    //  }
-    //);
+    this.teamService.createInvite(pessoaId,this.organizationSelected!,this.selectedProjectId!).subscribe(
+      response => {
+        console.log(response);
+      }
+    );
+    this.loadPendingInvites();
   }
 }

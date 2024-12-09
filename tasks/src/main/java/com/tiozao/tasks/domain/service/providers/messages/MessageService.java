@@ -1,9 +1,6 @@
 package com.tiozao.tasks.domain.service.providers.messages;
 
-import com.tiozao.tasks.domain.service.providers.messages.persist.InternalMessageEntity;
-import com.tiozao.tasks.domain.service.providers.messages.persist.InternalMessageRepository;
-import com.tiozao.tasks.domain.service.providers.messages.persist.TemplateInternalMessageEntity;
-import com.tiozao.tasks.domain.service.providers.messages.persist.TemplateInternalMessageRepository;
+import com.tiozao.tasks.domain.service.providers.messages.persist.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,21 +16,24 @@ public class MessageService {
     @Autowired
     private InternalMessageRepository messageRepository;
 
-    public boolean sendInternalMessage(String userFrom, String userTo, String title, String template, String owner, Map<String,String> atributes){
+    public String sendInternalMessage(String userFrom, String userTo, String title, String template, String owner, Map<String,String> atributes){
         InternalMessageEntity msg = new InternalMessageEntity();
         msg.setAttributesMap(atributes);
-        msg.setFrom(userFrom);
-        msg.setTo(userTo);
+        msg.setFromUser(userFrom);
+        msg.setToUser(userTo);
         msg.setTemplate(templateRepository.findByTemplateAndOwner(template,owner).orElseThrow());
         msg.setTitle(title);
+        msg.setExternalId(UUID.randomUUID().toString());
+        msg.setStatus(STATUS_MESSAGE.ENVIADO);
         messageRepository.save(msg);
-        return true;
+        return msg.getExternalId();
     }
 
-    public String createTemplate(String content, String owner){
+    public String createTemplate(String templateName, String content, String owner){
         TemplateInternalMessageEntity templateEntity = new TemplateInternalMessageEntity();
-        templateEntity.setTemplate(content);
+        templateEntity.setTemplate(templateName);
         templateEntity.setOwner(owner);
+        templateEntity.setContent(content);
         templateEntity.setExternalId(UUID.randomUUID().toString());
         templateEntity = templateRepository.save(templateEntity);
         return templateEntity.getExternalId();

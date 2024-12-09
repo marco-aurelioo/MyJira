@@ -1,16 +1,24 @@
 package com.tiozao.tasks.domain.service;
 
 import com.tiozao.tasks.domain.entity.PersonEntity;
+import com.tiozao.tasks.domain.entity.ProjectEntity;
 import com.tiozao.tasks.domain.service.providers.useraccess.UserRolesService;
 import com.tiozao.tasks.resources.repositories.PersonReportReporsitoy;
 import com.tiozao.tasks.resources.repositories.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+
 @Service
 public class PersonService {
+
+    Logger logger = LoggerFactory.getLogger("PersonService");
 
     @Autowired
     private PersonRepository repository;
@@ -46,4 +54,19 @@ public class PersonService {
     }
 
 
+    public Page<ProjectEntity> findMyProject(String myExternalId, Pageable pageable) {
+        return repository.findProjectsByPersonId(myExternalId, pageable);
+    }
+
+    public boolean incluiProjeto(String myExternalId, ProjectEntity projeto) {
+        PersonEntity pessoa = repository.findByUserId(myExternalId).orElseThrow();
+        if(!pessoa.getProjectMember().contains(projeto)) {
+            pessoa.getProjectMember().add(projeto);
+            repository.save(pessoa);
+            logger.info("Adicionando projeto;");
+        }else{
+            logger.info("Projeto ja adicionado;");
+        }
+        return true;
+    }
 }

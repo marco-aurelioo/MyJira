@@ -3,6 +3,7 @@ CREATE TABLE Organization (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     owner_id INTEGER,
+    external_id varchar(255),
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modify_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (owner_id) REFERENCES Persons(id) ON DELETE SET NULL
@@ -18,3 +19,5 @@ CREATE TABLE organization_administrators (
     FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE CASCADE,
     FOREIGN KEY (person_id) REFERENCES Persons(id) ON DELETE CASCADE
 );
+
+CREATE INDEX idx_Organization_external_id ON Organization (external_id);

@@ -34,7 +34,7 @@ public class ProjectConverter extends Converter<ProjectIn, ProjectOut> {
         projectEntity.setDescription(projectIn.getProjectDto().getDescription());
         projectEntity.setOwner(
                 personService.findPersonByUserId(userId));
-        projectEntity.setOrganization(organizationService.findORganizationByName(userId, projectIn.getOrganizations()));
+        projectEntity.setOrganization(organizationService.findORganizationById(projectIn.getOrganizations()));
         return new ProjectOut(projectEntity);
 
     }

@@ -11,7 +11,7 @@ import { OrganizacaoService } from 'src/app/services/organization.service';
 export class OrganizationComponent implements OnInit {
   
   organizacoes: Organizacao[] = [];
-  novaOrganizacao: Organizacao = { titulo: '' };
+  novaOrganizacao: Organizacao = { id:'', titulo: '' };
 
   constructor(private organizacaoService: OrganizacaoService) {}
 
@@ -35,7 +35,7 @@ export class OrganizationComponent implements OnInit {
       this.organizacaoService.addOrganizacao(this.novaOrganizacao).subscribe(
         (organizacao) => {
           this.organizacoes.push(organizacao);
-          this.novaOrganizacao = { titulo: '' }; // Limpa o formulário
+          this.novaOrganizacao = { id: '', titulo: '' }; // Limpa o formulário
         },
         (erro) => {
           console.error('Erro ao adicionar organização:', erro);

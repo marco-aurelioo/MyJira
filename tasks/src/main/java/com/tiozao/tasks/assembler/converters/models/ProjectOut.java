@@ -16,6 +16,7 @@ public class ProjectOut implements ObjectsOut{
     public ProjectOut(ProjectEntity projectEntity) {
         this.projectEntity = projectEntity;
         this.projectResponse =  new ProjectResponse(
+                projectEntity.getExternalId(),
                 projectEntity.getProjectName(),
                 projectEntity.getProjectAlias(),
                 projectEntity.getDescription()

@@ -14,6 +14,8 @@ public class TemplateInternalMessageEntity {
 
     private String owner;
 
+    private String content;
+
     private String template;
     private LocalDateTime createDate;
 
@@ -76,5 +78,13 @@ public class TemplateInternalMessageEntity {
 
     public void setExternalId(String externalId) {
         this.externalId = externalId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

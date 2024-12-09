@@ -13,6 +13,7 @@ public class ProjectEntity  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String externalId;
     private String projectName;
     private String projectAlias;
 
@@ -105,5 +106,13 @@ public class ProjectEntity  extends BaseEntity {
 
     public void setOrganization(OrganizationEntity organization) {
         this.organization = organization;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }

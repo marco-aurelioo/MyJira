@@ -11,6 +11,7 @@ public class OrganizationEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String externalId;
     private String name;
 
     @ManyToOne
@@ -55,5 +56,13 @@ public class OrganizationEntity extends BaseEntity {
 
     public void setAdms(List<PersonEntity> adms) {
         this.adms = adms;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }

@@ -36,6 +36,9 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/api/public/**").permitAll()
                                 .requestMatchers("/api/public/subscriptions/**").permitAll()
+                                .requestMatchers("/api/public/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->

@@ -12,4 +12,6 @@ public interface OrganizationRepository extends JpaRepository<OrganizationEntity
     List<OrganizationEntity> findByOwner(PersonEntity person);
 
     Optional<OrganizationEntity> findByNameAndOwner(String organizations, PersonEntity person);
+
+    Optional<OrganizationEntity> findByExternalId(String organizationId);
 }

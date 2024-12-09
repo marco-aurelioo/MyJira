@@ -5,6 +5,13 @@ public class InviteToTeamRequest {
     private String name;
     private String pessoaId;
 
+    public InviteToTeamRequest() {}
+
+    public InviteToTeamRequest(String name, String pessoaId) {
+        this.name = name;
+        this.pessoaId = pessoaId;
+    }
+
     public String getName() {
         return name;
     }

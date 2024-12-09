@@ -6,9 +6,7 @@ import com.tiozao.tasks.domain.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -33,8 +31,10 @@ public class ProfileController {
             entity = personService.createPerson(entity);
             return ResponseEntity.ok(getProfileDTO(entity));
         }
-
     }
+
+
+
 
     private ProfileDTO getProfileDTO(PersonEntity entity) {
         ProfileDTO profile = new ProfileDTO();

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProjectService {
@@ -24,6 +25,7 @@ public class ProjectService {
 
     public ProjectEntity create(ProjectEntity project) {
         validateOwner(project);
+        project.setExternalId(UUID.randomUUID().toString());
         ProjectEntity new_project = repository.save(project);
         return new_project;
     }
@@ -51,7 +53,11 @@ public class ProjectService {
 
     public List<ProjectEntity> findByOrganizations(String userId, String organizations) {
         PersonEntity owner = personService.findPersonByUserId(userId);
-        OrganizationEntity organization = organizationService.findORganizationByName(userId, organizations);
+        OrganizationEntity organization = organizationService.findORganizationById(organizations);
         return repository.findByOrganization(organization);
+    }
+
+    public ProjectEntity findByExternalId(String projectId) {
+        return repository.findByExternalId(projectId).orElseThrow();
     }
 }

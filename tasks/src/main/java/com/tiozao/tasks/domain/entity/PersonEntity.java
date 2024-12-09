@@ -18,7 +18,7 @@ public class PersonEntity  extends BaseEntity {
     private String name;
     private String avatar;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "person_projects",
             joinColumns = @JoinColumn(name = "person_id"),

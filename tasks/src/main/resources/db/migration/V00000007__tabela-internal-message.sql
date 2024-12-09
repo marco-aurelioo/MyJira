@@ -2,7 +2,8 @@
 CREATE TABLE templates_internal_messages (
     id SERIAL PRIMARY KEY,
     external_id VARCHAR(255) UNIQUE NOT NULL,  -- Identificador externo único do template
-    owner VARCHAR(255) NOT NULL,               -- Proprietário do template
+    owner VARCHAR(255) NOT NULL,
+    content TEXT,
     template TEXT NOT NULL,                    -- Conteúdo do template
     create_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,  -- Data de criação
     modify_date TIMESTAMPTZ                     -- Data de modificação
@@ -17,7 +18,9 @@ CREATE TABLE internal_messages (
     id SERIAL PRIMARY KEY,
     external_id VARCHAR(255) UNIQUE NOT NULL,  -- Identificador externo único da mensagem
     from_user VARCHAR(255) NOT NULL,           -- Remetente da mensagem
-    to_user VARCHAR(255) NOT NULL,             -- Destinatário da mensagem
+    to_user VARCHAR(255) NOT NULL,
+    status VARCHAR(255),
+    title  VARCHAR(255),
     template_id INT REFERENCES templates_internal_messages(id) ON DELETE SET NULL,
     attributes BYTEA,                          -- Atributos da mensagem em formato BLOB
     create_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,  -- Data de criação

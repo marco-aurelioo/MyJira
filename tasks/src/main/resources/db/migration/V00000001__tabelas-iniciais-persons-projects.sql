@@ -12,7 +12,8 @@ CREATE TABLE projects (
     project_name VARCHAR(255) NOT NULL,-- Nome do projeto
     project_alias VARCHAR(255),        -- Alias do projeto
     description TEXT,                  -- Descrição do projeto
-    owner_id INTEGER,                  -- ID do proprietário (referência a persons)
+    owner_id INTEGER,
+    external_id varchar(255),
     create_date TIMESTAMP,             -- Data de criação (herdada de BaseEntity)
     modify_date TIMESTAMP,             -- Data de modificação (herdada de BaseEntity)
     CONSTRAINT fk_owner FOREIGN KEY (owner_id) REFERENCES persons(id) -- Chave estrangeira para o proprietário
@@ -26,3 +27,5 @@ CREATE TABLE person_projects (
     CONSTRAINT fk_project FOREIGN KEY (project_id) REFERENCES projects(id),
     PRIMARY KEY (person_id, project_id)
 );
+
+CREATE INDEX idx_project_external_id ON projects (external_id);

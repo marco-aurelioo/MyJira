@@ -33,17 +33,17 @@ public class OrganizationController {
 
     @PostMapping("/organizations")
     //@PreAuthorize("hasRole('OWNER_ROLE')")
-    public ResponseEntity<String> listaOrganizations(@RequestBody OrganizationDTO organizationDTO, Principal principal){
+    public ResponseEntity<OrganizationDTO> listaOrganizations(@RequestBody OrganizationDTO organizationDTO, Principal principal){
 
         service.criarOrganizations(
                 organizationDTO.getTitulo(),
                 ((JwtAuthenticationToken) principal).getToken().getClaim("sub"));
 
-        return ResponseEntity.ok(organizationDTO.getTitulo());
+        return ResponseEntity.ok(organizationDTO);
     }
 
     private static OrganizationDTO convert(OrganizationEntity entity){
-        return new OrganizationDTO(entity.getName());
+        return new OrganizationDTO(entity.getName(), entity.getExternalId());
     }
 
 }

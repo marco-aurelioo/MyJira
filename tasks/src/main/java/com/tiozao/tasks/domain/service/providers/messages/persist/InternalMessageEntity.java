@@ -2,6 +2,7 @@ package com.tiozao.tasks.domain.service.providers.messages.persist;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tiozao.tasks.domain.entity.STATUS_INVITE;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,18 +16,23 @@ public class InternalMessageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String from;
+    private String fromUser;
 
-    private String to;
+    private String toUser;
 
     private String title;
+
+    private String externalId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private STATUS_MESSAGE status;
 
     @ManyToOne
     @JoinColumn(name = "template_id")
     private TemplateInternalMessageEntity template;
 
-    @Lob
-    @Column(name = "attributes", columnDefinition = "BLOB")
+    @Column(name = "attributes", columnDefinition = "TEXT")
     private String attributes;
 
     private LocalDateTime createDate;
@@ -59,7 +65,7 @@ public class InternalMessageEntity {
     protected void onUpdate() {
         this.modifyDate = LocalDateTime.now();
     }
-    private Boolean read;
+
 
     // Serializa/deserializa o Map para JSON
     public void setAttributesMap(Map<String, String> attributesMap) {
@@ -89,20 +95,20 @@ public class InternalMessageEntity {
         this.id = id;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFromUser() {
+        return fromUser;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
     }
 
-    public String getTo() {
-        return to;
+    public String getToUser() {
+        return toUser;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setToUser(String toUser) {
+        this.toUser = toUser;
     }
 
     public TemplateInternalMessageEntity getTemplate() {
@@ -121,12 +127,12 @@ public class InternalMessageEntity {
         this.attributes = attributes;
     }
 
-    public Boolean getRead() {
-        return read;
+    public STATUS_MESSAGE getStatus() {
+        return status;
     }
 
-    public void setRead(Boolean read) {
-        this.read = read;
+    public void setStatus(STATUS_MESSAGE status) {
+        this.status = status;
     }
 
     public String getTitle() {
@@ -135,5 +141,13 @@ public class InternalMessageEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }

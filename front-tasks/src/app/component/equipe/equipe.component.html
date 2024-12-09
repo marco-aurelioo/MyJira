@@ -10,7 +10,7 @@
             <div class="project-item" *ngFor="let item of myOrganizations">
                 <span>{{item.titulo}}</span>
                 <span ><button class="button btn-success"
-                    (click)="setOrganization(item.titulo)"
+                    (click)="setOrganization(item.id)"
                     >Load  projetos</button></span>
             </div>
             <form [formGroup]="formCadastroOrganizacao" (ngSubmit)="onSalvaOrganizacao()">
@@ -27,7 +27,7 @@
                 <div class="invite-form">
                     
                     <select class="form-control" [(ngModel)]="selectedProjectId">
-                        <option *ngFor="let item of myProjects" [value]="item.nome">{{ item.nome }}</option>
+                        <option *ngFor="let item of myProjects" [value]="item.id">{{ item.nome }}</option>
                     </select>
 
                     <input type="email" class="form-control" placeholder="Nick convidado"
@@ -40,10 +40,9 @@
                         <div style="display: flex; flex-direction: row;">
                             <img *ngIf="item.avatar" [src]="item.avatar" alt="Avatar" class="avatar"> 
                             <h3 style="margin-left: 20px;font-weight: 500;">{{ item.name }}</h3>
-                            <input type="hidden" value="{{item.pessoaId}}" />
                         </div>
                         <button class="button btn-success"
-                        (click)="sendInvite(item.name)"
+                        (click)="sendInvite(item.pessoaId)"
 
                         >Convidar</button> 
                     </div>
@@ -70,31 +69,28 @@
             <i class="fas fa-user-friends"></i>
             Times
         </div>
-        <div class="card-body">
+        <div class="card-body" >
             <div class="section-title">Convites Pendentes</div>
-            <div class="project-item">
+            <div class="project-item"  *ngFor="let item of myInvites">
                 <div>
-                    <div>Projeto C</div>
-                    <small style="color: #6b7280">Convidado por: João Silva</small>
+                    <div>{{item.projectName}}</div>
+                    <small style="color: #6b7280">Convidado por: {{item.userName}}</small>
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-success">Aceitar</button>
-                    <button class="btn btn-danger">Recusar</button>
+                    <button class="btn btn-success" 
+                        (click)="aceitarProjeto(item.inviteId!)"
+                        >Aceitar</button>
+                    <button class="btn btn-danger"
+                        (click)="rejeitarProjeto(item.inviteId!)
+                    ">Recusar</button>
                 </div>
             </div>
 
             <div class="section-title" style="margin-top: 20px;">Meus Times Ativos</div>
-            <div class="project-item">
+            <div class="project-item" *ngFor="let item of activeTeams">
                 <div>
-                    <div>Projeto D</div>
-                    <small style="color: #6b7280">Desenvolvedor</small>
-                </div>
-                <span class="status-badge status-active">Ativo</span>
-            </div>
-            <div class="project-item">
-                <div>
-                    <div>Projeto E</div>
-                    <small style="color: #6b7280">Tech Lead</small>
+                    <div>{{item.nome}} </div> 
+                    <div>{{item.alias}} </div> 
                 </div>
                 <span class="status-badge status-active">Ativo</span>
             </div>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrganizationService {
@@ -26,6 +27,7 @@ public class OrganizationService {
         PersonEntity person = personService.findPersonByUserId(pessoaId);
 
         OrganizationEntity entity = new OrganizationEntity();
+        entity.setExternalId(UUID.randomUUID().toString());
         entity.setName(organizationName);
         entity.setOwner(person);
         entity.setAdms(new ArrayList<>());
@@ -40,4 +42,7 @@ public class OrganizationService {
         return repository.findByNameAndOwner(organizations, person).orElseThrow();
     }
 
+    public OrganizationEntity findORganizationById(String organizationId) {
+        return repository.findByExternalId(organizationId).orElseThrow();
+    }
 }

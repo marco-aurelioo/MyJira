@@ -22,4 +22,11 @@ export class ProfileService {
     return this.http.get<Profile>(this.apiUrl, {headers: headersValues });
   } 
 
+  salvaProfile(avatar: string): Observable<Profile> {
+    console.log("chegou a entrar na consulta");
+    let headersValues = new HttpHeaders()
+        .set('Authorization', 'Bearer ' + this.keycloak.getToken());
+    return this.http.post<Profile>(this.apiUrl,{avatar: avatar}, {headers: headersValues });
+  } 
+
 }
