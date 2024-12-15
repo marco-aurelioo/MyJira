@@ -1,10 +1,10 @@
 export class Projeto{
 
-    id?:   String;  
-    nome?: String;
-    image?: String;
-    alias?: String;
-    description?: String;
+    id?:   string;  
+    nome?: string;
+    image?: string;
+    alias?: string;
+    description?: string;
 
     
         constructor(id: string, nome: string, image: string){

@@ -1,5 +1,6 @@
 package com.tiozao.tasks.domain.service;
 
+import com.tiozao.tasks.aplication.dtos.ProfileDTO;
 import com.tiozao.tasks.domain.entity.PersonEntity;
 import com.tiozao.tasks.domain.entity.ProjectEntity;
 import com.tiozao.tasks.domain.service.providers.useraccess.UserRolesService;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class PersonService {
 
     Logger logger = LoggerFactory.getLogger("PersonService");
+
+
 
     @Autowired
     private PersonRepository repository;
@@ -68,5 +71,16 @@ public class PersonService {
             logger.info("Projeto ja adicionado;");
         }
         return true;
+    }
+
+    public PersonEntity atualizaProfile(String externalId, ProfileDTO profileDTO) {
+        PersonEntity entity = findPersonByUserId(externalId);
+        entity.setAvatar(profileDTO.getImage());
+        return repository.save(entity);
+    }
+
+    public Page<PersonEntity> findPersonLikeNameNotInProject(String nameLike, Pageable pageable, String projetoId) {
+        return reportReporsitoy.findByNameLikeAndProjectMemberNot('%'+nameLike+'%', projetoId, pageable );
+
     }
 }

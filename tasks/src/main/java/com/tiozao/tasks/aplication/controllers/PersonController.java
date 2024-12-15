@@ -7,6 +7,7 @@ import com.tiozao.tasks.assembler.converters.PersonModelConverter;
 import com.tiozao.tasks.assembler.converters.models.PersonInputs;
 import com.tiozao.tasks.domain.entity.PersonEntity;
 import com.tiozao.tasks.domain.service.PersonService;
+import com.tiozao.tasks.resources.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,11 +38,19 @@ public class PersonController {
     @GetMapping("/persons")
     public ResponseEntity<Page<PersonDto>> findPerson(
             @RequestParam(name = "name", required = false) String nameLike,
+            @RequestParam(name = "toInviteProject", required = false) String toInviteProject,
             Pageable pageable
     ) {
-       return ResponseEntity.ok(
-               converterModel.createPageFromEntities(
-                       service.findPersonLikeName(nameLike,pageable)));
+       if(toInviteProject!=null){
+           return ResponseEntity.ok(
+                   converterModel.createPageFromEntities(
+                           service.findPersonLikeNameNotInProject(nameLike, pageable,
+                                   toInviteProject)));
+       }else {
+           return ResponseEntity.ok(
+                   converterModel.createPageFromEntities(
+                           service.findPersonLikeName(nameLike, pageable)));
+       }
     }
 
 

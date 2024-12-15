@@ -33,7 +33,13 @@ public class ProfileController {
         }
     }
 
+    @PutMapping("/profile")
+    public ResponseEntity<ProfileDTO> atualizaProfile(
+            Principal principal,
+            @RequestBody ProfileDTO profileDTO) {
 
+        return ResponseEntity.ok(getProfileDTO(personService.atualizaProfile(((JwtAuthenticationToken) principal).getToken().getClaim("sub"),profileDTO)));
+    }
 
 
     private ProfileDTO getProfileDTO(PersonEntity entity) {

@@ -51,7 +51,14 @@ export class ProfileComponent implements OnInit{
 
   onSubmit(): void {
     if (this.userForm!.valid) {
-      console.log('Form Submitted:', this.userForm!.value);
+      this.profileService.salvaProfile(this.userForm.value.image).subscribe(
+        (profile) => {
+          this.profile = profile;
+        },
+        (erro) => {
+          console.error('Erro ao carregar profile:', erro);
+        }
+      )
     }
   }
 

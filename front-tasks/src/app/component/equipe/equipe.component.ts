@@ -22,16 +22,14 @@ export class EquipeComponent implements OnInit {
   myProjects: Projeto[] = [];
   activeTeams: Projeto[] = [];
   pendingInvites: TeamInvite[] = [];
-
   myInvites: MyInviteProject[] = [];
 
   formCadastroOrganizacao: FormGroup;
   formCadastroProjeto: FormGroup;
-  selectedProjectId: string | undefined;
-
+  selectedProjectId: string;
 
   organizationSelected: string| undefined;
-  projectSelected: string| null = null;
+  projectSelected: string;
 
   //itens para busca de pessoas
   searchTerm: string = '';
@@ -54,6 +52,8 @@ export class EquipeComponent implements OnInit {
     this.formCadastroProjeto = this.fb.group({
       titulo:['']
     })
+    this.selectedProjectId = '';
+    this.projectSelected = '';
   }
 
   ngOnInit() {
@@ -65,14 +65,19 @@ export class EquipeComponent implements OnInit {
   }
 
   setOrganization(organization: string){
-
     this.organizationSelected = organization;
     console.log("load projects da organizacao "+organization)
     this.loadMyProjects();
   }
 
+  selectProject(projectId: string){
+    this.selectedProjectId = projectId;
+    let proj = this.myProjects.filter(x => x.id == projectId )[0];
+    this.projectSelected = proj.nome!;
+  }
+
   loadPessoas() {
-    this.pessoaService.getPaginaPessoa(this.searchTerm, this.currentPage, this.pageSize)
+    this.pessoaService.getPaginaPessoa(this.searchTerm, this.selectedProjectId, this.currentPage, this.pageSize)
       .subscribe(response => {
         this.results = response.content;
         this.totalElements = response.totalElements;

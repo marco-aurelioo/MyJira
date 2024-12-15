@@ -14,11 +14,11 @@ export class PessoaService {
 
   constructor(private http: HttpClient, private keycloak: KeycloakService) { }
 
-  getPaginaPessoa(searchTerm: string, currentPage: any, pageSize: any): Observable<PagePessoa> {
+  getPaginaPessoa(searchTerm: string, toInviteProject: string, currentPage: any, pageSize: any): Observable<PagePessoa> {
     console.log("chegou a entrar na consulta");
     let headersValues = new HttpHeaders()
         .set('Authorization', 'Bearer ' + this.keycloak.getToken());
-    return this.http.get<PagePessoa>(this.apiUrl+"?size="+pageSize+"&page="+currentPage+"&name="+searchTerm, {headers: headersValues });
+    return this.http.get<PagePessoa>(this.apiUrl+"?size="+pageSize+"&page="+currentPage+"&name="+searchTerm+"&toInviteProject="+toInviteProject, {headers: headersValues });
   } 
 
 }
