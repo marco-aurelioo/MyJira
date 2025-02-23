@@ -14,9 +14,9 @@ export class ProfileComponent implements OnInit{
 
   profile?: Profile;
   userForm: FormGroup = this.fb.group({
-    id: [''],
-    username: [''],
-    image: ['']
+    userId: [''],
+    name: [''],
+    avatar: ['']
   }); 
 
   constructor(
@@ -24,14 +24,15 @@ export class ProfileComponent implements OnInit{
     private profileService: ProfileService,
     private fb: FormBuilder
   ) {
+    console.log("carregando profile");
     if (keycloakService.isAuthenticated()) {
       profileService.getProfile().subscribe(
         (profile) => {
           this.profile = profile;
           this.userForm = this.fb.group({
-            id: [this.profile?.id],
-            username: [this.profile?.username],
-            image: [this.profile?.image]
+            userId: [this.profile?.userId],
+            name: [this.profile?.name],
+            avatar: [this.profile?.avatar]
           });
         },
         (erro) => {
@@ -42,16 +43,21 @@ export class ProfileComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    console.log("carregando profile onInit");
     this.userForm = this.fb.group({
-      id: [this.profile?.id],
-      username: [this.profile?.username],
-      image: [this.profile?.image]
+      userId: [this.profile?.userId],
+      name: [this.profile?.name],
+      avatar: [this.profile?.avatar]
     });
   }
 
   onSubmit(): void {
     if (this.userForm!.valid) {
-      this.profileService.salvaProfile(this.userForm.value.image).subscribe(
+      this.profileService.salvaProfile(
+        this.userForm.value.userId,
+        this.userForm.value.name,
+        this.userForm.value.avatar
+      ).subscribe(
         (profile) => {
           this.profile = profile;
         },

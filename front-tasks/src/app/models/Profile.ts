@@ -1,13 +1,14 @@
 export class Profile{
 
-id?:   String;  
-username?: String;
-image?: String;
+userId?:   String;  
+name?: String;
+avatar?: String;
 
-    constructor(id: string, userName: string, image: string){
-        this.id = id;
-        this.username = userName;
-        this.image = image;
+    constructor(userId: string, name: string, avatar: string){
+        this.userId = userId;
+        this.name = name;
+        this.avatar = avatar;
     }
+
 
 }

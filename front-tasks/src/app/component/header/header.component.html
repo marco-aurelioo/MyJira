@@ -7,7 +7,7 @@
         
         <div class="flex items-center gap-2" *ngIf="keycloakService.isAuthenticated(); else login" >
             <div  >
-                <h1>{{profile?.username}}</h1>
+                <h1>{{profile?.name}}</h1>
             </div>
 
             <button class="button button-primary">+ Nova Tarefa</button>

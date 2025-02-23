@@ -1,5 +1,6 @@
 // src/app/services/keycloak.service.ts
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import Keycloak, { KeycloakProfile } from 'keycloak-js';
 
 @Injectable({
@@ -8,9 +9,10 @@ import Keycloak, { KeycloakProfile } from 'keycloak-js';
 export class KeycloakService {
   private keycloakInstance: Keycloak.KeycloakInstance;
 
-  constructor() {
+
+  constructor(private router: Router) {
     this.keycloakInstance = new Keycloak({
-      url: 'http://192.168.0.106:9090/',
+      url: 'http://192.168.15.17:9090/',
       realm: 'DEV',
       clientId: 'task-track',
     });
@@ -36,7 +38,10 @@ export class KeycloakService {
   }
 
   login(): void {
-    this.keycloakInstance.login({ redirectUri: window.location.href });
+    
+    const redirectUri = window.location.origin + window.location.pathname;
+    this.keycloakInstance.login({ redirectUri });
+    
   }
 
   logout(): void {

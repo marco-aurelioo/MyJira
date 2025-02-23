@@ -11,6 +11,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {    
     console.log(this.keycloakService.isAuthenticated());
+    console.log("authGuard")
     if (this.keycloakService.isAuthenticated()) {
       return true;
     } else {

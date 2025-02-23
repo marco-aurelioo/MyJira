@@ -9,7 +9,7 @@ import { KeycloakService } from './keycloak.service';
 })
 export class ProfileService {
 
-  private apiUrl = 'http://localhost:8080/api/profile';
+  private apiUrl = 'http://localhost:8080/api/users';
   
   constructor(private http: HttpClient, private keycloak: KeycloakService) { 
 
@@ -19,16 +19,16 @@ export class ProfileService {
     console.log("chegou a entrar na consulta");
     let headersValues = new HttpHeaders()
         .set('Authorization', 'Bearer ' + this.keycloak.getToken());
-    return this.http.get<Profile>(this.apiUrl, {headers: headersValues });
+    return this.http.get<Profile>(this.apiUrl+"/my-profile", {headers: headersValues });
   } 
 
-  salvaProfile(avatar: string): Observable<Profile> {
+  salvaProfile(userId: string, name: string, avatar: string): Observable<Profile> {
     console.log("chegou a entrar na consulta "+avatar);
     let headersValues = new HttpHeaders()
         .set('Authorization', 'Bearer ' + this.keycloak.getToken());
     
-    return this.http.put<Profile>(this.apiUrl,
-      { image: avatar },
+    return this.http.put<Profile>(this.apiUrl+"/"+userId,
+      { userId: userId, name: name, avatar: avatar },
       {headers: headersValues });
   } 
 

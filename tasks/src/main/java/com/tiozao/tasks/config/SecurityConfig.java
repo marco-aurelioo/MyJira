@@ -1,16 +1,17 @@
 package com.tiozao.tasks.config;
 
-import com.tiozao.tasks.domain.service.providers.useraccess.JwtAuthConverter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import com.tiozao.tasks.aplication.saas.useraccess.JwtAuthConverter;
 
 import java.util.List;
 @Configuration
@@ -19,14 +20,15 @@ import java.util.List;
 public class SecurityConfig {
 
     @Autowired
-    private JwtAuthConverter jwtAuthConverter;
+    private  JwtAuthConverter jwtAuthConverter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable()) // Desativa CSRF para evitar bloqueios
                 .cors(cors -> cors.configurationSource(request -> {
                     var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                    corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200/"));
+                    corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
                     corsConfiguration.setAllowCredentials(true);
@@ -34,17 +36,17 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/public/**").permitAll()
-                                .requestMatchers("/api/public/subscriptions/**").permitAll()
-                                .requestMatchers("/api/public/**").permitAll()
+                                .requestMatchers("/api/public/**").permitAll() // Permite acesso sem autenticação
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated()
+                                .anyRequest().authenticated() // Requer autenticação para outras URLs
                 )
+                // 🔥 Aplica OAuth2 somente para rotas autenticadas
+                .securityMatcher("/api/**") // Aplica a segurança apenas para rotas autenticadas
                 .oauth2ResourceServer(oauth2ResourceServer ->
-                        oauth2ResourceServer
-                                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))
+                        oauth2ResourceServer.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter))
                 );
+
         return http.build();
     }
 
