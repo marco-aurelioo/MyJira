@@ -14,6 +14,8 @@ public class UserProfileConverter {
         return dto;
     }
 
+
+
     public com.tiozao.tasks.domain.entity.UserProfile convertToEntity(UserProfile userProfile) {
         com.tiozao.tasks.domain.entity.UserProfile entity = new com.tiozao.tasks.domain.entity.UserProfile();
         entity.setName(userProfile.getName());

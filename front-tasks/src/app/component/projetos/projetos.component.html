@@ -1,8 +1,72 @@
 <main class="main-content">
+    
     <div class="card">
-        <h1>lista e link do projeto</h1>
+        <div class="profile-stats">
+            <div class="stat-card">
+                <div class="stat-value">{{pageProjetos?.totalElements}}</div>
+                <div class="stat-label">Total de projetos</div>
+            </div>
+        </div>
+        
+        <ul>
+            <li *ngFor="let projeto of pageProjetos?.content" class="projeto">
+                
+                <div *ngIf="projeto.imagem" class="projeto-img-container">
+                    <img [src]="projeto.imagem" alt="Imagem do projeto" class="projeto-img">
+                </div>
+                <div *ngIf="!projeto.imagem" class="projeto-img-placeholder">
+                    📁
+                </div>
+                
+                <div class="projeto-info">
+                    <div class="projeto-apelido">{{ projeto.unicName }}</div>
+                    <div class="projeto-nome">{{ projeto.name }}</div>
+                </div>
+                
+                
+                <button class="projeto-btn" [routerLink]="['/projeto', projeto.unicName]">Acessar</button>
+            </li>
+        </ul>
+        
+        <!-- Paginação -->
+        <div class="paginacao" *ngIf="pageProjetos && pageProjetos?.totalPages! > 1 ">
+            <button class="pagina-btn" [disabled]="pageProjetos?.first" (click)="mudarPagina(0)">«</button>
+            <button class="pagina-btn" [disabled]="pageProjetos?.first" (click)="mudarPagina(pageProjetos!.number! - 1)">‹</button>
+            
+            <button *ngFor="let pagina of getPaginasDisponiveis()" 
+                    class="pagina-btn" 
+                    [class.ativo]="pagina === pageProjetos?.number"
+                    (click)="mudarPagina(pagina)">
+                {{ pagina + 1 }}
+            </button>
+            
+            <button class="pagina-btn" [disabled]="pageProjetos?.last" (click)="mudarPagina(pageProjetos!.number! + 1)">›</button>
+            <button class="pagina-btn" [disabled]="pageProjetos?.last" (click)="mudarPagina(pageProjetos!.totalPages! - 1)">»</button>
+        </div>
     </div>
+    
     <div class="card">
-        <h1>Formulario novo projeto.</h1>
+        <h1 style="margin-left: 25px;padding-top: 20px; font-weight: bolder;color: var(--text-primary);">Crie seu projeto.</h1>
+        <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" >
+            <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="form-group">
+            <label>descricao:</label>
+            <input type="text" class="form-control" formControlName="description">
+            </div>
+            <div class="form-group checkbox-group">
+                <label>
+                    <input type="checkbox" formControlName="isPublic">
+                    Público
+                </label>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+            <button type="submit" class="button button-primary criar_projeto" >Criar projeto</button>
+            </div>
+        </form>
+        
     </div>
 </main>

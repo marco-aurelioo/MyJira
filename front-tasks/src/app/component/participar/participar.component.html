@@ -1,0 +1,179 @@
+<div class="participar-container">
+    <div class="page-header">
+      <h1>Participar de Projetos</h1>
+      <p class="subtitle">Encontre projetos que combinam com suas habilidades e interesses</p>
+    </div>
+  
+    <!-- Seção de busca e filtros -->
+    <div class="search-section">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Buscar projetos..." 
+          [(ngModel)]="termoBusca"
+          (keyup.enter)="buscarProjetos()"
+          class="search-input">
+        <button class="search-button" (click)="buscarProjetos()">
+          🔍 Buscar
+        </button>
+      </div>
+  
+      <div class="filters">
+        <div class="filter-group">
+          <label>Ordenar por:</label>
+          <select [(ngModel)]="filtroOrdenacao" (change)="aplicarFiltros()">
+            <option value="recent">Mais recentes</option>
+            <option value="popular">Mais populares</option>
+            <option value="name">Nome (A-Z)</option>
+          </select>
+        </div>
+  
+        <div class="filter-group">
+          <label>Categorias:</label>
+          <div class="categories">
+            <div 
+              *ngFor="let categoria of categorias" 
+              class="category-tag" 
+              [class.active]="categoriasSelecionadas.includes(categoria)"
+              (click)="toggleCategoria(categoria)">
+              {{ categoria }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Lista de projetos -->
+    <div class="projects-grid" *ngIf="projetos.length > 0">
+      <div class="project-card" *ngFor="let projeto of projetos">
+        <div class="project-header">
+          <div class="project-image">
+            <img *ngIf="projeto.imagem" [src]="projeto.imagem" [alt]="projeto.name">
+            <div *ngIf="!projeto.imagem" class="project-image-placeholder">
+              📁
+            </div>
+          </div>
+          <div class="project-badges">
+            <span class="project-members">👥 {{ projeto.membrosCount || 0 }} membros</span>
+            <span class="project-tasks">✔️ {{ projeto.tarefasCount || 0 }} tarefas</span>
+          </div>
+        </div>
+  
+        <div class="project-content">
+          <h3 class="project-title">{{ projeto.name }}</h3>
+          <div class="project-id">{{ projeto.unicName }}</div>
+          <p class="project-description">{{ projeto.description || 'Sem descrição disponível.' }}</p>
+          
+          <div class="project-categories" *ngIf="projeto.categorias && projeto.categorias.length > 0">
+            <span class="category-tag small" *ngFor="let categoria of projeto.categorias">
+              {{ categoria }}
+            </span>
+          </div>
+        </div>
+  
+        <div class="project-actions">
+          <button class="btn-primary" (click)="abrirModalSolicitacao(projeto)">
+            Solicitar Participação
+          </button>
+          <button class="btn-secondary" [routerLink]="['/projeto', projeto.projectId]">
+            Ver Detalhes
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Estado vazio -->
+    <div class="empty-state" *ngIf="projetos.length === 0 && !carregando">
+      <div class="empty-icon">🔍</div>
+      <h3>Nenhum projeto encontrado</h3>
+      <p>Tente mudar os termos da busca ou remover alguns filtros.</p>
+    </div>
+  
+    <!-- Carregando -->
+    <div class="loading-state" *ngIf="carregando">
+      <div class="loading-spinner"></div>
+      <p>Buscando projetos...</p>
+    </div>
+  
+    <!-- Paginação -->
+    <div class="pagination" *ngIf="totalPaginas > 1">
+      <button class="page-btn" [disabled]="paginaAtual === 0" (click)="mudarPagina(0)">«</button>
+      <button class="page-btn" [disabled]="paginaAtual === 0" (click)="mudarPagina(paginaAtual - 1)">‹</button>
+      
+      <button *ngFor="let pagina of getPaginasDisponiveis()" 
+              class="page-btn" 
+              [class.active]="pagina === paginaAtual"
+              (click)="mudarPagina(pagina)">
+        {{ pagina + 1 }}
+      </button>
+      
+      <button class="page-btn" [disabled]="paginaAtual === totalPaginas - 1" (click)="mudarPagina(paginaAtual + 1)">›</button>
+      <button class="page-btn" [disabled]="paginaAtual === totalPaginas - 1" (click)="mudarPagina(totalPaginas - 1)">»</button>
+    </div>
+  </div>
+  
+  <!-- Modal de Solicitação -->
+  <div class="modal-backdrop" *ngIf="mostrarModal" (click)="fecharModal($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Solicitar Participação</h2>
+        <button class="close-button" (click)="fecharModal($event)">×</button>
+      </div>
+  
+      <div class="modal-body">
+        <div class="selected-project">
+          <div class="project-image-small">
+            <img *ngIf="projetoSelecionado?.imagem" [src]="projetoSelecionado?.imagem" [alt]="projetoSelecionado?.name">
+            <div *ngIf="!projetoSelecionado?.imagem" class="project-image-placeholder small">
+              📁
+            </div>
+          </div>
+          <div class="project-info-small">
+            <h3>{{ projetoSelecionado?.name }}</h3>
+            <div class="project-id-small">{{ projetoSelecionado?.unicName }}</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="motivacao">Por que você quer participar deste projeto?</label>
+          <textarea
+            id="motivacao"
+            rows="4"
+            [(ngModel)]="solicitacaoMensagem"
+            placeholder="Descreva suas motivações, habilidades e como você pode contribuir para o projeto..."
+            class="form-control"></textarea>
+        </div>
+  
+        <div class="form-group">
+          <label>Selecione suas habilidades relevantes:</label>
+          <div class="skills-selector">
+            <div 
+              *ngFor="let habilidade of habilidadesDisponiveis" 
+              class="skill-tag" 
+              [class.active]="habilidadesSelecionadas.includes(habilidade)"
+              (click)="toggleHabilidade(habilidade)">
+              {{ habilidade }}
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="fecharModal($event)">Cancelar</button>
+        <button 
+          class="btn-primary" 
+          [disabled]="!solicitacaoMensagem.trim()"
+          (click)="enviarSolicitacao()">
+          Enviar Solicitação
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast de notificação -->
+  <div class="toast" *ngIf="mostrarToast" [class.toast-success]="toastTipo === 'success'" [class.toast-error]="toastTipo === 'error'">
+    <div class="toast-icon">
+      {{ toastTipo === 'success' ? '✅' : '❌' }}
+    </div>
+    <div class="toast-message">{{ toastMensagem }}</div>
+  </div>

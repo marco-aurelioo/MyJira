@@ -1,19 +1,27 @@
 <aside class="sidebar">
     <nav>
-        <a href="home" class="nav-item">
-            📊 Dashboard
-        </a>
-        <a href="#" class="nav-item">
-            ✔️ Minhas Tarefas
-        </a>
-        <a href="equipe" class="nav-item">
-            👥 Equipe
-        </a>
-        <a href="profile" class="nav-item active">
-            👤 Perfil
-        </a>
-        <a href="#" class="nav-item">
-            ⚙️ Configurações
-        </a>
+        <div *ngIf="keycloakServie.isAuthenticated()">
+            <a href="/home" class="nav-item">
+                📊 Dashboard
+            </a>
+            <a href="#" class="nav-item">
+                ✔️ Minhas Tarefas
+            </a>
+            <a href="/equipe" class="nav-item">
+                👥 Equipe
+            </a>
+            <a href="/profile" class="nav-item active">
+                👤 Perfil
+            </a>
+            <a href="#" class="nav-item">
+                ⚙️ Configurações
+            </a>
+            <a href="/projetos" class="nav-item">
+                📁 Projetos
+            </a>
+            <a href="/participar" class="nav-item">
+                🤝 Participar de Projetos
+            </a>
+        </div>
     </nav>
 </aside>

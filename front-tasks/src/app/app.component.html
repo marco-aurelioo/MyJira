@@ -1,8 +1,6 @@
 
 <app-header></app-header>
-<div *ngIf="keycloakService.isAuthenticated()">
-    <app-naveg></app-naveg>
-</div>
+<app-naveg></app-naveg>
 <main class="main-content">
     <router-outlet></router-outlet>
 </main>

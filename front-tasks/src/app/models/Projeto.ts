@@ -1,16 +1,18 @@
 export class Projeto{
 
-    id?:   string;  
-    nome?: string;
-    image?: string;
-    alias?: string;
+    projectId?:   string;  
+    name?: string;
     description?: string;
+    isPublic?: boolean;
+    unicName?: string;
+    imagem?: string;
 
     
-        constructor(id: string, nome: string, image: string){
-            this.id = id;
-            this.nome = nome;
-            this.image = image;
+        constructor(projectId: string, name: string, description: string, isPublic: boolean){
+            this.projectId = projectId;
+            this.name = name;
+            this.description = description;
+            this.isPublic = isPublic
         }
     
     }

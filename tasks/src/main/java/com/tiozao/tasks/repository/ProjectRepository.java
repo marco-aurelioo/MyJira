@@ -2,6 +2,8 @@ package com.tiozao.tasks.repository;
 
 import com.tiozao.tasks.domain.entity.Project;
 import com.tiozao.tasks.domain.entity.UserProfile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,7 @@ public interface ProjectRepository extends CrudRepository<Project, Integer> {
     Optional<Project> findByExternalIdAndOwner(String externalId, UserProfile myUserProfile);
 
     Optional<Project> findByUnicNameAndOwner(String unicName,  UserProfile myUserProfile);
+
+    Page<Project> findByOwner(UserProfile myUserProfile, PageRequest pageable);
+
 }

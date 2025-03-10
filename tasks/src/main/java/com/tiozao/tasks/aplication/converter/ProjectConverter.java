@@ -1,6 +1,7 @@
 package com.tiozao.tasks.aplication.converter;
 
 import com.tiozao.tasks.aplication.controllers.model.Project;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,5 +27,9 @@ public class ProjectConverter {
         entity.setPublic(project.isPublic());
         entity.setExternalId(project.getProjectId());
         return entity;
+    }
+
+    public Page<Project> convertPageToDto(Page<com.tiozao.tasks.domain.entity.Project> pageEntity) {
+        return pageEntity.map(this::convertToDto);
     }
 }

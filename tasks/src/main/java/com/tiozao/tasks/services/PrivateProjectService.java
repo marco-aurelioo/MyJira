@@ -4,6 +4,8 @@ import com.tiozao.tasks.domain.entity.Project;
 import com.tiozao.tasks.repository.ProjectRepository;
 import com.tiozao.tasks.utils.NomeHashGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -58,5 +60,7 @@ public class PrivateProjectService {
     }
 
 
-
+    public Page<Project> findProjectByOwner(PageRequest pageable) {
+        return repository.findByOwner(userProfileService.findMyUserProfile(), pageable);
+    }
 }

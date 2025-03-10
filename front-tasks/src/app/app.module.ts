@@ -19,6 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './component/profile/profile.component';
 import { ProjetosComponent } from './component/projetos/projetos.component';
 import { HomeComponent } from './home/home.component';
+import { ProjetoComponent } from './component/projeto/projeto.component';
+import { ParticiparComponent } from './component/participar/participar.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => keycloak.init();
@@ -34,7 +36,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     NavegComponent,
     ProfileComponent,
     ProjetosComponent, 
-    HomeComponent ],
+    HomeComponent, ProjetoComponent, ParticiparComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
