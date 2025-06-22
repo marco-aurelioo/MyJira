@@ -24,9 +24,16 @@ export class ProjetosComponent implements OnInit{
   myProjetosPage: Number = 0
   myProjetosSize: Number = 5
 
+  
+  pageProjetosQueSouMembro?: PageProjeto;
+  myProjetosPageQueSouMembro: Number = 0
+  myProjetosSizeQueSouMembro: Number = 5
+
+
   constructor(private fb: FormBuilder, private service: ProjetosService){
     this.projeto = new Projeto('','','',false);
     this.loadMyProjetos();
+    this.loadMyProjetosQueSouMembro();
   }
 
   loadMyProjetos(){
@@ -46,6 +53,23 @@ export class ProjetosComponent implements OnInit{
     console.log(this.pageProjetos);
   }
 
+  loadMyProjetosQueSouMembro(){
+    this.service.findMyProjetosQueSouMembro(
+      this.myProjetosPageQueSouMembro,
+      this.myProjetosSizeQueSouMembro).subscribe(
+      (page) =>{
+        console.log("carregando meus projetosQueSouMembro");
+        console.log(page);
+        this.pageProjetosQueSouMembro = page;
+
+      },
+      (error) =>{
+        console.error("falha ao carregar meus projetosQueSouMembro.");
+      }
+    )
+    console.log(this.pageProjetosQueSouMembro);
+  }
+
 
   ngOnInit(): void {
     
@@ -60,9 +84,13 @@ export class ProjetosComponent implements OnInit{
     ).subscribe(
       (projeto) => {
         this.projeto = projeto;
+        this.projectForm.reset();
+        this.loadMyProjetos();
       },
       (erro) => {
         console.error('Falha ao enviar projeto:', erro);
+        alert('Erro ao cadastrar.')
+        this.projectForm.reset();
       }
     )
   }
@@ -70,6 +98,20 @@ export class ProjetosComponent implements OnInit{
   mudarPagina(pagina: number){
     this.myProjetosPage = pagina;
     this.loadMyProjetos();  
+  }
+
+
+  mudarPaginaQueSouMembro(pagina: number){
+    this.myProjetosPageQueSouMembro = pagina;
+    this.loadMyProjetosQueSouMembro();  
+  }
+
+  getPaginasDisponiveisQueSouMembro(): number[] {
+    if (!this.pageProjetosQueSouMembro || this.pageProjetosQueSouMembro.totalPages! <= 1) {
+      return [];
+    }
+  
+    return Array.from({ length: this.pageProjetosQueSouMembro.totalPages! }, (_, i) => i);
   }
 
   getPaginasDisponiveis(): number[] {

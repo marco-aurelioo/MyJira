@@ -21,6 +21,8 @@ public class CrudProjectController {
     
     @Autowired
     private PrivateProjectService service;
+
+
     
     
     @PostMapping("/projects")
@@ -52,6 +54,18 @@ public class CrudProjectController {
                         service.findProjectByOwner(
                                 PageRequest.of( page, size,
                                         Sort.by("unicName")))));
+    }
+
+
+    @GetMapping("/projects/member/")
+    public ResponseEntity<Page<Project>> findBprojectByImMember(
+            @RequestParam(name="page", required = false,defaultValue = "0") Integer page,
+            @RequestParam(name="size", required = false,defaultValue = "20") Integer size){
+        return ResponseEntity.ok(
+                converter.convertPageToDto(
+                        service.findProjectImMember(
+                                PageRequest.of( page, size,
+                                        Sort.by("id")))));
     }
 
 }

@@ -1,8 +1,11 @@
 package com.tiozao.tasks.services;
 
 import com.tiozao.tasks.domain.entity.Project;
+import com.tiozao.tasks.domain.entity.ProjectMember;
+import com.tiozao.tasks.repository.ProjectMemberRepository;
 import com.tiozao.tasks.repository.ProjectRepository;
 import com.tiozao.tasks.utils.NomeHashGenerator;
+import org.keycloak.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +22,14 @@ public class PrivateProjectService {
     @Autowired
     private ProjectRepository repository;
 
+    @Autowired
+    private ProjectMemberRepository projectMemberRepository;
+
 
     public Project  createProject(Project project){
-
+        if(StringUtil.isNullOrEmpty(project.getName())){
+            throw new IllegalArgumentException("Projeto precisa ter um nome");
+        }
         Project entity = new Project();
         entity.setOwner(userProfileService.findMyUserProfile());
         entity.setName(project.getName());
@@ -34,20 +42,30 @@ public class PrivateProjectService {
 
     }
 
-    public Project findProjectByExternalId(String externalId) {
+    public Project findMyProjectByExternalId(String externalId) {
         return repository.findByExternalIdAndOwner(
                 externalId,
                 userProfileService.findMyUserProfile())
                 .orElseThrow();
     }
 
-    public Project findProjectByUnicName(String unicName) {
+    public Project findMyProjectByUnicName(String unicName) {
         return repository.findByUnicNameAndOwner(
                 unicName,
                 userProfileService.findMyUserProfile())
                 .orElseThrow();
     }
 
+
+    public Project findProjectByExternalId(String externalId) {
+        return repository.findByExternalId(externalId)
+                .orElseThrow();
+    }
+
+    public Project findProjectByUnicName(String unicName) {
+        return repository.findByUnicName(unicName)
+                .orElseThrow();
+    }
 
     private String createUnicName(String originalName){
         String unicName = NomeHashGenerator.gerarHash(originalName);
@@ -63,4 +81,21 @@ public class PrivateProjectService {
     public Page<Project> findProjectByOwner(PageRequest pageable) {
         return repository.findByOwner(userProfileService.findMyUserProfile(), pageable);
     }
+
+    public Page<Project> findProjectImMember(PageRequest pageable) {
+        return projectMemberRepository.findByUser(userProfileService.findMyUserProfile(), pageable).map(ProjectMember::getProject);
+    }
+
+
+    public Page<Project> findPublicProjects(String alias, PageRequest pageable) {
+        if(StringUtil.isNullOrEmpty(alias)) {
+            return repository.findByIsPublic(true, pageable);
+        }else {
+            return repository.findByIsPublicAndNameLike(true, "%"+alias+"%", pageable);
+        }
+
+    }
+
+
+
 }

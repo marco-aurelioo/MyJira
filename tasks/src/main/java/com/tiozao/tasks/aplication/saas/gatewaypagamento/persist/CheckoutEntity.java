@@ -30,8 +30,8 @@ public class CheckoutEntity  {
 
     private String pessoa;
 
-    @Enumerated(EnumType.STRING)
-    private CheckoutStatus status;
+//    @Enumerated(EnumType.STRING)
+//    private CheckoutStatus status;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "carrinho_json", columnDefinition = "jsonb")
@@ -53,7 +53,7 @@ public class CheckoutEntity  {
         this.pessoa = pessoa;
         this.carrinhoJson = convertToJson(produtos);
         this.gatewayPaymentId = gatewayPaymentId;
-        this.status = CheckoutStatus.PENDING;
+       // this.status = CheckoutStatus.PENDING;
     }
 
     // Getters e setters
@@ -120,13 +120,13 @@ public class CheckoutEntity  {
         this.externalId = externalId;
     }
 
-    public CheckoutStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CheckoutStatus status) {
-        this.status = status;
-    }
+//    public CheckoutStatus getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(CheckoutStatus status) {
+//        this.status = status;
+//    }
 
     public String getGatewayPaymentId() {
         return gatewayPaymentId;

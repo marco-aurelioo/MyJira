@@ -6,6 +6,8 @@ export class Projeto{
     isPublic?: boolean;
     unicName?: string;
     imagem?: string;
+    qtdRequest?: number;
+    qtdInvites?: number;
 
     
         constructor(projectId: string, name: string, description: string, isPublic: boolean){

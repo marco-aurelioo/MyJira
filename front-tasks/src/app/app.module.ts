@@ -21,6 +21,14 @@ import { ProjetosComponent } from './component/projetos/projetos.component';
 import { HomeComponent } from './home/home.component';
 import { ProjetoComponent } from './component/projeto/projeto.component';
 import { ParticiparComponent } from './component/participar/participar.component';
+import { MinhasSolicitacoesComponent } from './component/participar/minhas-solicitacoes/minhas-solicitacoes.component';
+import { ParticiparProjetosComponent } from './component/participar/participar-projetos/participar-projetos.component';
+import { AprovarSolicitacoesComponent } from './component/participar/aprovar-solicitacoes/aprovar-solicitacoes.component';
+
+import { MembrosComponent } from './component/projeto/membros/membros.component';
+import { ConfiguracoesComponent } from './component/projeto/configuracoes/configuracoes.component';
+import { TarefasComponent } from './component/projeto/tarefas/tarefas.component';
+import { QuadroSprintComponent } from './component/projeto/quadro-sprint/quadro-sprint.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => keycloak.init();
@@ -36,7 +44,17 @@ function initializeKeycloak(keycloak: KeycloakService) {
     NavegComponent,
     ProfileComponent,
     ProjetosComponent, 
-    HomeComponent, ProjetoComponent, ParticiparComponent ],
+    HomeComponent,
+    ProjetoComponent, 
+    ParticiparComponent, 
+    MinhasSolicitacoesComponent,
+    ParticiparProjetosComponent,
+    AprovarSolicitacoesComponent,
+    MembrosComponent,
+    ConfiguracoesComponent,
+    TarefasComponent,
+    QuadroSprintComponent
+     ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -16,6 +16,46 @@
     --transition-speed: 0.2s;
   }
   
+
+  .tabs-container {
+    margin-bottom: 24px;
+  }
+  
+  .tab-nav {
+    display: flex;
+    
+    border-bottom: 2px solid  #dee2e6;
+    gap: 10px;
+  }
+  
+  .tab-button {
+    padding: 12px 20px;
+    background: white;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  
+  .tab-button:hover {
+    color: var(--primary-color);
+  }
+  
+  .tab-button.active {
+    color:  #007bff;;
+    border-bottom: 2px solid  #007bff;
+  }
+  
+  .tab-content {
+    padding-top: 20px;
+  }
+  
+
   .participar-container {
     max-width: 1200px;
     margin: 0 auto;

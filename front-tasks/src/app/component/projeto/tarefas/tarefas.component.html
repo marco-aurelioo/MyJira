@@ -1,0 +1,78 @@
+<div class="tarefas-header">
+    <h2>Tarefas do Projeto</h2>
+    <div class="filtros">
+      <select class="filtro-select" [(ngModel)]="filtroStatus">
+        <option value="all">Todas as tarefas</option>
+        <option value="available">Disponíveis</option>
+        <option value="in-progress">Em andamento</option>
+        <option value="completed">Concluídas</option>
+      </select>
+      <div class="pesquisa">
+        <input type="text" placeholder="Pesquisar tarefas..." [(ngModel)]="termoPesquisa">
+        <button class="btn-pesquisa">🔍</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de tarefas -->
+  <div class="tarefas-lista">
+    <div *ngFor="let tarefa of tarefasFiltradas" class="tarefa-card">
+      <div class="tarefa-status" [ngClass]="'status-' + tarefa.status"></div>
+      <div class="tarefa-content">
+        <div class="tarefa-header">
+          <h3 class="tarefa-titulo">{{ tarefa.titulo }}</h3>
+          <div class="tarefa-prioridade" [ngClass]="'prioridade-' + tarefa.prioridade">
+            {{ getPrioridadeLabel(tarefa.prioridade!) }}
+          </div>
+        </div>
+        <p class="tarefa-descricao">{{ tarefa.descricao }}</p>
+        <div class="tarefa-meta">
+          <div class="tarefa-prazo">
+            <span class="meta-icon">📅</span> Prazo: {{ tarefa.prazo | date:'dd/MM/yyyy' }}
+          </div>
+          <div class="tarefa-responsavel" *ngIf="tarefa.responsavel">
+            <span class="meta-icon">👤</span> {{ tarefa.responsavel.name }}
+          </div>
+        </div>
+        <div class="tarefa-tags">
+          <span *ngFor="let tag of tarefa.tags!" class="tag">{{ tag }}</span>
+        </div>
+      </div>
+      <div class="tarefa-acoes">
+        <button *ngIf="tarefa.status! === 'available'" class="btn-inscrever" (click)="inscreverTarefa(tarefa.id)">
+          Participar
+        </button>
+        <button *ngIf="tarefa.responsavel?.userId" class="btn-concluir" (click)="concluirTarefa(tarefa.id)">
+          Concluir
+        </button>
+        <button class="btn-detalhes" (click)="verDetalhesTarefa(tarefa.id)">
+          Detalhes
+        </button>
+      </div>
+    </div>
+
+    <!-- Mensagem quando não há tarefas -->
+    <div *ngIf="tarefasFiltradas.length === 0" class="sem-tarefas">
+      <div class="sem-tarefas-icon">📋</div>
+      <p>Nenhuma tarefa encontrada com os filtros atuais.</p>
+      <button *ngIf="isProjetoMembro" class="btn-criar-tarefa" (click)="criarNovaTarefa()">
+        Criar Nova Tarefa
+      </button>
+    </div>
+  </div>
+
+  <!-- Paginação -->
+  <div class="paginacao" *ngIf="totalPaginas > 1">
+    <button class="pagina-btn" [disabled]="paginaAtual === 0" (click)="mudarPagina(0)">«</button>
+    <button class="pagina-btn" [disabled]="paginaAtual === 0" (click)="mudarPagina(paginaAtual - 1)">‹</button>
+    
+    <button *ngFor="let pagina of getPaginasDisponiveis()" 
+            class="pagina-btn" 
+            [class.ativo]="pagina === paginaAtual"
+            (click)="mudarPagina(pagina)">
+      {{ pagina + 1 }}
+    </button>
+    
+    <button class="pagina-btn" [disabled]="paginaAtual === totalPaginas - 1" (click)="mudarPagina(paginaAtual + 1)">›</button>
+    <button class="pagina-btn" [disabled]="paginaAtual === totalPaginas - 1" (click)="mudarPagina(totalPaginas - 1)">»</button>
+  </div>

@@ -1,10 +1,48 @@
 package com.tiozao.tasks.aplication.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.tiozao.tasks.aplication.controllers.model.Project;
+import com.tiozao.tasks.aplication.converter.ProjectConverter;
+import com.tiozao.tasks.services.PrivateProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class PublicProjectController {
+
+    @Autowired
+    private ProjectConverter converter;
+
+    @Autowired
+    private PrivateProjectService service;
+
+    @GetMapping("/public/projects/")
+    public ResponseEntity<Page<Project>> findPublicProject(
+            @RequestParam(name="page", required = false,defaultValue = "0") Integer page,
+            @RequestParam(name="size", required = false,defaultValue = "20") Integer size,
+            @RequestParam(name="termo", required = false,defaultValue = "") String termo ){
+        return ResponseEntity.ok(
+                converter.convertPageToDto(
+                        service.findPublicProjects(
+                                termo,
+                                PageRequest.of( page, size,
+                                        Sort.by("unicName")))));
+    }
+
+    @GetMapping("/public/projects/{value}")
+    public ResponseEntity<Project> findBprojectById(
+            @PathVariable("value") String value){
+        if (value.matches("^[0-9a-fA-F-]{36}$")) { // Regex para UUID
+            return ResponseEntity.ok(
+                    converter.convertToDto(service.findProjectByExternalId(value)));
+        } else {
+            return ResponseEntity.ok(
+                    converter.convertToDto(service.findProjectByUnicName(value)));
+        }
+    }
 
 }

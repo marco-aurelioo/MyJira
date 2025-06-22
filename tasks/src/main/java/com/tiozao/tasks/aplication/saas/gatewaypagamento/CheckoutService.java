@@ -1,4 +1,4 @@
-package com.tiozao.tasks.domain.service.providers.gatewaypagamento;
+package com.tiozao.tasks.aplication.saas.gatewaypagamento;
 
 import com.tiozao.tasks.domain.exceptions.GatewayPagamentoException;
 import com.tiozao.tasks.domain.service.providers.gatewaypagamento.model.CheckoutGatewayResponse;
@@ -17,26 +17,27 @@ import java.util.UUID;
 @Service
 public class CheckoutService {
 
-    @Autowired
-    private StripeGatewayPagamento stripeGatewayPagamento;
+//    @Autowired
+//    private StripeGatewayPagamento stripeGatewayPagamento;
 
     @Autowired
     private CheckoutRepository repository;
 
     public String efetuarPagamento(List<Produto> produtos, String personId, String urlSuccess, String urlCancel) throws GatewayPagamentoException {
         UUID externalId = UUID.randomUUID();
-        CheckoutGatewayResponse response = stripeGatewayPagamento.getCheckout(externalId, urlSuccess ,urlCancel, produtos);
-        repository.save(new CheckoutEntity( externalId, personId, produtos, response.getGatewayReferenceId()));
-        return response.getUrl();
+        //CheckoutGatewayResponse response = stripeGatewayPagamento.getCheckout(externalId, urlSuccess ,urlCancel, produtos);
+        //repository.save(new CheckoutEntity( externalId, personId, produtos, response.getGatewayReferenceId()));
+        return "";//response.getUrl();
     }
 
     public boolean confirmPayment(String pessoaID, String checkoutId) throws GatewayPagamentoException {
-        CheckoutEntity checkout = getCheckout(pessoaID, checkoutId);
-        if(checkout.getStatus().equals(CheckoutStatus.PENDING)){
-            checkout.setStatus(CheckoutStatus.getStatus(stripeGatewayPagamento.confirPayment(checkout.getGatewayPaymentId())));
-            checkout = repository.save(checkout);
-        }
-        return isSucessed(checkout.getStatus());
+//        CheckoutEntity checkout = getCheckout(pessoaID, checkoutId);
+//        if(checkout.getStatus().equals(CheckoutStatus.PENDING)){
+//            checkout.setStatus(CheckoutStatus.getStatus(stripeGatewayPagamento.confirPayment(checkout.getGatewayPaymentId())));
+//            checkout = repository.save(checkout);
+//        }
+//        return isSucessed(checkout.getStatus());
+        return false;
     }
 
     public List<Produto> getCheckoutProdutos(String pessoaID, String checkoutId) {
@@ -45,14 +46,14 @@ public class CheckoutService {
     }
 
     private CheckoutEntity getCheckout(String pessoaID, String checkoutId) {
-        Optional<CheckoutEntity> optEntity = repository.findByExternalId(UUID.fromString(checkoutId));
-        if(optEntity.isPresent()){
-            CheckoutEntity checkout = optEntity.get();
-            if(!checkout.getPessoa().equals(pessoaID)){
-                throw new IllegalStateException("CheckoutEntity");
-            }
-            return checkout;
-        }
+//        Optional<CheckoutEntity> optEntity = repository.findByExternalId(UUID.fromString(checkoutId));
+//        if(optEntity.isPresent()){
+//            CheckoutEntity checkout = optEntity.get();
+//            if(!checkout.getPessoa().equals(pessoaID)){
+//                throw new IllegalStateException("CheckoutEntity");
+//            }
+//            return checkout;
+//        }
         throw new IllegalStateException("CheckoutEntity");
     }
 
