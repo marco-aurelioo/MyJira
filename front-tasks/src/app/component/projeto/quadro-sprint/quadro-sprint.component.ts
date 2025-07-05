@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Projeto } from 'src/app/models/Projeto';
 
 export interface TaskCard {
   id: string;
@@ -32,6 +33,8 @@ export interface KanbanColumn {
   styleUrls: ['./quadro-sprint.component.css']
 })
 export class QuadroSprintComponent implements OnInit {
+  
+  @Input() projeto!: Projeto;
   
   columns: KanbanColumn[] = [
     {
@@ -178,6 +181,7 @@ export class QuadroSprintComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+
     this.initializeTasks();
   }
 
@@ -240,7 +244,7 @@ export class QuadroSprintComponent implements OnInit {
 
   // Método para obter classe CSS do tipo de tarefa
   getTaskTypeClass(type: string): string {
-    return `type-${type}`;
+    return `${type}`;
   }
 
   // Método para obter ícone do tipo de tarefa

@@ -23,11 +23,11 @@
   
     <!-- Navegação de abas -->
     <div class="projeto-tabs">
-      <button class="tab-button" [class.active]="activeTab === 'tarefas'" (click)="activeTab = 'tarefas'">
-        ✔️ Tarefas
-      </button>
       <button class="tab-button" [class.active]="activeTab === 'quadro'" (click)="activeTab = 'quadro'">
         👥 Quadro Sprint
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'tarefas'" (click)="activeTab = 'tarefas'">
+        ✔️ Tarefas
       </button>
       <button class="tab-button" [class.active]="activeTab === 'membros'" (click)="activeTab = 'membros'">
         👥 Membros
@@ -38,17 +38,17 @@
     </div>
   
     <div *ngIf="activeTab === 'tarefas'" class="content-container">
-      <app-tarefas></app-tarefas>
+      <<app-tarefas ></app-tarefas>>
     </div>
 
     <div *ngIf="activeTab === 'quadro'" class="content-container">
       <h2>Quadro do Projeto</h2>
-      <app-quadro-sprint></app-quadro-sprint>
+      <app-quadro-sprint [projeto]="projeto!" ></app-quadro-sprint>
     </div>
 
     <div *ngIf="activeTab === 'membros'" class="content-container">
       <h2>Membros do Projeto</h2>
-      <app-membros></app-membros>
+      <app-membros [projeto]="projeto!" ></app-membros>
     </div>
   
     <div *ngIf="activeTab === 'configuracoes'" class="content-container">

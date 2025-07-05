@@ -28,8 +28,8 @@ export class ProjetoComponent implements OnInit {
   tarefas: Tarefa[] = [];
   tarefasFiltradas: Tarefa[] = [];
   
-  activeTab: 'tarefas' | 'membros' | 'configuracoes' | 'quadro'  = 'tarefas';
-  filtroStatus: 'all' | 'available' | 'in-progress' | 'completed' = 'all';
+  activeTab:  'quadro' | 'membros' | 'configuracoes' | 'tarefas'  = 'quadro';
+  filtroStatus: 'all'  | 'available' | 'in-progress' | 'completed' = 'all';
   termoPesquisa: string = '';
   
   paginaAtual: number = 0;

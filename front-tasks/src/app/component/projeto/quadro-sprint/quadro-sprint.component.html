@@ -1,8 +1,8 @@
 <div class="kanban-container">
     <!-- Cabeçalho -->
     <div class="board-header">
-      <h1 class="board-title">Board do Projeto</h1>
-      <p class="board-subtitle">Gerencie suas tarefas com fluxo Kanban</p>
+      <h1 class="board-title">Board do Projeto {{projeto.name}}</h1>
+      <p class="board-subtitle">{{projeto.name}}</p>
     </div>
   
     <!-- Board -->
@@ -37,6 +37,7 @@
               *ngFor="let task of column.tasks; trackBy: trackByTaskId"
               class="task-card"
               [class]="getTaskTypeClass(task.type)"
+              draggable="true"
               cdkDrag>
               
               <!-- Cabeçalho do Card -->

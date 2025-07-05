@@ -1,63 +1,176 @@
 import { Component, OnInit } from '@angular/core';
-import { Tarefa } from 'src/app/models/Tarefa';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+export interface Task {
+  id: number;
+  titulo: string;
+  descricao: string;
+  tipo: 'Task' | 'Story' | 'Epic' | 'Bug';
+  prioridade: 'Baixa' | 'Média' | 'Alta' | 'Crítica';
+  dataCriacao: Date;
+  status: 'Backlog' | 'Em Progresso' | 'Concluída';
+}
 
 @Component({
   selector: 'app-tarefas',
   templateUrl: './tarefas.component.html',
   styleUrls: ['./tarefas.component.css']
 })
-export class TarefasComponent  implements OnInit  {
+export class TarefasComponent implements OnInit {
+  tarefas: Task[] = [];
+  showModal = false;
+  taskForm: FormGroup;
+  editingTask: Task | null = null;
+  filtroTipo = '';
+  filtroPrioridade = '';
 
-
-  filtroStatus :string  = "";
-  termoPesquisa: string = "";
-  tarefasFiltradas: Tarefa[] = [];
-  isProjetoMembro: boolean = true;
-  totalPaginas: number = 0;
-  paginaAtual: number = 0;
-
-
-
-  ngOnInit(){
-
+  tipos = ['Task', 'Story', 'Epic', 'Bug'];
+  prioridades = ['Baixa', 'Média', 'Alta', 'Crítica'];
+  
+  constructor(private fb: FormBuilder) {
+    this.taskForm = this.fb.group({
+      titulo: ['', [Validators.required, Validators.minLength(3)]],
+      descricao: ['', [Validators.required, Validators.minLength(10)]],
+      tipo: ['Task', Validators.required],
+      prioridade: ['Média', Validators.required]
+    });
   }
 
-
-  getPrioridadeLabel(prioriade: string): string {
-    return "Alta"
+  ngOnInit() {
+    this.carregarTarefasExemplo();
   }
 
-  criarNovaTarefa(){
-
+  carregarTarefasExemplo() {
+    this.tarefas = [
+      {
+        id: 1,
+        titulo: 'Implementar autenticação',
+        descricao: 'Desenvolver sistema de login e logout com JWT',
+        tipo: 'Story',
+        prioridade: 'Alta',
+        dataCriacao: new Date('2024-01-15'),
+        status: 'Backlog'
+      },
+      {
+        id: 2,
+        titulo: 'Corrigir bug no formulário',
+        descricao: 'Validação não funciona corretamente no campo email',
+        tipo: 'Bug',
+        prioridade: 'Crítica',
+        dataCriacao: new Date('2024-01-16'),
+        status: 'Em Progresso'
+      },
+      {
+        id: 3,
+        titulo: 'Refatorar componente header',
+        descricao: 'Melhorar responsividade e performance do header',
+        tipo: 'Task',
+        prioridade: 'Baixa',
+        dataCriacao: new Date('2024-01-14'),
+        status: 'Backlog'
+      }
+    ];
   }
 
-  mudarPagina(pagina: number){
-
+  get tarefasFiltradas(): Task[] {
+    return this.tarefas
+      .filter(tarefa => {
+        const filtroTipoOk = !this.filtroTipo || tarefa.tipo === this.filtroTipo;
+        const filtroPrioridadeOk = !this.filtroPrioridade || tarefa.prioridade === this.filtroPrioridade;
+        return filtroTipoOk && filtroPrioridadeOk;
+      })
+      .sort((a, b) => {
+        const prioridadeOrdem = { 'Crítica': 4, 'Alta': 3, 'Média': 2, 'Baixa': 1 };
+        return prioridadeOrdem[b.prioridade] - prioridadeOrdem[a.prioridade];
+      });
   }
 
-  inscreverTarefa(idTarefa: string){
-
-  }
-
-  concluirTarefa(idTarefa: string){
-
-  }
-
-  verDetalhesTarefa(idTarefa: string){
-
-  }
-
-  getPaginasDisponiveis(): number[] {
-    const paginasVisiveis = 5;
-    let inicio = Math.max(0, this.paginaAtual - Math.floor(paginasVisiveis / 2));
-    let fim = Math.min(this.totalPaginas - 1, inicio + paginasVisiveis - 1);
+  abrirModal(tarefa?: Task) {
+    this.editingTask = tarefa || null;
     
-    if (fim - inicio + 1 < paginasVisiveis) {
-      inicio = Math.max(0, fim - paginasVisiveis + 1);
+    if (tarefa) {
+      this.taskForm.patchValue({
+        titulo: tarefa.titulo,
+        descricao: tarefa.descricao,
+        tipo: tarefa.tipo,
+        prioridade: tarefa.prioridade
+      });
+    } else {
+      this.taskForm.reset({
+        tipo: 'Task',
+        prioridade: 'Média'
+      });
     }
     
-    return Array.from({length: fim - inicio + 1}, (_, i) => inicio + i);
+    this.showModal = true;
   }
 
+  fecharModal() {
+    this.showModal = false;
+    this.editingTask = null;
+    this.taskForm.reset();
+  }
+
+  salvarTarefa() {
+    if (this.taskForm.valid) {
+      const formData = this.taskForm.value;
+      
+      if (this.editingTask) {
+        // Editar tarefa existente
+        const index = this.tarefas.findIndex(t => t.id === this.editingTask!.id);
+        this.tarefas[index] = {
+          ...this.editingTask,
+          ...formData
+        };
+      } else {
+        // Criar nova tarefa
+        const novaTarefa: Task = {
+          id: this.gerarNovoId(),
+          ...formData,
+          dataCriacao: new Date(),
+          status: 'Backlog' as const
+        };
+        this.tarefas.push(novaTarefa);
+      }
+      
+      this.fecharModal();
+    }
+  }
+
+  excluirTarefa(id: number) {
+    if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+      this.tarefas = this.tarefas.filter(t => t.id !== id);
+    }
+  }
+
+  alterarStatus(tarefa: Task) {
+    const statusSequencia = ['Backlog', 'Em Progresso', 'Concluída'];
+    const currentIndex = statusSequencia.indexOf(tarefa.status);
+    const nextIndex = (currentIndex + 1) % statusSequencia.length;
+    tarefa.status = statusSequencia[nextIndex] as Task['status'];
+  }
+
+  gerarNovoId(): number {
+    return this.tarefas.length > 0 ? Math.max(...this.tarefas.map(t => t.id)) + 1 : 1;
+  }
+
+  getPrioridadeClass(prioridade: string): string {
+    const classes = {
+      'Crítica': 'priority-critical',
+      'Alta': 'priority-high',
+      'Média': 'priority-medium',
+      'Baixa': 'priority-low'
+    };
+    return classes[prioridade as keyof typeof classes] || '';
+  }
+
+  getTipoClass(tipo: string): string {
+    const classes = {
+      'Epic': 'type-epic',
+      'Story': 'type-story',
+      'Task': 'type-task',
+      'Bug': 'type-bug'
+    };
+    return classes[tipo as keyof typeof classes] || '';
+  }
 }
