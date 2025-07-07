@@ -2,15 +2,13 @@ package com.tiozao.tasks.aplication.controllers;
 
 import com.tiozao.tasks.aplication.controllers.model.Project;
 import com.tiozao.tasks.aplication.converter.ProjectConverter;
-import com.tiozao.tasks.services.PrivateProjectService;
+import com.tiozao.tasks.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -20,7 +18,7 @@ public class CrudProjectController {
     private ProjectConverter converter;
     
     @Autowired
-    private PrivateProjectService service;
+    private ProjectService service;
 
 
     

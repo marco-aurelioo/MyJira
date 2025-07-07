@@ -1,6 +1,5 @@
 package com.tiozao.tasks.services;
 
-import com.tiozao.tasks.aplication.controllers.model.Participar;
 import com.tiozao.tasks.domain.entity.ParticipationStatus;
 import com.tiozao.tasks.domain.entity.RequestParticipation;
 import com.tiozao.tasks.repository.RequestParticipationRepository;
@@ -16,7 +15,7 @@ public class ParticipationService {
     private UserProfileService userProfileService;
 
     @Autowired
-    private PrivateProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
     private RequestParticipationRepository repository;

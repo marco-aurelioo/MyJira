@@ -2,6 +2,9 @@ package com.tiozao.tasks.aplication.controllers;
 
 
 import com.tiozao.tasks.aplication.controllers.model.Task;
+import com.tiozao.tasks.aplication.converter.TaksConverter;
+import com.tiozao.tasks.services.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,12 @@ public class TaskController {
     //CRUD -- tem que ser membro do projeto
     ///project/{sigla}/tasks - GET, POST (tem que ter permissao criador tarefas)
 
+    @Autowired
+    private TaskService service;
+
+    @Autowired
+    private TaksConverter converter;
+
     @GetMapping("/project/{sigla_projeto}/tasks")
     public ResponseEntity<Page<String>> buscaTarefas(
             @PathVariable("sigla_projeto") String siglaProjeto,
@@ -23,7 +32,7 @@ public class TaskController {
 
     @PostMapping("/project/{sigla_projeto}/tasks")
     public ResponseEntity<Task> createTask(@RequestBody Task task){
-        return ResponseEntity.ok(task);
+        return ResponseEntity.ok(converter.convertToDto(service.createTask(converter.convertToEntity(task))));
     }
 
 

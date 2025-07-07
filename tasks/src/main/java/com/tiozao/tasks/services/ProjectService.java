@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class PrivateProjectService {
+public class ProjectService {
 
     @Autowired
     private UserProfileService userProfileService;

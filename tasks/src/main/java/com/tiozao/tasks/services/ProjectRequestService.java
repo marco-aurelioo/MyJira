@@ -19,7 +19,7 @@ public class ProjectRequestService {
     private UserProfileService userProfileService;
 
     @Autowired
-    private PrivateProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
     private ProjectRequestRepository projectRequestRepository;

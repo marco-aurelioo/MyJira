@@ -2,7 +2,7 @@ package com.tiozao.tasks.aplication.controllers;
 
 import com.tiozao.tasks.aplication.controllers.model.Project;
 import com.tiozao.tasks.aplication.converter.ProjectConverter;
-import com.tiozao.tasks.services.PrivateProjectService;
+import com.tiozao.tasks.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +18,7 @@ public class PublicProjectController {
     private ProjectConverter converter;
 
     @Autowired
-    private PrivateProjectService service;
+    private ProjectService service;
 
     @GetMapping("/public/projects/")
     public ResponseEntity<Page<Project>> findPublicProject(
