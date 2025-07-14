@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Profile } from 'src/app/models/Profile';
 import { Projeto } from 'src/app/models/Projeto';
-import { Tasks } from 'src/app/models/Tasks';
+import { Tarefa } from 'src/app/models/Tarefa';
+
 
 @Component({
   selector: 'app-membros',
@@ -30,9 +31,9 @@ export class MembrosComponent implements OnInit{
         avatar: 'https://via.placeholder.com/50',
         characteristics: ['Frontend', 'React', 'Angular'],
         tasks: [
-          { id: '1', title: 'Implementar login', status: 'completed', description: 'Sistema de autenticação' },
-          { id: '2', title: 'Criar dashboard', status: 'in-progress', description: 'Painel principal' },
-          { id: '3', title: 'Testes unitários', status: 'pending', description: 'Cobertura de testes' }
+          { id: '1', titulo: 'Implementar login', status: 'completed', descricao: 'Sistema de autenticação' },
+          { id: '2', titulo: 'Criar dashboard', status: 'in-progress', descricao: 'Painel principal' },
+          { id: '3', titulo: 'Testes unitários', status: 'pending', descricao: 'Cobertura de testes' }
         ]
       },
       {
@@ -41,8 +42,8 @@ export class MembrosComponent implements OnInit{
         avatar: '',
         characteristics: ['Backend', 'Node.js', 'Database'],
         tasks: [
-          { id: '4', title: 'API REST', status: 'completed', description: 'Endpoints principais' },
-          { id: '5', title: 'Integração banco', status: 'in-progress', description: 'Configurar MongoDB' }
+          { id: '4', titulo: 'API REST', status: 'completed', descricao: 'Endpoints principais' },
+          { id: '5', titulo: 'Integração banco', status: 'in-progress', descricao: 'Configurar MongoDB' }
         ]
       },
       {
@@ -97,7 +98,7 @@ export class MembrosComponent implements OnInit{
     };
     return labels[status] || status;
   }
-  getTasksByStatus(tasks: Tasks[], status: string): string {
+  getTasksByStatus(tasks: Tarefa[], status: string): string {
     const labels: { [key: string]: string } = {
       'pending': 'Pendente',
       'in-progress': 'Em Progresso',

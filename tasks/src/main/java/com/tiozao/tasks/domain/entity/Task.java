@@ -3,6 +3,7 @@ package com.tiozao.tasks.domain.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "tasks")
@@ -18,6 +19,11 @@ public class Task {
     private String descricao;
     private LocalDate dataInicio;
     private LocalDate dataFim;
+
+    private String tipo;
+    private String status;
+    private String prioridade;
+    private Date dataCriacao;
 
     @ManyToOne(optional = false)
     private Project project;
@@ -106,5 +112,37 @@ public class Task {
 
     public void setCreatedBy(UserProfile createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
+    }
+
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 }

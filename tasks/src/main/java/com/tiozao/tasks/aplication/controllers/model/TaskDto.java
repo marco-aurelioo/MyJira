@@ -1,6 +1,8 @@
 package com.tiozao.tasks.aplication.controllers.model;
 
-public class Task {
+import java.util.Date;
+
+public class TaskDto {
 
     private String id;
     private String titulo;
@@ -8,6 +10,14 @@ public class Task {
     private Project projeto;
     private UserProfile responsavel;
     private UserProfile criador;
+
+    private String tipo;
+    private String status;
+    private String prioridade;
+    private Date dataCriacao;
+    private Date dataConclusao;
+
+
 
     public String getId() {
         return id;
@@ -55,5 +65,45 @@ public class Task {
 
     public void setCriador(UserProfile criador) {
         this.criador = criador;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(String prioridade) {
+        this.prioridade = prioridade;
+    }
+
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public Date getDataConclusao() {
+        return dataConclusao;
+    }
+
+    public void setDataConclusao(Date dataConclusao) {
+        this.dataConclusao = dataConclusao;
     }
 }

@@ -102,6 +102,11 @@
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>7.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.5.5.Final</version>
+		</dependency>
 
 	</dependencies>
 
@@ -117,6 +122,26 @@
 					<!-- Verifique se há configurações específicas de inclusões/exclusões -->
 				</configuration>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<source>11</source> <!-- ou 11, dependendo da sua versão do Java -->
+					<target>11</target>
+					<annotationProcessorPaths>
+						<!-- Processador de anotação do MapStruct -->
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.5.5.Final</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

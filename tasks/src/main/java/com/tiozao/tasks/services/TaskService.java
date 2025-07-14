@@ -27,12 +27,13 @@ public class TaskService {
         Project project = projectService.findMyProjectByUnicName(task.getProject().getUnicName());
         UserProfile createdBy = profileService.findMyUserProfile();
         task.setCreatedBy(createdBy);
+        task.setStatus("Backlog");
         task.setProject(project);
         if(task.getTaskOwner()!=null){
             task.setTaskOwner(profileService.findUserByExternalId(task.getTaskOwner().getExternalId()));
         }
         task.setSequencia(getNewSequencia(project));
-
+        repository.save(task);
         return task;
     }
 
@@ -44,18 +45,14 @@ public class TaskService {
     }
 
     public Page<Task> buscaTasks(String projectId, Pageable pageable){
-        return Page.empty();
+        Project project = projectService.findMyProjectByUnicName(projectId);
+        return repository.findByProject(project,pageable);
     }
 
-    public Task atualizaTask(Task task){
-
-        //carregar projeto
-
-        //carregar usuarios
-        //salvar task
-
-
-        return task;
+    public Task atualizaTask(String projectId,Task task){
+        Project project = projectService.findMyProjectByUnicName(projectId);
+        Task entity = repository.findByProjectAndSequencia(project,task.getSequencia());
+        return repository.save(entity);
     }
 
 

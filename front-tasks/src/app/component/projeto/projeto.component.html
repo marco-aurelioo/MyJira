@@ -38,7 +38,7 @@
     </div>
   
     <div *ngIf="activeTab === 'tarefas'" class="content-container">
-      <<app-tarefas ></app-tarefas>>
+      <app-tarefas [projeto]="projeto!" ></app-tarefas>>
     </div>
 
     <div *ngIf="activeTab === 'quadro'" class="content-container">

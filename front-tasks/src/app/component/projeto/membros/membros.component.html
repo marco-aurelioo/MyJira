@@ -112,9 +112,9 @@
                     *ngFor="let task of user.tasks | slice:0:2" 
                     class="task-preview-item"
                     [class]="'status-' + task.status"
-                    [title]="task.title + ' - ' + getStatusLabel(task.status!)"
+                    [title]="task.titulo + ' - ' + getStatusLabel(task.status!)"
                   >
-                    {{ task.title }}
+                    {{ task.titulo }}
                   </div>
                   <div *ngIf="user.tasks.length > 2" class="more-tasks" 
                        [title]="'Mais ' + (user.tasks.length - 2) + ' tarefas'">

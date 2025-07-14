@@ -36,9 +36,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let tarefa of tarefasFiltradas" class="task-row" [class]="getPrioridadeClass(tarefa.prioridade)">
+        <tr *ngFor="let tarefa of tarefasFiltradas" class="task-row" [class]="getPrioridadeClass(tarefa.prioridade!)">
           <td class="priority-cell">
-            <span class="priority-badge" [class]="getPrioridadeClass(tarefa.prioridade)">
+            <span class="priority-badge" [class]="getPrioridadeClass(tarefa.prioridade!)">
               {{tarefa.prioridade}}
             </span>
           </td>
@@ -47,10 +47,10 @@
             <div class="task-description">{{tarefa.descricao}}</div>
           </td>
           <td class="type-cell">
-            <span class="task-type" [class]="getTipoClass(tarefa.tipo)">{{tarefa.tipo}}</span>
+            <span class="task-type" [class]="getTipoClass(tarefa.tipo!)">{{tarefa.tipo}}</span>
           </td>
           <td class="status-cell">
-            <button class="status-btn" (click)="alterarStatus(tarefa)" [class]="'status-' + tarefa.status.toLowerCase().replace(' ', '-')">
+            <button class="status-btn" (click)="alterarStatus(tarefa)" [class]="'status-' + tarefa.status!.toLowerCase().replace(' ', '-')">
               {{tarefa.status}}
             </button>
           </td>
@@ -60,7 +60,7 @@
               <button class="btn-icon" (click)="abrirModal(tarefa)" title="Editar">
                 ✏️
               </button>
-              <button class="btn-icon btn-delete" (click)="excluirTarefa(tarefa.id)" title="Excluir">
+              <button class="btn-icon btn-delete" (click)="excluirTarefa(tarefa.id!)" title="Excluir">
                 🗑️
               </button>
             </div>

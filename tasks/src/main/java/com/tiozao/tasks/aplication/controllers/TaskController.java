@@ -1,11 +1,12 @@
 package com.tiozao.tasks.aplication.controllers;
 
 
-import com.tiozao.tasks.aplication.controllers.model.Task;
+import com.tiozao.tasks.aplication.controllers.model.TaskDto;
 import com.tiozao.tasks.aplication.converter.TaksConverter;
 import com.tiozao.tasks.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +24,15 @@ public class TaskController {
     private TaksConverter converter;
 
     @GetMapping("/project/{sigla_projeto}/tasks")
-    public ResponseEntity<Page<String>> buscaTarefas(
+    public ResponseEntity<Page<TaskDto>> buscaTarefas(
             @PathVariable("sigla_projeto") String siglaProjeto,
             @RequestParam(name="page", required = false,defaultValue = "0") Integer page,
             @RequestParam(name="size", required = false,defaultValue = "20") Integer size){
-        return ResponseEntity.ok(Page.empty());
+        return ResponseEntity.ok(converter.convertToPageDto(service.buscaTasks(siglaProjeto, PageRequest.of(page,size))));
     }
 
     @PostMapping("/project/{sigla_projeto}/tasks")
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
+    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto task){
         return ResponseEntity.ok(converter.convertToDto(service.createTask(converter.convertToEntity(task))));
     }
 
@@ -45,18 +46,22 @@ public class TaskController {
     }
 
     @PutMapping("/project/{sigla_projeto}/tasks/{task_id}")
-    public ResponseEntity<Task> atualizaTarefa(
+    public ResponseEntity<TaskDto> atualizaTarefa(
             @PathVariable("sigla_projeto") String siglaProjeto,
             @PathVariable("task_id") String taskId ,
-            @RequestBody Task task){
-        return ResponseEntity.ok(task);
+            @RequestBody TaskDto task){
+        return ResponseEntity.ok(
+                converter.convertToDto(
+                        service.atualizaTask(siglaProjeto,
+                                converter.convertToEntity(taskId,task)))
+        );
     }
 
     @PatchMapping("/project/{sigla_projeto}/tasks/{task_id}")
-    public ResponseEntity<Task> atualizaParcialTarefa(
+    public ResponseEntity<TaskDto> atualizaParcialTarefa(
             @PathVariable("sigla_projeto") String siglaProjeto,
             @PathVariable("task_id") String taskId ,
-            @RequestBody Task body){
+            @RequestBody TaskDto body){
         return ResponseEntity.ok(body);
     }
 

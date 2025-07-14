@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Projeto } from 'src/app/models/Projeto';
+import { Tarefa } from 'src/app/models/Tarefa';
+import { TaskService } from 'src/app/services/task.service';
 
-export interface Task {
-  id: number;
-  titulo: string;
-  descricao: string;
-  tipo: 'Task' | 'Story' | 'Epic' | 'Bug';
-  prioridade: 'Baixa' | 'Média' | 'Alta' | 'Crítica';
-  dataCriacao: Date;
-  status: 'Backlog' | 'Em Progresso' | 'Concluída';
-}
+
 
 @Component({
   selector: 'app-tarefas',
@@ -17,17 +12,20 @@ export interface Task {
   styleUrls: ['./tarefas.component.css']
 })
 export class TarefasComponent implements OnInit {
-  tarefas: Task[] = [];
+
+  @Input() projeto!: Projeto;
+
+  tarefas: Tarefa[] = [];
   showModal = false;
   taskForm: FormGroup;
-  editingTask: Task | null = null;
+  editingTask: Tarefa | null = null;
   filtroTipo = '';
   filtroPrioridade = '';
 
   tipos = ['Task', 'Story', 'Epic', 'Bug'];
   prioridades = ['Baixa', 'Média', 'Alta', 'Crítica'];
   
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private taskService: TaskService) {
     this.taskForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
       descricao: ['', [Validators.required, Validators.minLength(10)]],
@@ -37,42 +35,23 @@ export class TarefasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.carregarTarefasExemplo();
+    this.carregarTarefasBackEnd();
   }
 
-  carregarTarefasExemplo() {
-    this.tarefas = [
-      {
-        id: 1,
-        titulo: 'Implementar autenticação',
-        descricao: 'Desenvolver sistema de login e logout com JWT',
-        tipo: 'Story',
-        prioridade: 'Alta',
-        dataCriacao: new Date('2024-01-15'),
-        status: 'Backlog'
+  carregarTarefasBackEnd(){
+    this.taskService.buscaTarefasProjeto(this.projeto.unicName!,1,50).subscribe(
+      (page) =>{
+          this.tarefas = page.content!
+          console.log("carregando tarefa");
+          console.log(page);
       },
-      {
-        id: 2,
-        titulo: 'Corrigir bug no formulário',
-        descricao: 'Validação não funciona corretamente no campo email',
-        tipo: 'Bug',
-        prioridade: 'Crítica',
-        dataCriacao: new Date('2024-01-16'),
-        status: 'Em Progresso'
-      },
-      {
-        id: 3,
-        titulo: 'Refatorar componente header',
-        descricao: 'Melhorar responsividade e performance do header',
-        tipo: 'Task',
-        prioridade: 'Baixa',
-        dataCriacao: new Date('2024-01-14'),
-        status: 'Backlog'
-      }
-    ];
+      (error) =>{
+        console.error("falha ao salvar tarefa.");
+      });
   }
 
-  get tarefasFiltradas(): Task[] {
+
+  get tarefasFiltradas(): Tarefa[] {
     return this.tarefas
       .filter(tarefa => {
         const filtroTipoOk = !this.filtroTipo || tarefa.tipo === this.filtroTipo;
@@ -81,11 +60,11 @@ export class TarefasComponent implements OnInit {
       })
       .sort((a, b) => {
         const prioridadeOrdem = { 'Crítica': 4, 'Alta': 3, 'Média': 2, 'Baixa': 1 };
-        return prioridadeOrdem[b.prioridade] - prioridadeOrdem[a.prioridade];
+        return 1;//prioridadeOrdem[b.prioridade] - prioridadeOrdem[a.prioridade];
       });
   }
 
-  abrirModal(tarefa?: Task) {
+  abrirModal(tarefa?: Tarefa) {
     this.editingTask = tarefa || null;
     
     if (tarefa) {
@@ -112,46 +91,81 @@ export class TarefasComponent implements OnInit {
   }
 
   salvarTarefa() {
+    console.log("salvar Tarefa ");
     if (this.taskForm.valid) {
       const formData = this.taskForm.value;
       
       if (this.editingTask) {
         // Editar tarefa existente
-        const index = this.tarefas.findIndex(t => t.id === this.editingTask!.id);
-        this.tarefas[index] = {
-          ...this.editingTask,
-          ...formData
-        };
+        console.log("titulo:"+ this.taskForm.get("titulo")?.value);
+        console.log("descricao:"+ this.taskForm.get("descricao")?.value);
+        console.log("tipo:"+ this.taskForm.get("tipo")?.value);
+        console.log("prioridade:"+ this.taskForm.get("prioridade")?.value);
+        console.log("status:"+ this.taskForm.get("status")?.value);
+
+        this.taskService.updateTarefa(this.projeto.unicName!,
+          {
+            id: this.editingTask!.id,
+            titulo: this.taskForm.get("titulo")?.value,
+            descricao: this.taskForm.get("descricao")?.value,
+            tipo: this.taskForm.get("tipo")?.value,
+            prioridade: this.taskForm.get("prioridade")?.value,
+            status: this.taskForm.get("status")?.value,
+            projeto: this.projeto
+          }
+        ).subscribe(
+            (page) =>{
+                console.log("salvando tarefa");
+                console.log(page);
+            },
+            (error) =>{
+              console.error("falha ao salvar tarefa.");
+            }
+        );
+
       } else {
-        // Criar nova tarefa
-        const novaTarefa: Task = {
-          id: this.gerarNovoId(),
-          ...formData,
-          dataCriacao: new Date(),
-          status: 'Backlog' as const
-        };
-        this.tarefas.push(novaTarefa);
+        
+        this.taskService.createTarefa(
+        this.projeto.unicName!,
+          {
+            titulo: this.taskForm.get("titulo")?.value,
+            descricao: this.taskForm.get("descricao")?.value,
+            tipo: this.taskForm.get("tipo")?.value,
+            prioridade: this.taskForm.get("prioridade")?.value,
+            status: this.taskForm.get("status")?.value,
+            projeto: this.projeto
+          }
+        ).subscribe(
+            (page) =>{
+                console.log("salvando tarefa");
+                console.log(page);
+            },
+            (error) =>{
+              console.error("falha ao salvar tarefa.");
+            }
+        );
       }
+      
       
       this.fecharModal();
     }
   }
 
-  excluirTarefa(id: number) {
+  excluirTarefa(id: string) {
     if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
       this.tarefas = this.tarefas.filter(t => t.id !== id);
     }
   }
 
-  alterarStatus(tarefa: Task) {
+  alterarStatus(tarefa: Tarefa) {
     const statusSequencia = ['Backlog', 'Em Progresso', 'Concluída'];
-    const currentIndex = statusSequencia.indexOf(tarefa.status);
-    const nextIndex = (currentIndex + 1) % statusSequencia.length;
-    tarefa.status = statusSequencia[nextIndex] as Task['status'];
+    //const currentIndex = statusSequencia.indexOf(tarefa.status);
+   // const nextIndex = (currentIndex + 1) % statusSequencia.length;
+    //tarefa.status = statusSequencia[nextIndex] as Tarefa['status'];
   }
 
-  gerarNovoId(): number {
-    return this.tarefas.length > 0 ? Math.max(...this.tarefas.map(t => t.id)) + 1 : 1;
+  gerarNovoId(): string {
+    return "";//this.tarefas.length > 0 ? Math.max(...this.tarefas.map(t => t.id)) + 1 : 1;
   }
 
   getPrioridadeClass(prioridade: string): string {

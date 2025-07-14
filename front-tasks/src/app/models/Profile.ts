@@ -1,4 +1,5 @@
-import { Tasks } from "./Tasks";
+import { Tarefa } from "./Tarefa";
+
 
 export class Profile{
 
@@ -6,7 +7,7 @@ userId?:  string;
 name?:    string;
 avatar?:  string;
 characteristics?: string[];
-tasks?: Tasks[];
+tasks?: Tarefa[];
 
     constructor(userId: string, name: string, avatar: string){
         this.userId = userId;
