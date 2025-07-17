@@ -1,0 +1,102 @@
+
+<nav class="sidebar" id="sidebar">
+    <ul class="sidebar-menu">
+        <li>
+            <a href="#" class="active">
+                <span class="icon">👤</span>
+                <span>Perfil</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon">📁</span>
+                <span>Meus Projetos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon">🤝</span>
+                <span>Participar de Projetos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <span class="icon">✅</span>
+                <span>Minhas Tarefas</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Overlay para mobile -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+<script>
+        let sidebarOpen = true;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const footer = document.getElementById('footer');
+            const overlay = document.getElementById('overlay');
+            
+            if (window.innerWidth <= 768) {
+                // Mobile behavior
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('active');
+            } else {
+                // Desktop behavior
+                sidebarOpen = !sidebarOpen;
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                footer.classList.toggle('expanded');
+            }
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('overlay');
+                
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('active');
+            }
+        });
+
+        // Menu item click handler
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Close sidebar on mobile after selection
+                if (window.innerWidth <= 768) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                const menuToggle = document.querySelector('.menu-toggle');
+                
+                if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                    closeSidebar();
+                }
+            }
+        });
+    </script>
