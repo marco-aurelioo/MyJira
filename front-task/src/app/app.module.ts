@@ -13,14 +13,14 @@ import { LayoutComponentComponent } from './component/layout-component/layout-co
     AppComponent,
     HeaderComponentComponent,
     SidebarComponentComponent,
-    FooterComponentComponent,
-    LayoutComponentComponent
+    LayoutComponentComponent,
+    FooterComponentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent]  
 })
 export class AppModule { }

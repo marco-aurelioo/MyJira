@@ -2,30 +2,17 @@
 <body>
     <!-- Header -->
     <app-header-component></app-header-component>
-
     <!-- Sidebar -->
     <app-sidebar-component></app-sidebar-component>
-
-    
-
     <!-- Main Content -->
     <main class="main-content" id="mainContent">
-      
-        <div class="content-area">
-            <div class="content-placeholder">
-                <div>
-                    <h2>Área de Conteúdo</h2>
-                    <p>Aqui será exibido o conteúdo das suas páginas Angular</p>
-                </div>
-            </div>
+        <div class="content" >
+            <router-outlet></router-outlet>
+            <span>front-task app is running!</span>
         </div>
-        <router-outlet></router-outlet>
     </main>
-
     <!-- Footer -->
     <app-footer-component></app-footer-component>
-
-    
 </body>
 
 
