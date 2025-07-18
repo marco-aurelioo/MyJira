@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-layout-component',
     templateUrl: './layout-component.component.html',
     styleUrls: ['./layout-component.component.css'],
-    standalone: false
+    standalone: true
 })
 export class LayoutComponentComponent {
 

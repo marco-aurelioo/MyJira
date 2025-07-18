@@ -4,11 +4,23 @@
         <div class="logo-icon">📋</div>
         <span>TaskManager</span>
     </div>
-    <div class="user-info">
-        <div class="user-details">
-            <div class="user-name">João Silva</div>
-            <div class="user-role">Desenvolvedor</div>
+    
+    <div class="user-info" *ngIf="profileService.isAuthenticate(); else login">
+        <div class="user-avatar" *ngIf="profile?.avatar; else defaultAvatar" >
+            <img class="user-avatar" src={{profile?.avatar}} alt="{{profile?.name}}" />
         </div>
-        <div class="user-avatar">JS</div>
+
+        <div >
+            <h1>{{profile?.name}}</h1>
+        </div>
+        <button class="button button-primary"  (click)="profileService.logout()">Logout</button>
     </div>
+    
+    <ng-template #login>
+        <button class="button button-primary" (click)="profileService.login()">Login</button>
+    </ng-template>
+    <ng-template #defaultAvatar>
+        <img class="user-avatar"  src="https://img.freepik.com/vetores-gratis/circulo-azul-com-usuario-branco_78370-4707.jpg?semt=ais_hybrid&w=740" alt="{{profile?.name}}"/>
+    </ng-template>
+
 </header>
