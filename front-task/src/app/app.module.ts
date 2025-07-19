@@ -7,20 +7,18 @@ import { HeaderComponentComponent } from './component/header-component/header-co
 import { SidebarComponentComponent } from './component/sidebar-component/sidebar-component.component';
 import { FooterComponentComponent } from './component/footer-component/footer-component.component';
 import { LayoutComponentComponent } from './component/layout-component/layout-component.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponentComponent,
-    SidebarComponentComponent,
-    LayoutComponentComponent,
-    FooterComponentComponent
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]  
+  bootstrap: []  
 })
 export class AppModule { }

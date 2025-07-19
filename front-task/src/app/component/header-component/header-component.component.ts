@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import {ReactiveFormsModule, FormBuilder, FormGroup  } from '@angular/forms';
 import { Profile } from 'src/app/models/Profile';
 import { ProfileService } from 'src/app/service/profile.service';
 
@@ -8,7 +9,7 @@ import { ProfileService } from 'src/app/service/profile.service';
     templateUrl: './header-component.component.html',
     styleUrls: ['./header-component.component.css'],
     standalone: true,
-    imports: [CommonModule]
+    imports: [ReactiveFormsModule,CommonModule ]
 })
 export class HeaderComponentComponent implements OnInit{
 
@@ -17,16 +18,19 @@ export class HeaderComponentComponent implements OnInit{
 
   constructor(private service: ProfileService){
     this.profileService = service;
-    
-    service.getProfile().subscribe(
-      (profile) => {
-        this.profile = profile;
-        console.log(profile.name);
-      },
-      (error) => {
-        console.log("erro ao tentar recupear profile "+error);
-      }
-    );
+    if(this.profileService.isAuthenticate()){
+      service.getProfile().subscribe(
+        (profile) => {
+          this.profile = profile;
+          console.log(profile.name);
+        },
+        (error) => {
+          console.log("erro ao tentar recupear profile "+error);
+        }
+      );
+    } else {
+      console.log("Usuário não autenticado, não é possível recuperar o perfil.");
+    } 
   }
 
   logout(){

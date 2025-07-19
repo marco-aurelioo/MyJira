@@ -7,7 +7,7 @@ import { KeycloakAngularModule } from 'keycloak-angular';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-import { keycloakInterceptor } from './app/interceptors/auth.interceptor';
+import { authInterceptor } from './app/interceptors/auth.interceptor';
 
 
 // Função para inicializar o Keycloak
@@ -38,7 +38,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     importProvidersFrom(KeycloakAngularModule),
     {
       provide: APP_INITIALIZER,

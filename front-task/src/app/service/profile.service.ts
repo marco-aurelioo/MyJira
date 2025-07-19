@@ -20,10 +20,10 @@ export class ProfileService {
   private apiUrl = 'http://localhost:8080/api/users';
   
   getProfile(): Observable<Profile> {
-    console.log("chegou a entrar na consulta");
-    let headersValues = new HttpHeaders()
-        .set('Authorization', 'Bearer ' + this.auth.getToken());
-    return this.http.get<Profile>(this.apiUrl+"/my-profile", {headers: headersValues });
+    if (!this.isAuthenticate()) {
+      throw new Error('Usuário não autenticado');
+    }
+    return this.http.get<Profile>(this.apiUrl+"/my-profile");
   } 
 
   login(){

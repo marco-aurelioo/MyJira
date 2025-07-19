@@ -12,13 +12,11 @@ export const routes: Routes = [
     path: 'dashboard',
     loadComponent: () => import('../app/component/dashboard/dashboard.component').then(m => m.DashboardComponent)
   },
-  
-//   {
-//     path: 'admin',
-//     loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
-//     canActivate: [AuthGuard, RoleGuard],
-//     data: { roles: ['admin'] }
-//   },
+  {
+    path: 'profile',
+    loadComponent: () => import('../app/component/profile/profile.component').then(m => m.ProfileComponent),
+    canActivate: [AuthGuard] 
+  },
 //   {
 //     path: 'unauthorized',
 //     loadComponent: () => import('./unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent)

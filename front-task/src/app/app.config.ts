@@ -4,7 +4,8 @@ import { KeycloakService } from 'keycloak-angular';
 import { routes } from './app.routes';
 
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { keycloakInterceptor } from './interceptors/auth.interceptor';
+import { authInterceptor } from './interceptors/auth.interceptor';
+
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -23,6 +24,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideRouter(routes),
     KeycloakService,
     {
@@ -31,6 +33,6 @@ export const appConfig: ApplicationConfig = {
       multi: true,
       deps: [KeycloakService]
     },
-    provideHttpClient(withInterceptors([keycloakInterceptor])),
+    
   ]
 };
