@@ -8,7 +8,7 @@ import { KeycloakProfile } from 'keycloak-js';
 })
 export class AuthService {
   
-    constructor(private keycloakService: KeycloakService) {}
+  constructor(private keycloakService: KeycloakService) {}
 
   async init() {
     return this.keycloakService.init({

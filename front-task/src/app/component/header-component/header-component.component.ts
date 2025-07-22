@@ -26,6 +26,8 @@ export class HeaderComponentComponent implements OnInit{
         },
         (error) => {
           console.log("erro ao tentar recupear profile "+error);
+          console.log("deslogando usuario");
+          this.profileService.logout();
         }
       );
     } else {

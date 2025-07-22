@@ -26,6 +26,14 @@ export class ProfileService {
     return this.http.get<Profile>(this.apiUrl+"/my-profile");
   } 
 
+  salvaProfile(userId: string, name: string, avatar: string): Observable<Profile> {
+    if (!this.isAuthenticate()) {
+      throw new Error('Usuário não autenticado');
+    }
+    return this.http.put<Profile>(this.apiUrl+"/"+userId,
+      { userId: userId, name: name, avatar: avatar });
+  }
+
   login(){
     this.auth.login();
   }

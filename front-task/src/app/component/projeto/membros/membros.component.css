@@ -1,0 +1,400 @@
+.user-list-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .header h1 {
+    color: #333;
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .stats {
+    display: flex;
+    gap: 20px;
+  }
+
+  .stat-item {
+    background: #f5f5f5;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: #666;
+  }
+
+  .filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .search-input, .filter-select {
+    padding: 12px 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .search-input {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .search-input:focus, .filter-select:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .users-table thead {
+    background: #f8f9fa;
+  }
+
+  .users-table th {
+    padding: 16px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .users-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .users-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .users-table tbody tr.has-tasks {
+    border-left: 4px solid #4CAF50;
+  }
+
+  .users-table td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+  }
+
+  .user-cell {
+    min-width: 200px;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar-container {
+    flex-shrink: 0;
+  }
+
+  .avatar, .default-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .default-avatar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .user-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .user-id {
+    color: #666;
+    font-size: 0.9rem;
+    font-family: monospace;
+  }
+
+  .characteristics-cell {
+    min-width: 180px;
+    max-width: 250px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .tag {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .characteristic-tag {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  .more-items {
+    background: #f5f5f5;
+    color: #666;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .tasks-count {
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .task-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .count-badge {
+    background: #f5f5f5;
+    color: #666;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .count-badge.has-tasks {
+    background: #4CAF50;
+    color: white;
+  }
+
+  .task-label {
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .tasks-status {
+    min-width: 200px;
+    max-width: 300px;
+  }
+
+  .status-indicators {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .status-summary {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .status-count {
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .status-count.completed {
+    background: #e8f5e8;
+    color: #2e7d32;
+  }
+
+  .status-count.in-progress {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  .status-count.pending {
+    background: #fff3e0;
+    color: #f57c00;
+  }
+
+  .task-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .task-preview-item {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .task-preview-item.status-pending {
+    background: #fff3e0;
+    color: #f57c00;
+  }
+
+  .task-preview-item.status-in-progress {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  .task-preview-item.status-completed {
+    background: #e8f5e8;
+    color: #2e7d32;
+  }
+
+  .more-tasks {
+    color: #666;
+    font-style: italic;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }
+
+  .no-data {
+    color: #999;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  .actions-cell {
+    min-width: 100px;
+  }
+
+  .user-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+  }
+
+  .btn-primary {
+    background: #4CAF50;
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #45a049;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: #f5f5f5;
+    color: #333;
+  }
+
+  .btn-secondary:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 1200px) {
+    .users-table {
+      font-size: 0.9rem;
+    }
+    
+    .users-table th,
+    .users-table td {
+      padding: 12px 8px;
+    }
+    
+    .characteristics-cell,
+    .tasks-status {
+      max-width: 150px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    .users-table {
+      min-width: 800px;
+    }
+    
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .stats {
+      align-self: stretch;
+      justify-content: space-between;
+    }
+    
+    .filters {
+      width: 100%;
+    }
+    
+    .search-input {
+      min-width: 200px;
+    }
+  }

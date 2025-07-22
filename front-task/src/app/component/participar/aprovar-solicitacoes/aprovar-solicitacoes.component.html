@@ -1,0 +1,199 @@
+<div class="container">
+  <!-- Seção de Projetos -->
+  <div class="my-Projects-List">
+    <div class="projects-header">
+      <h2 class="projects-title">Meus Projetos</h2>
+    </div>
+    
+    <!-- Lista de Projetos -->
+    <div class="approval-list" *ngIf="pageProjects!.content!.length > 0">
+      <div 
+        class="project-card" 
+        *ngFor="let projeto_ of pageProjects!.content" 
+        [ngClass]="{'active': projetoSelecionado?.projectId === projeto_.project.projectId}"
+        (click)="selecionarProjeto(projeto_.project)">
+        <div class="project-info">
+          <div class="project-name">{{projeto_.project.name}}</div>
+          <div class="project-unic">{{projeto_.project.unicName}}</div>
+        </div>
+        <div class="project-badges">
+          <div class="badge badge-requests" *ngIf="projeto_.qtdRequest > 0">
+            <span class="badge-icon">📝</span>
+            <span>{{projeto_.qtdRequest}} solicitações</span>
+          </div>
+          <div class="badge badge-invites" *ngIf="projeto_.qtdInvite > 0">
+            <span class="badge-icon">📨</span>
+            <span>{{projeto_.qtdInvite}} convites</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado vazio para projetos -->
+    <div class="empty-state" *ngIf="pageProjects!.content!.length === 0 && !carregandoProjetos">
+      <div class="empty-icon">📁</div>
+      <h3>Nenhum projeto encontrado</h3>
+      <p>Você não possui projetos com solicitações pendentes.</p>
+    </div>
+
+    <!-- Carregando projetos -->
+    <div class="loading-state" *ngIf="carregandoProjetos">
+      <div class="loading-spinner"></div>
+      <p>Carregando projetos...</p>
+    </div>
+
+    <!-- Paginação de Projetos -->
+    <div class="pagination" *ngIf="totalPaginasProjetos > 1">
+      <button class="page-item page-nav" [disabled]="currentPageProjetos === 0" (click)="mudarPaginaProjetos(currentPageProjetos - 1)">
+        &lt;
+      </button>
+      <ng-container *ngFor="let page of getPaginationArray(totalPaginasProjetos); let i = index">
+        <button class="page-item" [ngClass]="{'active': currentPageProjetos === i}" (click)="mudarPaginaProjetos(i)">
+          {{i + 1}}
+        </button>
+      </ng-container>
+      <button class="page-item page-nav" [disabled]="currentPageProjetos === totalPaginasProjetos - 1" (click)="mudarPaginaProjetos(currentPageProjetos + 1)">
+        &gt;
+      </button>
+    </div>
+  </div>
+
+  <!-- Seção de Solicitações do Projeto Selecionado -->
+  <div class="requests-container" *ngIf="projetoSelecionado">
+    <div class="requests-header">
+      <h2 class="requests-title">Solicitações de Participação - {{projetoSelecionado.name}}</h2>
+    </div>
+
+    <!-- Lista de Solicitações -->
+    <div class="approval-list" *ngIf="solicitacoesParaAprovar.length > 0">
+      <div class="request-card" *ngFor="let solicitacao of solicitacoesParaAprovar">
+        <div class="request-header">
+          <div class="user-info">
+            <div class="user-avatar">
+              <img *ngIf="solicitacao.usuario?.avatar" [src]="solicitacao.usuario?.avatar" [alt]="solicitacao.usuario?.name">
+              <div *ngIf="!solicitacao.usuario?.avatar" class="user-avatar-placeholder">
+                👤
+              </div>
+            </div>
+            <div class="user-name">{{ solicitacao.usuario?.name }}</div>
+          </div>
+          <div class="request-status" [ngClass]="'status-' + solicitacao.status">
+            {{ getStatusText(solicitacao.status!) }}
+          </div>
+        </div>
+
+        <div class="request-details">
+          <div class="request-date">
+            <span>Solicitação recebida em: {{ solicitacao.dataCriacao | date:'dd/MM/yyyy' }}</span>
+          </div>
+          
+          <div class="request-message">
+            <h4>Mensagem do candidato:</h4>
+            <p>{{ solicitacao.comentario }}</p>
+          </div>
+          
+          <div class="request-skills" *ngIf="solicitacao.categorias && solicitacao.categorias.length > 0">
+            <h4>Habilidades oferecidas:</h4>
+            <div class="skills-list">
+              <span class="skill-tag" *ngFor="let habilidade of solicitacao.categorias">
+                {{ habilidade }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="request-message" *ngIf="solicitacao.status !== 'PENDING'">
+            <h4>Seu feedback:</h4>
+            <p>{{ solicitacao.feedback }}</p>
+          </div>
+        </div>
+
+        <div class="request-actions" *ngIf="solicitacao.status === 'PENDING'">
+          <button class="btn-approve" (click)="abrirModalResposta(solicitacao, 'APPROVE')">
+            Aprovar Solicitação
+          </button>
+          <button class="btn-reject" (click)="abrirModalResposta(solicitacao, 'REJECT')">
+            Rejeitar Solicitação
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado vazio para solicitações -->
+    <div class="empty-state" *ngIf="solicitacoesParaAprovar.length === 0 && !carregandoAprovacoes">
+      <div class="empty-icon">✅</div>
+      <h3>Nenhuma solicitação para este projeto</h3>
+      <p>Não há solicitações pendentes para este projeto no momento.</p>
+    </div>
+
+    <!-- Carregando solicitações -->
+    <div class="loading-state" *ngIf="carregandoAprovacoes">
+      <div class="loading-spinner"></div>
+      <p>Carregando solicitações...</p>
+    </div>
+
+    <!-- Paginação das Solicitações -->
+    <div class="pagination" *ngIf="totalPaginasSolicitacoes > 1">
+      <button class="page-item page-nav" [disabled]="currentPageSolicitacoes === 0" (click)="mudarPaginaSolicitacoes(currentPageSolicitacoes - 1)">
+        &lt;
+      </button>
+      <ng-container *ngFor="let page of getPaginationArray(totalPaginasSolicitacoes); let i = index">
+        <button class="page-item" [ngClass]="{'active': currentPageSolicitacoes === i}" (click)="mudarPaginaSolicitacoes(i)">
+          {{i + 1}}
+        </button>
+      </ng-container>
+      <button class="page-item page-nav" [disabled]="currentPageSolicitacoes === totalPaginasSolicitacoes - 1" (click)="mudarPaginaSolicitacoes(currentPageSolicitacoes + 1)">
+        &gt;
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Resposta a Solicitação -->
+<div class="modal-backdrop" *ngIf="mostrarModalResposta" (click)="fecharModalResposta($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ acaoResposta === 'APPROVE' ? 'Aprovar' : 'Rejeitar' }} Solicitação</h2>
+      <button class="close-button" (click)="fecharModalResposta($event)">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="user-request-info">
+        <div class="user-avatar medium">
+          <img *ngIf="solicitacaoSelecionada?.usuario?.avatar" [src]="solicitacaoSelecionada?.usuario?.avatar" [alt]="solicitacaoSelecionada?.usuario?.name">
+          <div *ngIf="!solicitacaoSelecionada?.usuario?.avatar" class="user-avatar-placeholder medium">
+            👤
+          </div>
+        </div>
+        <div class="user-request-details">
+          <h3>{{ solicitacaoSelecionada?.usuario?.name }}</h3>
+          <p>Solicitação para: <strong>{{ solicitacaoSelecionada?.project?.name }}</strong></p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback">{{ acaoResposta === 'APPROVE' ? 'Mensagem de boas-vindas:' : 'Motivo da rejeição:' }}</label>
+        <textarea
+          id="feedback"
+          rows="4"
+          [(ngModel)]="respostaFeedback"
+          [placeholder]="acaoResposta === 'APPROVE' ? 'Escreva uma mensagem de boas-vindas ao novo membro...' : 'Explique o motivo da rejeição da solicitação...'"
+          class="form-control"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="fecharModalResposta($event)">Cancelar</button>
+      <button 
+        class="btn-primary" 
+        (click)="responderSolicitacao()">
+        {{ acaoResposta === 'APPROVE' ? 'Aprovar' : 'Rejeitar' }}
+      </button>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+

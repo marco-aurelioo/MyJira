@@ -4,6 +4,7 @@ import com.tiozao.tasks.domain.entity.Project;
 import com.tiozao.tasks.domain.entity.Task;
 import com.tiozao.tasks.domain.entity.UserProfile;
 import com.tiozao.tasks.repository.TaskRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +53,15 @@ public class TaskService {
     public Task atualizaTask(String projectId,Task task){
         Project project = projectService.findMyProjectByUnicName(projectId);
         Task entity = repository.findByProjectAndSequencia(project,task.getSequencia());
+
+        entity.setTitulo(task.getTitulo());
+        if( task.getStatus() != null ) {
+            entity.setStatus(task.getStatus());
+        }
+        entity.setPrioridade(task.getPrioridade());
+        entity.setDescricao(task.getDescricao());
+        entity.setTaskOwner(task.getTaskOwner());
+
         return repository.save(entity);
     }
 

@@ -1,0 +1,148 @@
+<div class="user-list-container">
+    
+    <div class="filters">
+      <input 
+        type="text" 
+        placeholder="Buscar usuários..." 
+        class="search-input"
+        (input)="onSearchChange($event)"
+      >
+      <select class="filter-select" (change)="onFilterChange($event)">
+        <option value="">Todos os usuários</option>
+        <option value="with-tasks">Com tarefas</option>
+        <option value="without-tasks">Sem tarefas</option>
+      </select>
+    </div>
+
+    <div class="table-container">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>ID</th>
+            <th>Características</th>
+            <th>Tarefas</th>
+            <th>Status das Tarefas</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            *ngFor="let user of filteredUsers" 
+            class="user-row"
+            [class.has-tasks]="user.tasks && user.tasks.length > 0"
+          >
+            <td class="user-cell">
+              <div class="user-info">
+                <div class="avatar-container">
+                  <img 
+                    *ngIf="user.avatar; else defaultAvatar" 
+                    [src]="user.avatar" 
+                    [alt]="user.name"
+                    class="avatar"
+                    (error)="onImageError($event)"
+                  >
+                  <ng-template #defaultAvatar>
+                    <div class="default-avatar">
+                      {{ getInitials(user.name) }}
+                    </div>
+                  </ng-template>
+                </div>
+                <div class="user-details">
+                  <div class="user-name">{{ user.name || 'Nome não informado' }}</div>
+                </div>
+              </div>
+            </td>
+            
+            <td class="user-id">{{ user.userId || 'N/A' }}</td>
+            
+            <td class="characteristics-cell">
+              <div *ngIf="user.characteristics && user.characteristics.length > 0; else noCharacteristics" class="tags">
+                <span 
+                  *ngFor="let characteristic of user.characteristics | slice:0:3" 
+                  class="tag characteristic-tag"
+                >
+                  {{ characteristic }}
+                </span>
+                <span *ngIf="user.characteristics.length > 3" class="more-items">
+                  +{{ user.characteristics.length - 3 }}
+                </span>
+              </div>
+              <ng-template #noCharacteristics>
+                <span class="no-data">Nenhuma</span>
+              </ng-template>
+            </td>
+            
+            <td class="tasks-count">
+              <div class="task-summary">
+                <span class="count-badge" [class.has-tasks]="user.tasks && user.tasks.length > 0">
+                  {{ user.tasks?.length || 0 }}
+                </span>
+                <span class="task-label">tarefas</span>
+              </div>
+            </td>
+            
+            <td class="tasks-status">
+              <div *ngIf="user.tasks && user.tasks.length > 0; else noTasksStatus" class="status-indicators">
+                <div class="status-summary">
+                  <span 
+                    *ngIf="getTasksByStatus(user.tasks, 'completed').length > 0"
+                    class="status-count completed"
+                    title="{{ getTasksByStatus(user.tasks, 'completed').length }} concluídas"
+                  >
+                    ✓ {{ getTasksByStatus(user.tasks, 'completed').length }}
+                  </span>
+                  <span 
+                    *ngIf="getTasksByStatus(user.tasks, 'in-progress').length > 0"
+                    class="status-count in-progress"
+                    title="{{ getTasksByStatus(user.tasks, 'in-progress').length }} em progresso"
+                  >
+                    ◐ {{ getTasksByStatus(user.tasks, 'in-progress').length }}
+                  </span>
+                  <span 
+                    *ngIf="getTasksByStatus(user.tasks, 'pending').length > 0"
+                    class="status-count pending"
+                    title="{{ getTasksByStatus(user.tasks, 'pending').length }} pendentes"
+                  >
+                    ○ {{ getTasksByStatus(user.tasks, 'pending').length }}
+                  </span>
+                </div>
+                <div class="task-preview">
+                  <div 
+                    *ngFor="let task of user.tasks | slice:0:2" 
+                    class="task-preview-item"
+                    [class]="'status-' + task.status"
+                    [title]="task.titulo + ' - ' + getStatusLabel(task.status!)"
+                  >
+                    {{ task.titulo }}
+                  </div>
+                  <div *ngIf="user.tasks.length > 2" class="more-tasks" 
+                       [title]="'Mais ' + (user.tasks.length - 2) + ' tarefas'">
+                    +{{ user.tasks.length - 2 }}
+                  </div>
+                </div>
+              </div>
+              <ng-template #noTasksStatus>
+                <span class="no-data">Sem tarefas</span>
+              </ng-template>
+            </td>
+            
+            <td class="actions-cell">
+              <div class="user-actions">
+                <button class="btn btn-primary" (click)="viewUserDetails(user)" title="Ver detalhes">
+                  🔍
+                </button>
+                <button class="btn btn-secondary" (click)="editUser(user)" title="Editar">
+                  💬
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="filteredUsers.length === 0" class="no-results">
+      <p>Nenhum usuário encontrado com os filtros aplicados.</p>
+    </div>
+  </div>

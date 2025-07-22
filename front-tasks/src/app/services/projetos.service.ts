@@ -80,8 +80,7 @@ export class ProjetosService {
 
     return this.http.put<String>(
         "http://localhost:8080/api/participar/projects-approve/project/"+solicitacao.projectId+"/invite/"+solicitacao.id,
-        solicitacao,
-        { headers: headersValues });
+        solicitacao);
   }
 
 }

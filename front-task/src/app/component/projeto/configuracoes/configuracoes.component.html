@@ -1,0 +1,224 @@
+<div class="project-config-container">
+  <div class="config-content">
+    <!-- Informações Básicas -->
+    <section class="config-section">
+      <h2>
+        <i class="icon-settings"></i>
+        Informações Básicas
+      </h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="projectName">Nome do Projeto</label>
+          <input type="text" id="projectName" [(ngModel)]="projectName" class="form-control" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Configuração de Colunas -->
+    <section class="config-section">
+      <div class="section-header">
+        <h2>
+          <i class="icon-columns"></i>
+          Colunas do Quadro Kanban
+        </h2>
+        <button class="btn btn-primary" (click)="addColumn()">
+          <i class="icon-plus"></i>
+          Adicionar Coluna
+        </button>
+      </div>
+
+      <div class="columns-list">
+        <div *ngFor="let column of columns; let i = index" class="column-item">
+          <div class="column-form">
+            <div class="form-group">
+              <label>Nome da Coluna</label>
+              <input type="text" [value]="column.name" (input)="updateColumn(column.id, 'name', $event.target)"
+                class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label>Limite WIP</label>
+              <input type="number" [value]="column.wipLimit"
+                (input)="updateColumn(column.id, 'wipLimit', $event.target ? 0 : null)" placeholder="Sem limite"
+                class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label>Cor</label>
+              <input type="color" [value]="column.color" (input)="updateColumn(column.id, 'color', $event.target)"
+                class="form-control color-input" />
+            </div>
+
+            <div class="column-actions">
+              <button (click)="moveColumn(i, i - 1)" [disabled]="i === 0" class="btn btn-secondary btn-sm"
+                title="Mover para esquerda">
+                ←
+              </button>
+              <button (click)="moveColumn(i, i + 1)" [disabled]="i === columns.length - 1"
+                class="btn btn-secondary btn-sm" title="Mover para direita">
+                →
+              </button>
+              <button (click)="deleteColumn(column.id)" class="btn btn-danger btn-sm" title="Excluir coluna">
+                <i class="icon-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Equipe -->
+    <section class="config-section">
+      <div class="section-header">
+        <h2>
+          <i class="icon-users"></i>
+          Membros da Equipe
+        </h2>
+        <button class="btn btn-success" (click)="addTeamMember()">
+          <i class="icon-plus"></i>
+          Adicionar Membro
+        </button>
+      </div>
+
+      <div class="team-list">
+        <div *ngFor="let member of teamMembers" class="team-member-item">
+          <div class="member-form">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" [value]="member.name" (input)="updateTeamMember(member.id, 'name', $event.target)"
+                class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" [value]="member.email" (input)="updateTeamMember(member.id, 'email', $event.target)"
+                class="form-control" />
+            </div>
+
+            <div class="form-group">
+              <label>Função</label>
+              <select [value]="member.role" (change)="updateTeamMember(member.id, 'role', $event.target)"
+                class="form-control">
+                <option *ngFor="let role of roles" [value]="role">
+                  {{ role }}
+                </option>
+              </select>
+            </div>
+
+            <div class="member-actions">
+              <button (click)="deleteTeamMember(member.id)" class="btn btn-danger btn-sm" title="Remover membro">
+                <i class="icon-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tags -->
+    <section class="config-section">
+      <div class="section-header">
+        <h2>
+          <i class="icon-tag"></i>
+          Tags do Projeto
+        </h2>
+        <button class="btn btn-purple" (click)="addTag()">
+          <i class="icon-plus"></i>
+          Adicionar Tag
+        </button>
+      </div>
+
+      <div class="tags-grid">
+        <div *ngFor="let tag of tags" class="tag-item">
+          <div class="tag-form">
+            <div class="form-group">
+              <label>Nome da Tag</label>
+              <input type="text" [value]="tag.name" (input)="updateTag(tag.id, 'name', $event.target)"
+                class="form-control" />
+            </div>
+
+            <div class="tag-color-section">
+              <div class="form-group">
+                <label>Cor</label>
+                <input type="color" [value]="tag.color" (input)="updateTag(tag.id, 'color', $event.target)"
+                  class="form-control color-input" />
+              </div>
+
+              <button (click)="deleteTag(tag.id)" class="btn btn-danger btn-sm" title="Excluir tag">
+                <i class="icon-trash"></i>
+              </button>
+            </div>
+
+            <div class="tag-preview" [style.background-color]="tag.color">
+              {{ tag.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Configurações Gerais -->
+    <section class="config-section">
+      <h2>
+        <i class="icon-alert"></i>
+        Configurações Gerais
+      </h2>
+
+      <div class="settings-grid">
+        <div class="settings-group">
+          <h3>Workflow</h3>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.autoAssign" />
+              <span>Atribuição automática de tarefas</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.estimationRequired" />
+              <span>Estimativa obrigatória</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.dueDateRequired" />
+              <span>Data de entrega obrigatória</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.allowSubtasks" />
+              <span>Permitir subtarefas</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <h3>Análise e Notificações</h3>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.enableTimeTracking" />
+              <span>Controle de tempo</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.notifyOnWipExceed" />
+              <span>Notificar quando exceder limite WIP</span>
+            </label>
+
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="generalSettings.cycleTimeAnalysis" />
+              <span>Análise de tempo de ciclo</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botão Salvar -->
+    <div class="save-section">
+      <button (click)="saveConfiguration()" class="btn btn-primary btn-large">
+        <i class="icon-save"></i>
+        Salvar Configurações
+      </button>
+    </div>
+  </div>

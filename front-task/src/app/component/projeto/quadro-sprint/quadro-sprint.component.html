@@ -1,0 +1,81 @@
+<div class="kanban-container">
+   
+    <!-- Board -->
+    <div class="board-container">
+      <div class="kanban-board">
+        <!-- Colunas -->
+        <div 
+          *ngFor="let column of columns; trackBy: trackByColumnId" 
+          class="kanban-column"
+          [attr.data-status]="column.status">
+          
+          <!-- Cabeçalho da Coluna -->
+          <div class="column-header">
+            <div class="column-title">
+              {{ column.title }}
+              <span class="column-count">{{ column.tasks.length }}</span>
+            </div>
+          </div>
+      
+          <!-- Conteúdo da Coluna -->
+          <div 
+            class="column-content"
+            cdkDropList
+            [id]="column.id"
+            [cdkDropListData]="column.tasks"
+            [cdkDropListConnectedTo]="getConnectedDropLists()" 
+            (cdkDropListDropped)="onDrop($event)"      
+            >
+            
+            <!-- Cards das Tarefas -->
+            <div 
+              *ngFor="let task of column.tasks; trackBy: trackByTaskId"
+              class="task-card"
+              [class]="getTaskTypeClass(task.type)"
+              draggable="true"
+              cdkDrag>
+              
+              <!-- Cabeçalho do Card -->
+              <div class="card-header">
+                <div class="task-type">
+                  <div class="type-icon" [class]="getTaskTypeClass(task.type)">
+                    {{ getTaskTypeIcon(task.type) }}
+                  </div>
+                  {{ getTaskTypeLabel(task.type) }}
+                </div>
+                <div 
+                  *ngIf="task.hasImpediment"
+                  class="impediment-icon"
+                  [title]="'Impedimento: ' + task.impedimentReason"
+                  (click)="onImpedimentClick(task)">
+                  🚫
+                </div>
+              </div>
+  
+              <!-- Título do Card -->
+              <h3 class="card-title">{{ task.title }}</h3>
+  
+              <!-- Data de Início -->
+              <div class="card-date">
+                📅 {{ formatDate(task.startDate) }}
+              </div>
+  
+              <!-- Footer do Card -->
+              <div class="card-footer">
+                <!-- Responsável -->
+                <div class="assignee">
+                  <div class="avatar">{{ task.assignee.initials }}</div>
+                  <span class="assignee-name">{{ task.assignee.name }}</span>
+                </div>
+  
+                <!-- Comentários -->
+                <div class="comments" (click)="onCommentsClick(task)">
+                  💬 {{ task.commentsCount }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,59 @@
+<div class="projeto-container">
+    <!-- Cabeçalho do projeto -->
+    <div class="projeto-header">
+      <div class="projeto-header-content">
+        <div class="projeto-imagem-container">
+          <img *ngIf="projeto?.imagem" [src]="projeto?.imagem" alt="Imagem do projeto" class="projeto-imagem">
+          <div *ngIf="!projeto?.imagem" class="projeto-imagem-placeholder">
+            📁
+          </div>
+        </div>
+        <div class="projeto-info">
+          <div class="projeto-badges">
+            <span class="badge" [ngClass]="projeto?.isPublic ? 'badge-public' : 'badge-private'">
+              {{ projeto?.isPublic ? 'Público' : 'Privado' }}
+            </span>
+          </div>
+          <h1 class="projeto-title">{{ projeto?.name }}</h1>
+          <div class="projeto-unicname">{{ projeto?.unicName }}</div>
+          <p class="projeto-description">{{ projeto?.description }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Navegação de abas -->
+    <div class="projeto-tabs">
+      <button class="tab-button" [class.active]="activeTab === 'quadro'" (click)="activeTab = 'quadro'">
+        👥 Quadro Sprint
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'tarefas'" (click)="activeTab = 'tarefas'">
+        ✔️ Tarefas
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'membros'" (click)="activeTab = 'membros'">
+        👥 Membros
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'configuracoes'" (click)="activeTab = 'configuracoes'">
+        ⚙️ Configurações
+      </button>
+    </div>
+  
+    <div *ngIf="activeTab === 'tarefas'" class="content-container">
+      <app-tarefas [projeto]="projeto!" ></app-tarefas>>
+    </div>
+
+    <div *ngIf="activeTab === 'quadro'" class="content-container">
+      <h2>Quadro do Projeto</h2>
+      <app-quadro-sprint [projeto]="projeto!" ></app-quadro-sprint>
+    </div>
+
+    <div *ngIf="activeTab === 'membros'" class="content-container">
+      <h2>Membros do Projeto</h2>
+      <!-- <app-membros [projeto]="projeto!" ></app-membros> -->
+    </div>
+  
+    <div *ngIf="activeTab === 'configuracoes'" class="content-container">
+      <h2>Configurações do Projeto</h2>
+      <!-- <app-configuracoes></app-configuracoes> -->
+    </div>
+    
+  </div>

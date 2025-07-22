@@ -1,0 +1,114 @@
+
+    <div class="search-section">
+        <div class="filters">
+            <div class="filter-group">
+                <label>Filtrar por:</label>
+                <select [(ngModel)]="filtroStatusSolicitacao" (change)="buscarMinhasSolicitacoes()">
+                    <option value="all">Todas</option>
+                    <option value="pending">Pendentes</option>
+                    <option value="approved">Aprovadas</option>
+                    <option value="rejected">Rejeitadas</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lista de solicitações -->
+    <div class="requests-list" *ngIf="minhasSolicitacoes.length > 0">
+      <div class="request-card" *ngFor="let solicitacao of minhasSolicitacoes">
+        <div class="request-header">
+        
+          <div class="request-image">
+            <img *ngIf="solicitacao.project?.imagem" [src]="solicitacao.project?.imagem" [alt]="solicitacao.project?.name">
+            <div *ngIf="!solicitacao.project?.imagem" class="project-image-placeholder small">
+              📁
+            </div>
+          </div>
+
+          <div class="request-project-info">
+            <h3 class="request-title">{{ solicitacao.project?.name }}</h3>
+            <div class="request-project-id">{{ solicitacao.project?.unicName }}</div>
+          </div>
+          <div class="request-status" [ngClass]="'status-' + solicitacao.status">
+            {{ getStatusText(solicitacao.status!) }}
+          </div>
+        </div>
+
+        <div class="request-content">
+          <div class="request-date">
+            <span>Enviada em: {{ solicitacao.dataCriacao | date:'dd/MM/yyyy' }}</span>
+            <span *ngIf="solicitacao.dataAtualizacao && getStatusText(solicitacao.status!) !== 'PENDING'">
+              {{ solicitacao.status === 'APPROVED' ? 'Aprovada' : 'Rejeitada' }} em: {{ solicitacao.dataAtualizacao | date:'dd/MM/yyyy' }}
+            </span>
+            <span *ngIf="solicitacao.dataAtualizacao && getStatusText(solicitacao.status!) === 'PENDING'"  class="request-status" [ngClass]="'status-' + solicitacao.status" >
+              Aguardando resposta!!
+            </span>
+          </div>
+          
+          <div class="request-message">
+            <h4>Sua mensagem:</h4>
+            <p>{{ solicitacao.comentario }}</p>
+          </div>
+          
+          <div class="request-skills" *ngIf="solicitacao.categorias && solicitacao.categorias.length > 0">
+            <h4>Habilidades oferecidas:</h4>
+            <div class="skills-list">
+              <span class="skill-tag small" *ngFor="let habilidade of solicitacao.categorias">
+                {{ habilidade }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="request-feedback" *ngIf="solicitacao.feedback">
+            <h4>Feedback do responsável:</h4>
+            <p>{{ solicitacao.feedback }}</p>
+          </div> 
+        </div>
+
+        <div class="request-actions">
+          <button class="btn-primary" *ngIf="solicitacao.status === 'APPROVED'" [routerLink]="['/projeto', solicitacao.project?.projectId]">
+            Ir para o Projeto
+          </button>
+          <button class="btn-secondary" *ngIf="solicitacao.status === 'PENDING'" (click)="cancelarSolicitacao(solicitacao.id!)">
+            Cancelar Solicitação
+          </button>
+          <button class="btn-secondary" *ngIf="solicitacao.status === 'REJECTED'" (click)="abrirModalSolicitacao(solicitacao.projectId)">
+            Solicitar Novamente
+          </button>
+        </div>
+      </div> 
+
+       <!-- Estado vazio -->
+    <div class="empty-state" *ngIf="minhasSolicitacoes.length === 0 && !carregandoMinhasSolicitacoes">
+      <div class="empty-icon">📋</div>
+      <h3>Nenhuma solicitação encontrada</h3>
+      <p>Você ainda não enviou solicitações para participar de projetos.</p>
+    </div>
+
+    <!-- Carregando  -->
+    <div class="loading-state" *ngIf="carregandoMinhasSolicitacoes">
+      <div class="loading-spinner"></div>
+      <p>Carregando suas solicitações...</p>
+    </div> 
+
+     <!-- Paginação -->
+  <div class="pagination" *ngIf="totalPaginas > 1">
+    <button class="page-btn" [disabled]="paginaAtual === 0" (click)="mudarPagina(0)">«</button>
+    <button class="page-btn" [disabled]="paginaAtual === 0" (click)="mudarPagina(paginaAtual - 1)">‹</button>
+    
+    <button *ngFor="let pagina of getPaginasDisponiveis()" 
+            class="page-btn" 
+            [class.active]="pagina === paginaAtual"
+            (click)="mudarPagina(pagina)">
+      {{ pagina + 1 }}
+    </button>
+    
+    <button class="page-btn" [disabled]="paginaAtual === totalPaginas - 1" (click)="mudarPagina(paginaAtual + 1)">›</button>
+    <button class="page-btn" [disabled]="paginaAtual === totalPaginas - 1" (click)="mudarPagina(totalPaginas - 1)">»</button>
+  </div>
+  
+  </div>
+
+   
+
+   
