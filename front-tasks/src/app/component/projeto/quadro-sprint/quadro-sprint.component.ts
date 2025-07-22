@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Projeto } from 'src/app/models/Projeto';
 
 export interface TaskCard {
@@ -30,7 +30,8 @@ export interface KanbanColumn {
 @Component({
   selector: 'app-quadro-sprint',
   templateUrl: './quadro-sprint.component.html',
-  styleUrls: ['./quadro-sprint.component.css']
+  styleUrls: ['./quadro-sprint.component.css'],
+  
 })
 export class QuadroSprintComponent implements OnInit {
   
