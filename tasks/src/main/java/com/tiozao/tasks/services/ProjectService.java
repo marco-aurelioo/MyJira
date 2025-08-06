@@ -1,5 +1,6 @@
 package com.tiozao.tasks.services;
 
+import com.tiozao.tasks.aplication.controllers.model.ProjectConfiguration;
 import com.tiozao.tasks.domain.entity.Project;
 import com.tiozao.tasks.domain.entity.ProjectMember;
 import com.tiozao.tasks.repository.ProjectMemberRepository;
@@ -25,6 +26,9 @@ public class ProjectService {
     @Autowired
     private ProjectMemberRepository projectMemberRepository;
 
+    @Autowired
+    private ProjectConfigurationService configurationService;
+
 
     public Project  createProject(Project project){
         if(StringUtil.isNullOrEmpty(project.getName())){
@@ -37,8 +41,10 @@ public class ProjectService {
         entity.setExternalId(UUID.randomUUID().toString());
         entity.setPublic(project.isPublic());
         entity.setUnicName(createUnicName(project.getName()));
-
-        return repository.save(entity);
+        entity = repository.save(entity);
+        configurationService.createDefaultSteps(entity);
+        configurationService.createDefaultTaksTypes(entity);
+        return entity;
 
     }
 

@@ -67,53 +67,6 @@
       </div>
     </section>
 
-    <!-- Equipe -->
-    <section class="config-section">
-      <div class="section-header">
-        <h2>
-          <i class="icon-users"></i>
-          Membros da Equipe
-        </h2>
-        <button class="btn btn-success" (click)="addTeamMember()">
-          <i class="icon-plus"></i>
-          Adicionar Membro
-        </button>
-      </div>
-
-      <div class="team-list">
-        <div *ngFor="let member of teamMembers" class="team-member-item">
-          <div class="member-form">
-            <div class="form-group">
-              <label>Nome</label>
-              <input type="text" [value]="member.name" (input)="updateTeamMember(member.id, 'name', $event.target)"
-                class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" [value]="member.email" (input)="updateTeamMember(member.id, 'email', $event.target)"
-                class="form-control" />
-            </div>
-
-            <div class="form-group">
-              <label>Função</label>
-              <select [value]="member.role" (change)="updateTeamMember(member.id, 'role', $event.target)"
-                class="form-control">
-                <option *ngFor="let role of roles" [value]="role">
-                  {{ role }}
-                </option>
-              </select>
-            </div>
-
-            <div class="member-actions">
-              <button (click)="deleteTeamMember(member.id)" class="btn btn-danger btn-sm" title="Remover membro">
-                <i class="icon-trash"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Tags -->
     <section class="config-section">

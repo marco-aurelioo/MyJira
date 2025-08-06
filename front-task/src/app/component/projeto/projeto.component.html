@@ -24,7 +24,7 @@
     <!-- Navegação de abas -->
     <div class="projeto-tabs">
       <button class="tab-button" [class.active]="activeTab === 'quadro'" (click)="activeTab = 'quadro'">
-        👥 Quadro Sprint
+        👥 Quadro do Projeto
       </button>
       <button class="tab-button" [class.active]="activeTab === 'tarefas'" (click)="activeTab = 'tarefas'">
         ✔️ Tarefas
@@ -53,7 +53,7 @@
   
     <div *ngIf="activeTab === 'configuracoes'" class="content-container">
       <h2>Configurações do Projeto</h2>
-      <!-- <app-configuracoes></app-configuracoes> -->
+      <app-configuracoes [projeto]="projeto!"></app-configuracoes>
     </div>
     
   </div>

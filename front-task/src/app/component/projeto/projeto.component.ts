@@ -8,6 +8,7 @@ import { ProfileService } from 'src/app/service/profile.service';
 import { ProjetosService } from 'src/app/service/projetos.service';
 import { TarefasComponent } from './tarefas/tarefas.component';
 import { QuadroSprintComponent } from './quadro-sprint/quadro-sprint.component';
+import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 
 
 interface Tarefa {
@@ -26,7 +27,7 @@ interface Tarefa {
   templateUrl: './projeto.component.html',
   styleUrls: ['./projeto.component.css'],
   standalone: true,
-   imports: [RouterModule, CommonModule, ReactiveFormsModule, TarefasComponent, QuadroSprintComponent ],
+   imports: [RouterModule, CommonModule, ReactiveFormsModule, TarefasComponent, QuadroSprintComponent, ConfiguracoesComponent ],
 })
 export class ProjetoComponent implements OnInit {
   projetoId: string = '';

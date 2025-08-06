@@ -20,6 +20,8 @@ export class TaskserviceService {
   }
 
   public updateTarefa(projectName: string, tarefa :Tarefa ) :Observable<Tarefa> {
+    console.log(tarefa);
+    console.log(this.apiUrl+projectName+"/tasks/"+tarefa.id)
     return this.http.put<Tarefa>(
       this.apiUrl+projectName+"/tasks/"+tarefa.id,
       tarefa);

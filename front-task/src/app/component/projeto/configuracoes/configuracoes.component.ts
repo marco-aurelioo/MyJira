@@ -1,4 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Projeto } from 'src/app/models/Projeto';
 
 interface Column {
   id: number;
@@ -33,9 +37,14 @@ interface GeneralSettings {
 @Component({
   selector:    'app-configuracoes',
   templateUrl: './configuracoes.component.html',
-  styleUrls: [ './configuracoes.component.css']
+  styleUrls: [ './configuracoes.component.css'],
+  standalone: true,
+  imports:[ RouterModule, CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class ConfiguracoesComponent implements OnInit {
+
+ @Input() projeto!: Projeto;
+
   projectName: string = 'Meu Projeto';
   
   columns: Column[] = [

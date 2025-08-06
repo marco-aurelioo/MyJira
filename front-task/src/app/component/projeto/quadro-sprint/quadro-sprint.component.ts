@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskserviceService } from 'src/app/service/taskservice.service';
+import { Tarefa } from 'src/app/models/Tarefa';
 
 export interface TaskCard {
   id: string;
@@ -21,6 +22,7 @@ export interface TaskCard {
   hasImpediment: boolean;
   impedimentReason?: string;
   priority?: 'alta' | 'media' | 'baixa';
+  tarefa?: Tarefa;
 }
 
 export interface KanbanColumn {
@@ -49,7 +51,7 @@ export class QuadroSprintComponent implements OnInit {
     {
       id: 'backlog',
       title: 'Backlog',
-      status: 'backlog',
+      status: 'Backlog',
       tasks: []
     },
     {
@@ -196,6 +198,7 @@ export class QuadroSprintComponent implements OnInit {
         console.log("projeto => "+ this.projeto.unicName!);
         console.log(this.projeto);
         console.log(page);
+        this.loadTasksOnBoard(page.content!);
 
       },
       (error) => {
@@ -205,41 +208,71 @@ export class QuadroSprintComponent implements OnInit {
     )
   }
 
+  loadTasksOnBoard(listaTarefas: Tarefa[]){
+    for (const tarefa of listaTarefas) {
+      for (const coluna of this.columns) {
+        if (tarefa.status === coluna.status) {
+          coluna.tasks.push(
+            {
+              id: tarefa.id!,
+              title: tarefa.titulo!,
+              description: tarefa.descricao,
+              startDate: Date(),
+              assignee: {
+                name: "teste",
+                initials: "teste",
+                avatar: "teste",
+              },
+              type: 'story',
+              commentsCount: 0,
+              hasImpediment: false,
+              impedimentReason: "",
+              priority: 'media', 
+              tarefa: tarefa
+            }
+          );
+          break;
+        }
+    }
+  }
+
+  }
+
   ngOnInit(): void {
-    this.initializeTasks();
     this.loadTasks();
   }
 
-  private initializeTasks(): void {
-    // Distribuir tarefas pelas colunas
-    this.columns[0].tasks = this.sampleTasks.slice(0, 3); // Backlog
-    this.columns[1].tasks = this.sampleTasks.slice(3, 5); // To Do
-    this.columns[2].tasks = this.sampleTasks.slice(5, 7); // Doing
-    this.columns[3].tasks = this.sampleTasks.slice(7, 8); // Test
-    this.columns[4].tasks = this.sampleTasks.slice(8, 9); // Validate
-    this.columns[5].tasks = this.sampleTasks.slice(9, 11); // Done
-  }
+  
 
   // Método para mover itens entre colunas
   onDrop(event: CdkDragDrop<TaskCard[]>): void {
     if (event.previousContainer === event.container) {
-      // Reordenar dentro da mesma coluna
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      const task = event.previousContainer.data[event.previousIndex];
+      console.log(task.id+" ordem "+event.currentIndex);
     } else {
-      // Mover entre colunas diferentes
       const task = event.previousContainer.data[event.previousIndex];
       const targetColumn = this.columns.find(col => col.tasks === event.container.data);
-      
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-
-      // Mostrar notificação
+      
       if (targetColumn) {
-        this.showMoveNotification(task, targetColumn);
+       // this.showMoveNotification(task, targetColumn);
+        console.log("atualizando tarefa");
+        task.tarefa!.status = targetColumn.status;
+        this.tarefaService.updateTarefa(this.projeto.unicName!, task.tarefa!).subscribe(
+         (page) => {
+            console.log("atualizado => "+ page);
+        },
+          (error) => {
+            console.log("Error " + error);
+          }
+        );
+        console.log("fim atualizacao");
       }
     }
   }
